@@ -4,12 +4,7 @@ import Button from 'material-ui/Button'
 import styled from 'styled-components'
 import socket from '../socket'
 import clubLogo from '../../assets/pcc-logo@2x.png'
-import riderMale0 from '../../assets/rider-male-0.png'
-import riderMale1 from '../../assets/rider-male-1.png'
-import riderMale2 from '../../assets/rider-male-2.png'
-import riderFemale0 from '../../assets/rider-female-0.png'
-import riderFemale1 from '../../assets/rider-female-1.png'
-import riderFemale2 from '../../assets/rider-female-2.png'
+import riderImages from './rider-images'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 
 const RiderContainer = styled.div`
@@ -191,7 +186,7 @@ class ChooseRiders extends Component {
           <SelectedRider bike={player1.bike}>
             <SelectedRiderTitle>1P</SelectedRiderTitle>
             <img
-              src={`/rider-${player1.gender}-${player1.image}.png`}
+              src={riderImages[rider.gender][rider.image]}
               width='200'
               height='225'
               onClick={this.onDropOut(player1)}
@@ -206,7 +201,7 @@ class ChooseRiders extends Component {
           <SelectedRider bike={player2.bike}>
             <SelectedRiderTitle>2P</SelectedRiderTitle>
             <img
-              src={`/rider-${player2.gender}-${player2.image}.png`}
+              src={riderImages[rider.gender][rider.image]}
               width='200'
               height='225'
               onClick={this.onDropOut(player2)}
@@ -219,7 +214,7 @@ class ChooseRiders extends Component {
               return (
                 <Rider key={rider.id} selected={rider.selected} bike={rider.bike} eliminated={rider.eliminated}>
                   <img
-                    src={`/rider-${rider.gender}-${rider.image}.png`}
+                    src={riderImages[rider.gender][rider.image]}
                     width='100'
                     height='120'
                   />

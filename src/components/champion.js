@@ -4,12 +4,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import socket from '../socket'
 import clubLogo from '../../assets/pcc-logo@2x.png'
-import riderMale0 from '../../assets/rider-male-0.png'
-import riderMale1 from '../../assets/rider-male-1.png'
-import riderMale2 from '../../assets/rider-male-2.png'
-import riderFemale0 from '../../assets/rider-female-0.png'
-import riderFemale1 from '../../assets/rider-female-1.png'
-import riderFemale2 from '../../assets/rider-female-2.png'
+import riderImages from './rider-images'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 
 const Wrapper = styled.div`
@@ -86,7 +81,7 @@ class Champion extends Component {
 
         <SelectedRider>
           <img
-            src={`/rider-${champion.gender}-${champion.image}.png`}
+            src={riderImages[champion.gender][champion.image]}
             width='200'
             height='225'
           />
