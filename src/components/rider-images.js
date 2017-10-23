@@ -14,7 +14,7 @@ const images = {
   female: [
     riderFemale0,
     riderFemale1,
-    riderFemale3
+    riderFemale2
   ]
 }
 
