@@ -1,3 +1,4 @@
+import '../assets/pcc-avatar.png'
 import './css/Index.css'
 import React from 'react'
 import ReactDOM from 'react-dom'

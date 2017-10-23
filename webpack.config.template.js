@@ -2,7 +2,6 @@ const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const LiveReloadPlugin = require('webpack-livereload-plugin')
 const postcssUrl = require('postcss-url')
 const postcssImport = require('postcss-import')
 const postcssCssnext = require('postcss-cssnext')
@@ -18,8 +17,6 @@ module.exports = {
     publicPath: '/deathmatch/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new LiveReloadPlugin({ port: 35831, appendScriptTag: true }),
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('[name].css', { allChunks: true }),
     new HtmlWebpackPlugin({
