@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3697e68030d0bee242ed"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a7f6cc0aa57acfe384b7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -25670,10 +25670,10 @@
 	
 	emitter.startGame = function (trackLength) {
 	  var getWatts = function getWatts() {
-	    return parseInt(200 + Math.random() * 100, 10);
+	    return parseInt(300 + Math.random() * 100, 10);
 	  };
 	  var getCadence = function getCadence() {
-	    return parseInt(200 + Math.random() * 100, 10);
+	    return parseInt(50 + Math.random() * 100, 10);
 	  };
 	
 	  startGame(emitter, getWatts, getCadence, trackLength, riders);
@@ -60431,10 +60431,16 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _class, _temp;
+	var _class, _temp2;
 	
 	var _templateObject = _taggedTemplateLiteral(['\n  background-color: #FFF;\n  background-image: url(', ');\n  background-size: contain;\n  background-position: center;\n  background-repeat: no-repeat;\n  width: ', 'px;\n  height: ', 'px;\n  margin: auto;\n  padding-top: 500px;\n'], ['\n  background-color: #FFF;\n  background-image: url(', ');\n  background-size: contain;\n  background-position: center;\n  background-repeat: no-repeat;\n  width: ', 'px;\n  height: ', 'px;\n  margin: auto;\n  padding-top: 500px;\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  margin-top: 0;\n'], ['\n  margin-top: 0;\n']);
+	
+	var _propTypes = __webpack_require__(187);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactRedux = __webpack_require__(185);
 	
 	var _Button = __webpack_require__(467);
 	
@@ -60494,13 +60500,33 @@
 	
 	var StartGame = _ff2.default.extend(_templateObject2);
 	
-	var Intro = _wrapComponent('Intro')((_temp = _class = function (_Component) {
+	var Intro = _wrapComponent('Intro')((_temp2 = _class = function (_Component) {
 	  _inherits(Intro, _Component);
 	
 	  function Intro() {
+	    var _ref;
+	
+	    var _temp, _this, _ret;
+	
 	    _classCallCheck(this, Intro);
 	
-	    return _possibleConstructorReturn(this, (Intro.__proto__ || Object.getPrototypeOf(Intro)).apply(this, arguments));
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Intro.__proto__ || Object.getPrototypeOf(Intro)).call.apply(_ref, [this].concat(args))), _this), _this.onStart = function () {
+	      if (_this.props.riders.length) {
+	        return _this.props.onStart();
+	      }
+	
+	      alert('Please add some riders first!');
+	    }, _this.onReset = function () {
+	      if (_this.props.riders.length) {
+	        return _this.props.onReset();
+	      }
+	
+	      alert('Please add some riders first!');
+	    }, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 	
 	  _createClass(Intro, [{
@@ -60519,12 +60545,12 @@
 	          ),
 	          _react3.default.createElement(
 	            _Button2.default,
-	            { onClick: this.props.onReset },
+	            { onClick: this.onReset },
 	            'New Game >'
 	          ),
 	          _react3.default.createElement(
 	            _Button2.default,
-	            { onClick: this.props.onStart },
+	            { onClick: this.onStart },
 	            'Continue >'
 	          )
 	        )
@@ -60534,11 +60560,21 @@
 	
 	  return Intro;
 	}(_react2.Component), _class.propTypes = {
-	  onStart: _react2.PropTypes.func.isRequired,
-	  onReset: _react2.PropTypes.func.isRequired
-	}, _temp));
+	  onStart: _propTypes2.default.func.isRequired,
+	  onReset: _propTypes2.default.func.isRequired,
+	  riders: _propTypes2.default.array.isRequired
+	}, _temp2));
 	
-	exports.default = Intro;
+	var mapStateToProps = function mapStateToProps(_ref2) {
+	  var riders = _ref2.riders.riders;
+	  return {
+	    riders: riders
+	  };
+	};
+	
+	var mapDispatchToProps = {};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Intro);
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(211)(module)))
 
 /***/ }),
@@ -74030,6 +74066,10 @@
 	    _templateObject6 = _taggedTemplateLiteral(['\n  color: ', ';\n  text-align: center;\n  display: inline-block;\n  padding: 10px;\n  border: 5px solid;\n  margin-top: 10px;\n  height: 323px;\n  border-color: ', ';\n\n  p {\n    font-size: 10px;\n  }\n'], ['\n  color: ', ';\n  text-align: center;\n  display: inline-block;\n  padding: 10px;\n  border: 5px solid;\n  margin-top: 10px;\n  height: 323px;\n  border-color: ', ';\n\n  p {\n    font-size: 10px;\n  }\n']),
 	    _templateObject7 = _taggedTemplateLiteral(['\n  display: inline-block;\n'], ['\n  display: inline-block;\n']);
 	
+	var _propTypes = __webpack_require__(187);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
 	var _reactRedux = __webpack_require__(185);
 	
 	var _Button = __webpack_require__(467);
@@ -74312,9 +74352,9 @@
 	
 	  return ChooseRiders;
 	}(_react2.Component), _class.propTypes = {
-	  adminToken: _react2.PropTypes.string.isRequired,
-	  riders: _react2.PropTypes.array.isRequired,
-	  trackLength: _react2.PropTypes.number.isRequired
+	  adminToken: _propTypes2.default.string.isRequired,
+	  riders: _propTypes2.default.array.isRequired,
+	  trackLength: _propTypes2.default.number.isRequired
 	}, _temp2));
 	
 	var mapStateToProps = function mapStateToProps(_ref2) {
