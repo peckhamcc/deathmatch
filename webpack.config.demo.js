@@ -3,7 +3,7 @@ const config = require('./webpack.config.template.js')
 
 config.plugins.push(new webpack.DefinePlugin({
   'process.env': {
-    'NODE_ENV': '"DEMO"'
+    'NODE_ENV': '"production"'
   }
 }))
 

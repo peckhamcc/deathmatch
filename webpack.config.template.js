@@ -67,6 +67,5 @@ module.exports = {
       postcssCssnext(),
       postcssReporter()
     ]
-  },
-  devtool: 'source-map'
+  }
 }
