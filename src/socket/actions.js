@@ -63,7 +63,7 @@ export default (store) => {
   })
 
   socket.on('game:sprint', () => {
-    
+
   })
 
   socket.on('game:finishing', () => {

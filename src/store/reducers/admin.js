@@ -10,7 +10,7 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         token: action.payload
-      };
+      }
     default:
       return state
   }

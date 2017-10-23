@@ -13,18 +13,18 @@ const toolbar = ({demo, gameState}) => {
   }
 
   if (
-    gameState === GAME_STATE.intro || 
+    gameState === GAME_STATE.intro ||
     gameState === GAME_STATE.riders
   ) {
     return (
       <div>
-        {/*<AppBar position="static">
+        {/* <AppBar position="static">
           <Toolbar> */}
         <BluetoothState />
         <Settings />
         <Authenticate />
-        {/*</Toolbar>
-        </AppBar>*/}
+        {/* </Toolbar>
+        </AppBar> */}
       </div>
     )
   }

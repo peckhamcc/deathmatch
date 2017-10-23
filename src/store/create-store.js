@@ -1,4 +1,4 @@
-import { createStore, compose } from 'redux';
+import { createStore, compose } from 'redux'
 import socketActions from '../socket/actions'
 
 const makeStore = (rootReducer, initialState, enhancers = []) => {

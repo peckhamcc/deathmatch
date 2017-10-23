@@ -147,7 +147,7 @@ const PlayerStats = ({trackLength, x, y, width, height, index, players}) => {
 
 const mapStateToProps = ({ game: { trackLength }, players: { players } }) => ({
   trackLength: trackLength,
-  players: players,
+  players: players
 })
 
 const mapDispatchToProps = {

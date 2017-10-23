@@ -15,7 +15,7 @@ const updateGameState = (state = initialState, action) => {
       return {
         ...state,
         state: action.payload
-      };
+      }
     case TRACK_LENGTH_SET:
       return {
         ...state,

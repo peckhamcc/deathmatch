@@ -1,6 +1,8 @@
-//import io from 'socket.io-client'
-import socket from './demo'
+if (process.env.NODE_ENV === 'production') {
+  const io = require('socket.io-client')
+  const socket = io('//')
 
-//const socket = io('//')
-
-export default socket
+  module.exports = socket
+} else {
+  module.exports = require('./demo')
+}

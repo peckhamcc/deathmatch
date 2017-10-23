@@ -1,53 +1,53 @@
 import shortid from 'shortid'
 
 const createRiders = () => ([{
-  "id": shortid.generate(),
-  "name":"Alex Potsides",
-  "age":"37",
-  "gender":"male",
-  "weight":"74",
-  "image":0,
-  "races":0
+  'id': shortid.generate(),
+  'name': 'Alex Potsides',
+  'age': '37',
+  'gender': 'male',
+  'weight': '74',
+  'image': 0,
+  'races': 0
 }, {
-  "id":shortid.generate(),
-  "name": "Katherine Potsides",
-  "age":"35",
-  "gender":"female",
-  "weight":"68",
-  "image":0,
-  "races":0
+  'id': shortid.generate(),
+  'name': 'Katherine Potsides',
+  'age': '35',
+  'gender': 'female',
+  'weight': '68',
+  'image': 0,
+  'races': 0
 }, {
-  "id": shortid.generate(),
-  "name":"Rob Whitworth",
-  "age":"30",
-  "gender":"male",
-  "weight":"70",
-  "image":1,
-  "races":0
+  'id': shortid.generate(),
+  'name': 'Rob Whitworth',
+  'age': '30',
+  'gender': 'male',
+  'weight': '70',
+  'image': 1,
+  'races': 0
 }, {
-  "id": shortid.generate(),
-  "name":"Tegwen Tucker",
-  "age":"36",
-  "gender":"female",
-  "weight":"72",
-  "image":1,
-  "races":0
+  'id': shortid.generate(),
+  'name': 'Tegwen Tucker',
+  'age': '36',
+  'gender': 'female',
+  'weight': '72',
+  'image': 1,
+  'races': 0
 }, {
-  "id": shortid.generate(),
-  "name":"Jon Arm",
-  "age":"39",
-  "gender":"male",
-  "weight":"75",
-  "image":2,
-  "races":0
+  'id': shortid.generate(),
+  'name': 'Jon Arm',
+  'age': '39',
+  'gender': 'male',
+  'weight': '75',
+  'image': 2,
+  'races': 0
 }, {
-  "id": shortid.generate(),
-  "name":"Hannah Sender",
-  "age":"32",
-  "gender":"female",
-  "weight":"62",
-  "image":2,
-  "races":0
+  'id': shortid.generate(),
+  'name': 'Hannah Sender',
+  'age': '32',
+  'gender': 'female',
+  'weight': '62',
+  'image': 2,
+  'races': 0
 }
 ])
 
@@ -55,14 +55,14 @@ let riders = createRiders()
 
 module.exports = {
   get: () => riders,
-  
+
   set: (r) => {
     riders = r
   },
 
   create: (rider) => {
     const next = riders.filter(r => r.gender === rider.gender).pop() || { image: 0 }
-    
+
     if (next.image === images[rider.gender].max) {
       images[rider.gender].last = 0
     }
@@ -110,7 +110,7 @@ module.exports = {
         delete rider.bike
         delete rider.winner
         delete rider.loser
-        
+
         rider.races = 0
       })
 

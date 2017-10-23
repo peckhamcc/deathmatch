@@ -10,7 +10,7 @@ const deviceReducer = (state = initialState, action) => {
       return {
         ...state,
         devices: action.payload
-      };
+      }
     case DEVICES_ADD:
       console.info('devices', state.devices)
       console.info('payload', action.payload)
@@ -22,7 +22,7 @@ const deviceReducer = (state = initialState, action) => {
       return {
         ...state,
         devices
-      };
+      }
     default:
       return state
   }

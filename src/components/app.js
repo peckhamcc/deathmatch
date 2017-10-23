@@ -7,7 +7,7 @@ import createGenerateClassName from 'material-ui/styles/createGenerateClassName'
 const theme = createMuiTheme({
   palette: {
     primary: grey,
-    secondary: grey,
+    secondary: grey
   }
 })
 
@@ -21,7 +21,7 @@ const styles = theme => ({
       fontSize: 16
     },
     body: {
-      margin: 0,
+      margin: 0
     }
   }
 })

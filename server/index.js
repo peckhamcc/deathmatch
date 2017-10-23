@@ -27,7 +27,7 @@ io.on('connection', (client) => {
 
     io.emit('riders', riders.create(rider))
   })
-  
+
   client.on('admin:riders:update', (token, rider) => {
     if (token !== adminToken) {
       return debug('Invalid admin token')

@@ -7,7 +7,7 @@ import createGenerateClassName from 'material-ui/styles/createGenerateClassName'
 const theme = createMuiTheme({
   palette: {
     primary: purple,
-    secondary: green,
+    secondary: green
   }
 })
 
@@ -17,10 +17,10 @@ const styles = theme => ({
     html: {
       background: theme.palette.background.default,
       WebkitFontSmoothing: 'antialiased', // Antialiasing.
-      MozOsxFontSmoothing: 'grayscale', // Antialiasing.
+      MozOsxFontSmoothing: 'grayscale' // Antialiasing.
     },
     body: {
-      margin: 0,
+      margin: 0
     }
   }
 })

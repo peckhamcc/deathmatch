@@ -13,7 +13,7 @@ const log = debug('BluetoothState')
 
 const BluetoothState = ({ status }) => {
   return (
-    <IconButton aria-label="Bluetooth status">
+    <IconButton aria-label='Bluetooth status'>
       {status === 'unknown' && <ErrorIcon /> }
       {status === 'poweredOff' && <BluetoothDisabledIcon /> }
       {status === 'poweredOn' && <BluetoothIcon /> }
@@ -34,7 +34,7 @@ const mapStateToProps = ({ bluetooth: { status } }) => ({
 })
 
 const mapDispatchToProps = {
-  
+
 }
 
 export default connect(

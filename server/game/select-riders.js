@@ -14,16 +14,16 @@ const selectRiders = (emitter, riders) => {
   // sort by number of races ascending so everyone rides at least once
   // before the first rider has to ride again
   eligible = eligible.sort((a, b) => {
-      if (a.races < b.races) {
-        return -1
-      }
+    if (a.races < b.races) {
+      return -1
+    }
 
-      if (a.races > b.races) {
-        return 1
-      }
+    if (a.races > b.races) {
+      return 1
+    }
 
-      return 0
-    })
+    return 0
+  })
 
   if (eligible.length > 1) {
     // there are two or more eligible riders, we race!

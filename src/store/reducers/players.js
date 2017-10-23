@@ -39,7 +39,7 @@ const playerReducer = (state = initialState, action) => {
       return {
         ...state,
         players: action.payload
-      };
+      }
     default:
       return state
   }

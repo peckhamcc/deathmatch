@@ -19,7 +19,7 @@ const gameLoop = (emitter, getWatts, getCadence, trackLength, then, players) => 
       if (emitter.state === GAME_STATE.race || emitter.state === GAME_STATE.sprinting || emitter.state === GAME_STATE.finishing) {
         const seconds = (now - then) / 1000
         const joules = player.power / seconds
-  
+
         player.totalJoules += joules
         player.metersRemaining = trackLength - rangeMap(player.totalJoules, 0, player.targetJoules, 0, trackLength)
 
@@ -32,7 +32,7 @@ const gameLoop = (emitter, getWatts, getCadence, trackLength, then, players) => 
           emitter.emit('game:finished', player.id, players.filter(p => p.id !== player.id).pop().id)
         }
       }
-  
+
       // within 5% of the end, show the finish line!
       if (emitter.state === GAME_STATE.race && player.totalJoules > (player.targetJoules - ((player.targetJoules / 100) * SPRINT_DISTANCE_FROM_FINISH))) {
         emitter.state = GAME_STATE.sprinting
@@ -59,7 +59,7 @@ module.exports = {
     if (gameInterval) {
       module.exports.stopGame()
     }
-  
+
     gameInterval = setInterval(gameLoop(emitter, getWatts, getCadence, trackLength, Date.now(), setUpPlayers(
       riders.get().filter(rider => rider.selected),
       trackLength

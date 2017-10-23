@@ -6,9 +6,9 @@ const emitter = new EventEmitter()
 const periferals = {}
 
 const TYPES = {
-  POWER: "1818",
-  SPEED_CADENCE: "1816",
-  DEVICE_INFORMATION: "180a"
+  POWER: '1818',
+  SPEED_CADENCE: '1816',
+  DEVICE_INFORMATION: '180a'
 }
 
 emitter.state = noble.state
@@ -42,7 +42,7 @@ noble.on('discover', (peripheral) => {
     }
 
     if (advert.txPowerLevel) {
-      periferals[peripheral.id].signal= advert.txPowerLevel
+      periferals[peripheral.id].signal = advert.txPowerLevel
     }
   }
 
@@ -79,12 +79,12 @@ emitter.connect = (id) => {
     debug(`connected to ${peripheral.name}`)
 
     peripheral.device.discoverAllServicesAndCharacteristics((error, services, characteristics) => {
-        if (error) {
-          return debug(`Error discovering services and charateristics of ${peripheral.name}: ${error}`)
-        }
+      if (error) {
+        return debug(`Error discovering services and charateristics of ${peripheral.name}: ${error}`)
+      }
 
-        debug(peripheral.name, 'services', services)
-        debug(peripheral.name, 'characteristics', characteristics)
+      debug(peripheral.name, 'services', services)
+      debug(peripheral.name, 'characteristics', characteristics)
     })
   })
 }

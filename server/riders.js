@@ -6,7 +6,7 @@ let riders = load('riders.json')
 
 module.exports = {
   get: () => riders,
-  
+
   set: (r) => {
     save(r, 'riders.json')
     riders = r
@@ -14,7 +14,7 @@ module.exports = {
 
   create: (rider) => {
     const next = riders.filter(r => r.gender === rider.gender).pop() || { image: 0 }
-    
+
     if (next.image === images[rider.gender].max) {
       images[rider.gender].last = 0
     }
@@ -68,7 +68,7 @@ module.exports = {
         delete rider.bike
         delete rider.winner
         delete rider.loser
-        
+
         rider.races = 0
       })
 
