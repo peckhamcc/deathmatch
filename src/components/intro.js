@@ -33,7 +33,7 @@ class Intro extends Component {
 
   onStart = () => {
     if (this.props.riders.length) {
-      return this.props.onStart
+      return this.props.onStart()
     }
 
     alert('Please add some riders first!')
@@ -41,7 +41,7 @@ class Intro extends Component {
 
   onReset = () => {
     if (this.props.riders.length) {
-      return this.props.onReset
+      return this.props.onReset()
     }
 
     alert('Please add some riders first!')

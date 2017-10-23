@@ -4,6 +4,17 @@ const { load, save } = require('./files')
 
 let riders = load('riders.json')
 
+const images = {
+  male: {
+    max: 2,
+    last: 2
+  },
+  female: {
+    max: 2,
+    last: 2
+  }
+}
+
 module.exports = {
   get: () => riders,
 
