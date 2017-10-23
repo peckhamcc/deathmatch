@@ -1,4 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import Button from 'material-ui/Button'
 import introBackground from '../../assets/intro.png'
 import FF7 from './ff7'
@@ -25,7 +27,24 @@ class Intro extends Component {
 
   static propTypes = {
     onStart: PropTypes.func.isRequired,
-    onReset: PropTypes.func.isRequired
+    onReset: PropTypes.func.isRequired,
+    riders: PropTypes.array.isRequired
+  }
+
+  onStart = () => {
+    if (this.props.riders.length) {
+      return this.props.onStart
+    }
+
+    alert('Please add some riders first!')
+  }
+
+  onReset = () => {
+    if (this.props.riders.length) {
+      return this.props.onReset
+    }
+
+    alert('Please add some riders first!')
   }
 
   render () {
@@ -33,12 +52,23 @@ class Intro extends Component {
       <IntroWrapper>
         <StartGame>
           <p>PCC Max Turbo</p>
-          <Button onClick={this.props.onReset}>New Game &gt;</Button>
-          <Button onClick={this.props.onStart}>Continue &gt;</Button>
+          <Button onClick={this.onReset}>New Game &gt;</Button>
+          <Button onClick={this.onStart}>Continue &gt;</Button>
         </StartGame>
       </IntroWrapper>
     )
   }
 }
 
-export default Intro
+const mapStateToProps = ({ riders: { riders } }) => ({
+  riders: riders
+})
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Intro)
