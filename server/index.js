@@ -12,7 +12,10 @@ const devices = require('./devices')
 const adminToken = 'something-random'
 
 const app = express()
-app.use(serveStatic(path.resolve(path.join(__dirname, '..', 'dist'))))
+app.use('/deathmatch', serveStatic(path.resolve(path.join(__dirname, '..', 'dist'))))
+app.use((req, res) => {
+  res.redirect(301, '/deathmatch')
+})
 
 const server = http.createServer(app)
 const io = socket(server)

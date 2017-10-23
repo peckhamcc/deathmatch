@@ -15,7 +15,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: '[name].js',
-    publicPath: '/'
+    publicPath: '/deathmatch/'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -25,6 +25,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './src/index.template.html'
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': '"PRODUCTION"'
+      }
     })
   ],
   module: {

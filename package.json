@@ -14,10 +14,9 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && webpack",
+    "build": "npm run clean && webpack --config webpack.config.demo.js",
     "start": "npm run clean && (webpack --progress --colors --watch & DEBUG=*,-babel node server)",
-    "deploy": "NODE_ENV=production gh-pages-deploy",
-    "clean-source": "rimraf README.md src server package.json package-lock.json webpack.config.js .babelrc .gitignore",
+    "deploy": "npm run build && gh-pages -d dist",
     "lint": "standard"
   },
   "pre-commit": [
@@ -63,7 +62,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "firebase-tools": "^3.0.8",
-    "gh-pages-deploy": "^0.4.2",
+    "gh-pages": "^1.0.0",
     "html-webpack-plugin": "^2.22.0",
     "http-server": "^0.9.0",
     "image-webpack-loader": "^2.0.0",
@@ -86,15 +85,5 @@
     "webpack-dev-middleware": "^1.8.3",
     "webpack-hot-middleware": "^2.12.2",
     "webpack-livereload-plugin": "^0.8.2"
-  },
-  "gh-pages-deploy": {
-    "staticpath": "dist",
-    "prep": [
-      "build"
-    ],
-    "post": [
-      "clean-source"
-    ],
-    "noprompt": false
   }
 }
