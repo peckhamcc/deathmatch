@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "259a673c7ec24c897a6b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3697e68030d0bee242ed"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -74255,7 +74255,7 @@
 	            '1P'
 	          ),
 	          _react3.default.createElement('img', {
-	            src: _riderImages2.default[rider.gender][rider.image],
+	            src: _riderImages2.default[player1.gender][player1.image],
 	            width: '200',
 	            height: '225',
 	            onClick: this.onDropOut(player1)
@@ -74280,7 +74280,7 @@
 	            '2P'
 	          ),
 	          _react3.default.createElement('img', {
-	            src: _riderImages2.default[rider.gender][rider.image],
+	            src: _riderImages2.default[player2.gender][player2.image],
 	            width: '200',
 	            height: '225',
 	            onClick: this.onDropOut(player2)
