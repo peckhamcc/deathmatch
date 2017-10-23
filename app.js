@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "484b609e8195d108739d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "259a673c7ec24c897a6b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -72662,7 +72662,7 @@
 	
 	var images = {
 	  male: [_riderMale2.default, _riderMale4.default, _riderMale6.default],
-	  female: [_riderFemale2.default, _riderFemale4.default, riderFemale3]
+	  female: [_riderFemale2.default, _riderFemale4.default, _riderFemale6.default]
 	};
 	
 	exports.default = images;
