@@ -1,6 +1,6 @@
 
 const powerMeasurement = (buffer) => {
-  const flags = buffer.readInt16BE(0)
+  /*const flags = buffer.readInt16BE(0)
   const power = buffer.readInt16BE(1)
 
   console.info('flags', flags.toString(2))
@@ -23,7 +23,7 @@ const powerMeasurement = (buffer) => {
     accumulatedEnergy: 0,
     offsetCompensation: 0
   }
-
+*/
   const flags = buffer.readInt16BE(0)
   const power = buffer.readInt16BE(1)
 

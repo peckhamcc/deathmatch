@@ -108,29 +108,34 @@ class ChooseRiders extends Component {
 
   state = {
     riders: [],
-    showRiders: false,
-    count: 0,
-    timeout: 10
+    player1Index: 0,
+    player2Index: 1,
+    player1StartingIndex: 0,
+    player2StartingIndex: 1,
+    loop: 0,
+    done: false
   }
 
   componentWillMount () {
     this.setState({
-      showRiders: false,
-      count: 0,
-      timeout: 50
+      riders: [],
+      player1Index: 0,
+      player2Index: 1,
+      loop: 0,
+      done: false
     })
 
-    this.selectRandomRiders()
+    this.selectRiders()
   }
 
   componentWillUnmount () {
     clearTimeout(this.timeout)
   }
 
-  selectRandomRiders = () => {
-    if (this.state.count === 20) {
+  selectRiders = () => {
+    if (this.state.loop === 10) {
       this.setState({
-        showRiders: true
+        done: true
       })
 
       return
@@ -144,22 +149,52 @@ class ChooseRiders extends Component {
       return r
     })
 
-    const player1 = findRider(riders)
-    const player2 = findRider(riders, player1.id)
-  
-    player1.selected = true
-    player1.bike = 'A'
-    player2.selected = true
-    player2.bike = 'B'
+    let looped = false
+
+    const findNextIndex = (riders, lastIndex, notIndex) => {
+      for (let nextIndex = lastIndex + 1; nextIndex !== lastIndex; nextIndex++) {
+        if (nextIndex === riders.length) {
+          nextIndex = 0
+          looped = true
+        }
+
+        const rider = riders[nextIndex]
+
+        if (!rider.eliminated && nextIndex !== notIndex) {
+          return nextIndex
+        }
+      }
+
+      return -1
+    }
+
+    const nextPlayer1Index = findNextIndex(riders, this.state.player1Index)
+    const nextPlayer2Index = findNextIndex(riders, this.state.player2Index, nextPlayer1Index)
+
+    if (nextPlayer1Index === -1 || nextPlayer2Index === -1) {
+      this.setState({
+        done: true
+      })
+
+      return
+    }
+
+    const riderA = riders[nextPlayer1Index]
+    const riderB = riders[nextPlayer2Index]
+
+    riderA.selected = true
+    riderA.bike = 'A'
+    riderB.selected = true
+    riderB.bike = 'B'
 
     this.setState(s => ({
       riders: riders,
-      showRiders: false,
-      count: s.count + 1,
-      timeout: s.timeout < 500 ? Math.round(s.timeout * 1.2) : s.timeout
+      loop: looped ? s.loop + 1 : s.loop,
+      player1Index: nextPlayer1Index,
+      player2Index: nextPlayer2Index
     }))
 
-    this.timeout = setTimeout(this.selectRandomRiders, this.state.timeout)
+    this.timeout = setTimeout(this.selectRiders, 100)
   }
 
   onStart = () => {
@@ -175,7 +210,7 @@ class ChooseRiders extends Component {
   render () {
     let riders = this.state.riders
 
-    if (this.state.showRiders) {
+    if (this.state.done) {
       riders = this.props.riders
     }
 
