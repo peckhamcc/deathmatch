@@ -79,6 +79,8 @@ const PlayerStats = ({trackLength, x, y, width, height, index, players}) => {
     cadenceColour = 'red'
   }
 
+  const power = '1000'
+
   return (
     <FF7Canvas x={x} y={y} width={width} height={height}>
       <Text
@@ -94,8 +96,8 @@ const PlayerStats = ({trackLength, x, y, width, height, index, players}) => {
         shadowBlur={0}
       />
       <Text
-        text={`Power: ${player.power} w`}
-        x={x + 14}
+        text='Power'
+        x={x + 202}
         y={y + 48}
         fill={powerColour}
         fontFamily='"Press Start 2P", cursive'
@@ -106,6 +108,30 @@ const PlayerStats = ({trackLength, x, y, width, height, index, players}) => {
         shadowBlur={0}
       />
       <Text
+        text={player.power}
+        x={x + 202 + (player.power.toString().length === 4 ? 0 : 64)}
+        y={y + 74}
+        fill={powerColour}
+        fontFamily='"Press Start 2P", cursive'
+        fontSize={64}
+        shadowColor='#424542'
+        shadowOffsetX={0}
+        shadowOffsetY={3}
+        shadowBlur={0}
+      />
+      <Text
+        text='w'
+        x={x + 460}
+        y={y + 109}
+        fill={powerColour}
+        fontFamily='"Press Start 2P", cursive'
+        fontSize={24}
+        shadowColor='#424542'
+        shadowOffsetX={0}
+        shadowOffsetY={3}
+        shadowBlur={0}
+      />
+      {/*<Text
         text={`Power to weight: ${wattsPerKg} w/kg`}
         x={x + 14}
         y={y + 74}
@@ -128,14 +154,26 @@ const PlayerStats = ({trackLength, x, y, width, height, index, players}) => {
         shadowOffsetX={0}
         shadowOffsetY={3}
         shadowBlur={0}
-      />
+      />*/}
       <Text
-        text={`Remaining: ${player.metersRemaining} m`}
+        text={'Remaining'}
         x={x + 14}
-        y={y + 122}
+        y={y + 48}
         fill='white'
         fontFamily='"Press Start 2P", cursive'
         fontSize={16}
+        shadowColor='#424542'
+        shadowOffsetX={0}
+        shadowOffsetY={3}
+        shadowBlur={0}
+      />
+      <Text
+        text={player.metersRemaining}
+        x={x + 14}
+        y={y + 74}
+        fill='white'
+        fontFamily='"Press Start 2P", cursive'
+        fontSize={64}
         shadowColor='#424542'
         shadowOffsetX={0}
         shadowOffsetY={3}

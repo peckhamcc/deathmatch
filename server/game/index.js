@@ -10,8 +10,8 @@ const emitter = new EventEmitter()
 emitter.state = GAME_STATE.intro
 
 emitter.startGame = (trackLength) => {
-  const getWatts = () => parseInt(800 + (Math.random() * 100), 10)
-  const getCadence = () => parseInt(800 + (Math.random() * 100), 10)
+  const getWatts = () => parseInt(200 + (Math.random() * 100), 10)
+  const getCadence = () => parseInt(20 + (Math.random() * 100), 10)
 
   startGame(emitter, getWatts, getCadence, trackLength, riders)
 
