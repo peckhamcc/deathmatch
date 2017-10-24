@@ -113,7 +113,8 @@ class ChooseRiders extends Component {
     player1StartingIndex: 0,
     player2StartingIndex: 1,
     loop: 0,
-    done: false
+    done: false,
+    timeout: 100
   }
 
   componentWillMount () {
@@ -122,7 +123,8 @@ class ChooseRiders extends Component {
       player1Index: 0,
       player2Index: 1,
       loop: 0,
-      done: false
+      done: false,
+      timeout: 50
     })
 
     this.selectRiders()
@@ -133,7 +135,7 @@ class ChooseRiders extends Component {
   }
 
   selectRiders = () => {
-    if (this.state.loop === 10) {
+    if (this.state.loop === 18) {
       this.setState({
         done: true
       })
@@ -168,7 +170,12 @@ class ChooseRiders extends Component {
       return -1
     }
 
-    const nextPlayer1Index = findNextIndex(riders, this.state.player1Index)
+    let nextPlayer1Index = findNextIndex(riders, this.state.player1Index)
+
+    if (this.state.loop > 10) {
+      nextPlayer1Index = this.props.riders.findIndex(rider => rider.bike === 'A')
+    }
+
     const nextPlayer2Index = findNextIndex(riders, this.state.player2Index, nextPlayer1Index)
 
     if (nextPlayer1Index === -1 || nextPlayer2Index === -1) {
@@ -191,10 +198,11 @@ class ChooseRiders extends Component {
       riders: riders,
       loop: looped ? s.loop + 1 : s.loop,
       player1Index: nextPlayer1Index,
-      player2Index: nextPlayer2Index
+      player2Index: nextPlayer2Index,
+      timeout: looped ? (s.timeout > 300 ? 300 : s.timeout *= 1.1) : s.timeout
     }))
 
-    this.timeout = setTimeout(this.selectRiders, 100)
+    this.timeout = setTimeout(this.selectRiders, this.state.timeout)
   }
 
   onStart = () => {
