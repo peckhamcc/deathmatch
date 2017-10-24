@@ -2,6 +2,8 @@
 
 A turbo trainer based game for two or more players.
 
+Demo: [https://peckhamcc.github.io/deathmatch/](https://peckhamcc.github.io/deathmatch/)
+
 ## Requirements
 
 1. A laptop with bluetooth

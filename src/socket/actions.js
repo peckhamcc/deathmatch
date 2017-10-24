@@ -36,6 +36,10 @@ export default (store) => {
     store.dispatch(addDevice(device))
   })
 
+  socket.on('devices', (devices) => {
+    store.dispatch(setDevices(devices))
+  })
+
   socket.on('riders', (riders) => {
     store.dispatch(setRiders(riders))
   })

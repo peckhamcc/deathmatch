@@ -4,10 +4,9 @@ const path = require('path')
 const socket = require('socket.io')
 const http = require('http')
 const debug = require('debug')('server')
-const bluetooth = require('./bluetooth')
+const bluetooth = require('./devices')
 const riders = require('./riders')
 const game = require('./game')
-const devices = require('./devices')
 
 const adminToken = 'something-random'
 
@@ -52,7 +51,7 @@ io.on('connection', (client) => {
       return debug('Invalid admin token')
     }
 
-    devices.startSearching()
+    bluetooth.startSearching()
   })
 
   client.on('admin:devices:search:stop', (token) => {
@@ -60,13 +59,15 @@ io.on('connection', (client) => {
       return debug('Invalid admin token')
     }
 
-    devices.stopSearching()
+    bluetooth.stopSearching()
   })
 
   client.on('admin:devices:connect', (token, id) => {
     if (token !== adminToken) {
       return debug('Invalid admin token')
     }
+
+    bluetooth.connect(id)
   })
 
   client.on('admin:game:new', (token) => {
@@ -119,7 +120,7 @@ io.on('connection', (client) => {
   client.emit('init', {
     bluetoothStatus: bluetooth.state,
     riders: riders.get(),
-    devices: devices.get(),
+    devices: bluetooth.get(),
     state: game.state
   })
 })
@@ -136,13 +137,8 @@ bluetooth.on('search:stop', (state) => {
   io.emit('device:search:stop')
 })
 
-bluetooth.on('device', (device) => {
-  io.emit('device:found', {
-    id: device.id,
-    name: device.name,
-    signal: device.signal,
-    services: device.services
-  })
+bluetooth.on('devices', (devices) => {
+  io.emit('devices', devices)
 })
 
 game.on('game:countdown', () => {

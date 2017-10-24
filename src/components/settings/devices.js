@@ -27,6 +27,13 @@ import Tooltip from 'material-ui/Tooltip'
 import DeleteIcon from 'material-ui-icons/Delete'
 import SearchIcon from 'material-ui-icons/Search'
 import StopIcon from 'material-ui-icons/Stop'
+import PowerIcon from 'material-ui-icons/Power'
+import InfoIcon from 'material-ui-icons/Info'
+import CachedIcon from 'material-ui-icons/Cached'
+import BatteryIcon from 'material-ui-icons/BatteryStd'
+import BluetoothConnectIcon from 'material-ui-icons/BluetoothConnected'
+import FlashOnIcon from 'material-ui-icons/FlashOn'
+import ConnectIcon from 'material-ui-icons/AddBox'
 
 class Devices extends Component {
   static propTypes = {
@@ -42,6 +49,10 @@ class Devices extends Component {
 
   stopScan = () => {
     socket.emit('admin:devices:search:stop', this.props.adminToken)
+  }
+
+  connect = (device) => {
+    return () => socket.emit('admin:devices:connect', this.props.adminToken, device.id)
   }
 
   render () {
@@ -61,14 +72,42 @@ class Devices extends Component {
         </AppBar>
         <Table>
           <TableBody>
-            {this.props.devices.map(device => {
+            {this.props.devices
+              .filter(device => device.services.length)
+              .sort((a, b) => a.name - b.name)
+              .map(device => {
+              const serviceIcons = {
+                '1818': <FlashOnIcon key='power' />,
+                '180f': <BatteryIcon key='battery' />,
+                '1816': <CachedIcon key='speed/cadence' />,
+                '180a': <InfoIcon key='deviceinfo' />
+              }
+
+              const services = []
+
+              device.services.forEach(id => {
+                if (serviceIcons[id]) {
+                  services.push(serviceIcons[id])
+                } else {
+                  console.warn('Do not know what to do with', id)
+                }
+              })
+
+              if (!services.length) {
+                return null
+              }
+
               return (
                 <TableRow
                 key={device.id}
               >
                 <TableCell padding="none">{device.name}</TableCell>
-                <TableCell>{device.signal}</TableCell>
-                <TableCell>{device.services}</TableCell>
+                <TableCell>{services}</TableCell>
+                <TableCell>{device.power || '-'}</TableCell>
+                <TableCell>{device.cadence || '-'}</TableCell>
+                <TableCell>
+                  <ConnectIcon onClick={this.connect(device)} />
+                </TableCell>
               </TableRow>
               )
             })}
