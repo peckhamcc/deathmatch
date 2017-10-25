@@ -19,6 +19,7 @@ const PlayerName = styled.div`
 export const SPRITE_WIDTH = 500
 export const SPRITE_HEIGHT = 400
 export const NAME_SIZE = 24
+export const UPDATE_FREQUENCY_MS = 1000
 
 class Player extends Component {
 
@@ -88,7 +89,7 @@ class Player extends Component {
     this.setState(s => {
       return {
         animation: 'riding',
-        x: rangeMap(through > 1000 ? 1000 : through, 0, 1000, this.state.lastX, this.state.nextX)
+        x: rangeMap(through > UPDATE_FREQUENCY_MS ? UPDATE_FREQUENCY_MS : through, 0, UPDATE_FREQUENCY_MS, this.state.lastX, this.state.nextX)
       }
     })
   }
