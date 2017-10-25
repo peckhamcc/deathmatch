@@ -7,6 +7,7 @@ import socket from '../socket'
 import clubLogo from '../../assets/pcc-logo@2x.png'
 import riderImages from './rider-images'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
+import FF7 from './ff7'
 
 const RiderContainer = styled.div`
   width: ${STAGE_WIDTH}px;
@@ -75,6 +76,11 @@ const SelectedRider = styled.div`
 
 const ClubLogo = styled.div`
   display: inline-block;
+`
+
+const StartRace = FF7.extend`
+  position: absolute;
+  margin: 390px 385px;
 `
 
 const findRider = (riders, id) => {
@@ -220,6 +226,9 @@ class ChooseRiders extends Component {
 
     return (
       <RiderContainer>
+          {this.state.done && <StartRace>
+            <Button onClick={this.onStart}>Start Race &gt;</Button>
+          </StartRace>}
           <SelectedRider bike={player1.bike}>
             <SelectedRiderTitle>1P</SelectedRiderTitle>
             <img

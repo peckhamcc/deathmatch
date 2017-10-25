@@ -26,7 +26,7 @@ const createRiders = () => ([{
   'races': 0
 }, {
   'id': shortid.generate(),
-  'name': 'Tegwen Tucker',
+  'name': 'Tegwen Owen',
   'age': '36',
   'gender': 'female',
   'weight': '72',
