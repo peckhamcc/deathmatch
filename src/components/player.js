@@ -6,6 +6,7 @@ import { Layer, Rect, Stage, Group, Text, Image, Sprite } from 'react-konva'
 import riderSprite from '../../assets/rider-sprite.png'
 import { addAnimateable, removeAnimateable } from './animator'
 import GAME_STATE from '../constants/game-state'
+import rangeMap from 'range-map'
 
 const PlayerName = styled.div`
   background-color: #FFF;
@@ -30,7 +31,10 @@ class Player extends Component {
 
   state = {
     animation: 'riding',
-    x: 0
+    x: 0,
+    nextX: 0,
+    lastX: 0,
+    startXTime: 0
   }
 
   componentDidMount() {
@@ -53,6 +57,14 @@ class Player extends Component {
     removeAnimateable(this.animate)
   }
 
+  componentWillReceiveProps (nextProps) {
+    this.setState(s => ({
+      lastX: s.nextX,
+      nextX: this.props.player.x,
+      startXTime: Date.now()
+    }))
+  }
+
   animate = () => {
     if (this.props.gameState === GAME_STATE.countingDown) {
       return this.setState(s => {
@@ -71,10 +83,12 @@ class Player extends Component {
       })
     }
 
+    const through = Date.now() - this.state.startXTime
+
     this.setState(s => {
       return {
         animation: 'riding',
-        x: this.props.player.x
+        x: rangeMap(through > 1000 ? 1000 : through, 0, 1000, this.state.lastX, this.state.nextX)
       }
     })
   }

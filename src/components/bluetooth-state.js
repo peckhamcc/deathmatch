@@ -7,17 +7,26 @@ import IconButton from 'material-ui/IconButton'
 import BluetoothIcon from 'material-ui-icons/Bluetooth'
 import BluetoothDisabledIcon from 'material-ui-icons/BluetoothDisabled'
 import ErrorIcon from 'material-ui-icons/Error'
+import styled from 'styled-components'
 import GAME_STATE from '../constants/game-state'
 
 const log = debug('BluetoothState')
 
+const Wrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+`
+
 const BluetoothState = ({ status }) => {
   return (
-    <IconButton aria-label='Bluetooth status'>
-      {status === 'unknown' && <ErrorIcon /> }
-      {status === 'poweredOff' && <BluetoothDisabledIcon /> }
-      {status === 'poweredOn' && <BluetoothIcon /> }
-    </IconButton>
+    <Wrapper>
+      <IconButton aria-label='Bluetooth status'>
+        {status === 'unknown' && <ErrorIcon /> }
+        {status === 'poweredOff' && <BluetoothDisabledIcon /> }
+        {status === 'poweredOn' && <BluetoothIcon /> }
+      </IconButton>
+    </Wrapper>
   )
 }
 

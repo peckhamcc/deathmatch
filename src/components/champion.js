@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
+import Button from 'material-ui/Button'
 import socket from '../socket'
 import clubLogo from '../../assets/pcc-logo@2x.png'
 import riderImages from './rider-images'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
+import FF7 from './ff7'
 
 const Wrapper = styled.div`
   width: ${STAGE_WIDTH}px;
@@ -58,6 +60,11 @@ const SelectedRider = styled.div`
   display: inline-block;
 `
 
+const NewGame = FF7.extend`
+  position: absolute;
+  margin: 670px 0 0 755px;
+`
+
 class Champion extends Component {
 
   static propTypes = {
@@ -65,7 +72,7 @@ class Champion extends Component {
     riders: PropTypes.array.isRequired
   }
 
-  nextRace = () => {
+  newGame = () => {
     socket.emit('admin:game:new', this.props.adminToken)
   }
 
@@ -77,8 +84,12 @@ class Champion extends Component {
     }
 
     return (
-      <Wrapper className="game-over" onClick={this.nextRace}>
-        <WinnerText>{champion.name} is the champion!</WinnerText>
+      <Wrapper className="game-over" onClick={this.newGame}>
+        <NewGame>
+          <Button onClick={this.newGame}>New Game &gt;</Button>
+        </NewGame>
+
+        <WinnerText>Winner: {champion.name}!</WinnerText>
 
         <SelectedRider>
           <img

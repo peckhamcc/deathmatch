@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Devices from './devices'
-import Riders from './riders'
+import styled from 'styled-components'
 import Button from 'material-ui/Button'
 import Dialog, {
   DialogTitle,
@@ -17,6 +16,9 @@ import Typography from 'material-ui/Typography'
 import withStyles from 'material-ui/styles/withStyles'
 import IconButton from 'material-ui/IconButton'
 import SettingsIcon from 'material-ui-icons/Settings'
+import Devices from './devices'
+import Riders from './riders'
+import Authentication from './authentication'
 import GAME_STATE from '../../constants/game-state'
 
 const styles = {
@@ -26,9 +28,16 @@ const styles = {
   }
 }
 
+const Wrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+`
+
 const tabs = [
   Devices,
-  Riders
+  Riders,
+  Authentication
 ]
 
 class Settings extends Component {
@@ -72,24 +81,27 @@ class Settings extends Component {
     const Panel = tabs[this.state.tab]
 
     return (
-      <IconButton aria-label="Delete" onClick={this.showSettings}>
-        <SettingsIcon />
-        <Dialog open={this.state.open} onRequestClose={this.hideSettings}>
-          <DialogTitle>SETTINGS</DialogTitle>
-          <DialogContent>
-            <Tabs value={this.state.tab} onChange={this.handleTabChange}>
-              <Tab label='DEVICES' />
-              <Tab label='RIDERS' />
-            </Tabs>
-            <Panel socket={this.props.socket} />
-          </DialogContent>
-          <DialogActions>
-            <Button color="primary" onClick={this.hideSettings}>
-              OK
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </IconButton>
+      <Wrapper>
+        <IconButton aria-label="Delete" onClick={this.showSettings}>
+          <SettingsIcon />
+          <Dialog open={this.state.open} onRequestClose={this.hideSettings}>
+            <DialogTitle>SETTINGS</DialogTitle>
+            <DialogContent>
+              <Tabs value={this.state.tab} onChange={this.handleTabChange}>
+                <Tab label='DEVICES' />
+                <Tab label='RIDERS' />
+                <Tab label='AUTHENTICATION' />
+              </Tabs>
+              <Panel socket={this.props.socket} />
+            </DialogContent>
+            <DialogActions>
+              <Button color="primary" onClick={this.hideSettings}>
+                OK
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </IconButton>
+      </Wrapper>
     )
   }
 }

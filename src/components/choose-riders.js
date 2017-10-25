@@ -80,7 +80,7 @@ const ClubLogo = styled.div`
 
 const StartRace = FF7.extend`
   position: absolute;
-  margin: 390px 385px;
+  margin: 670px 0 0 755px;
 `
 
 const findRider = (riders, id) => {
