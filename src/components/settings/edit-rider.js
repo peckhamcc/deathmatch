@@ -14,10 +14,17 @@ import Dialog, {
 } from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import MenuItem from 'material-ui/Menu/MenuItem'
+import styled from 'styled-components'
 
 const styles = {
 
 }
+
+const VideoWrapper = styled.div`
+  height: 693px;
+  width: 572px;
+  display: inline-block
+`
 
 class RiderForm extends Component {
   static propTypes = {
@@ -33,7 +40,26 @@ class RiderForm extends Component {
   }
 
   state = {
+    mediaStream: null
+  }
 
+  componentDidMount () {
+    // Prefer camera resolution nearest to 1280x720.
+    const constraints = {
+      audio: false,
+      video: {
+        width: 572,
+        height: 693
+      }
+    } 
+
+    navigator.mediaDevices.getUserMedia(constraints)
+      .then(mediaStream => {
+        this.setState({
+          mediaStream
+        })
+      })
+      .catch((err) => console.log(err.name + ": " + err.message))
   }
 
   componentWillReceiveProps (props) {
@@ -124,6 +150,30 @@ class RiderForm extends Component {
                 Female
               </MenuItem>
             </TextField>
+            <video height={693} width={572} ref={ref => {
+              if (ref && this.state.mediaStream) {
+                ref.srcObject = this.state.mediaStream
+                ref.onloadedmetadata = () => {
+                  ref.play()
+                }
+              }
+            }}></video>
+             <video height={693} width={572} ref={ref => {
+              if (ref && this.state.mediaStream) {
+                ref.srcObject = this.state.mediaStream
+                ref.onloadedmetadata = () => {
+                  ref.play()
+                }
+              }
+            }}></video>
+             <video height={693} width={572} ref={ref => {
+              if (ref && this.state.mediaStream) {
+                ref.srcObject = this.state.mediaStream
+                ref.onloadedmetadata = () => {
+                  ref.play()
+                }
+              }
+            }}></video>
           </form>
         </DialogContent>
         <DialogActions>
