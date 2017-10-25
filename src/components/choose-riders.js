@@ -44,25 +44,22 @@ const Rider = styled.div`
 
 const SelectedRiderTitle = styled.div`
   font-size: 20px;
-  width: 200px;
-  text-overflow: ellipsis;
 `
 
 const SelectedRiderName = styled.div`
   font-size: 20px;
   width: 200px;
-  text-overflow: ellipsis;
   line-height: 1.2;
 `
 
 const SelectedRider = styled.div`
-  color: ${props => props.selected ? 'blue' : 'black'};
   text-align: center;
   display: inline-block;
   padding: 10px;
   border: 5px solid;
   margin-top: 10px;
   height: 323px;
+  vertical-align: top;
   border-color: ${props => {
     if (props.bike === 'A') {
       return 'red'
@@ -74,10 +71,6 @@ const SelectedRider = styled.div`
 
     return 'white'
   }};
-
-  p {
-    font-size: 10px;
-  }
 `
 
 const ClubLogo = styled.div`

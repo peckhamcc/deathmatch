@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {Layer, Rect, Stage, Group} from 'react-konva'
+import { Layer, Rect, Stage, Group, Filters } from 'react-konva'
 import styled from 'styled-components'
 import Background from './background'
 import Road from './road'
@@ -46,7 +46,11 @@ class Game extends Component {
   render () {
     return (
       <StageWrapper>
-        <Stage width={this.props.width} height={this.props.height} ref={ref => this.canvas = ref}>
+        <Stage
+          width={this.props.width}
+          height={this.props.height}
+          ref={ref => this.canvas = ref}
+          >
           <Layer>
             <Background image={backgroundClouds} width={4096} height={200} speed={2} y={60} />
             <Background image={backgroundCity} width={4096} height={451} speed={4} y={25} />

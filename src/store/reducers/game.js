@@ -3,7 +3,7 @@ import GAME_STATE from '../../constants/game-state'
 
 const initialState = {
   state: GAME_STATE.connecting,
-  trackLength: 250,
+  trackLength: 400,
   demo: false
 }
 

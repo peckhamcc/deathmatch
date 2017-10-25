@@ -36,6 +36,7 @@ const SelectedRider = styled.div`
   border: 5px solid;
   margin-top: 10px;
   height: 323px;
+  vertical-align: top;
   border-color: ${props => {
     if (props.bike === 'A') {
       return 'red'
