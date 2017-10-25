@@ -24048,7 +24048,7 @@
 	    'races': 0
 	  }, {
 	    'id': _shortid2.default.generate(),
-	    'name': 'Tegwen Tucker',
+	    'name': 'Tegwen Owen',
 	    'age': '36',
 	    'gender': 'female',
 	    'weight': '72',
@@ -62878,7 +62878,8 @@
 	    _templateObject4 = _taggedTemplateLiteral(['\n  font-size: 20px;\n'], ['\n  font-size: 20px;\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  font-size: 20px;\n  width: 200px;\n  line-height: 1.2;\n'], ['\n  font-size: 20px;\n  width: 200px;\n  line-height: 1.2;\n']),
 	    _templateObject6 = _taggedTemplateLiteral(['\n  text-align: center;\n  display: inline-block;\n  padding: 10px;\n  border: 5px solid;\n  margin-top: 10px;\n  height: 323px;\n  vertical-align: top;\n  border-color: ', ';\n'], ['\n  text-align: center;\n  display: inline-block;\n  padding: 10px;\n  border: 5px solid;\n  margin-top: 10px;\n  height: 323px;\n  vertical-align: top;\n  border-color: ', ';\n']),
-	    _templateObject7 = _taggedTemplateLiteral(['\n  display: inline-block;\n'], ['\n  display: inline-block;\n']);
+	    _templateObject7 = _taggedTemplateLiteral(['\n  display: inline-block;\n'], ['\n  display: inline-block;\n']),
+	    _templateObject8 = _taggedTemplateLiteral(['\n  position: absolute;\n  margin: 390px 385px;\n'], ['\n  position: absolute;\n  margin: 390px 385px;\n']);
 
 	var _react = __webpack_require__(3);
 
@@ -62911,6 +62912,10 @@
 	var _riderImages2 = _interopRequireDefault(_riderImages);
 
 	var _settings = __webpack_require__(284);
+
+	var _ff = __webpack_require__(294);
+
+	var _ff2 = _interopRequireDefault(_ff);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -62961,6 +62966,8 @@
 	});
 
 	var ClubLogo = _styledComponents2.default.div(_templateObject7);
+
+	var StartRace = _ff2.default.extend(_templateObject8);
 
 	var findRider = function findRider(riders, id) {
 	  var output = void 0;
@@ -63121,6 +63128,15 @@
 	      return _react2.default.createElement(
 	        RiderContainer,
 	        null,
+	        this.state.done && _react2.default.createElement(
+	          StartRace,
+	          null,
+	          _react2.default.createElement(
+	            _Button2.default,
+	            { onClick: this.onStart },
+	            'Start Race >'
+	          )
+	        ),
 	        _react2.default.createElement(
 	          SelectedRider,
 	          { bike: player1.bike },
