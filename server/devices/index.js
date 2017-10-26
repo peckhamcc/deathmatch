@@ -179,4 +179,16 @@ emitter.connect = (id) => {
 
 emitter.get = () => peripherals
 
+emitter.assign = (deviceId, player) => {
+  const device = peripherals.find(device => device.id === deviceId)
+
+  if (!device) {
+    return perifierals
+  }
+
+  device.player = player
+  save(peripherals, 'devices.json')
+  emitter.emit('devices', peripherals)
+}
+
 module.exports = emitter
