@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'material-ui/Button'
 import styled from 'styled-components'
+import { PHOTO_WIDTH, PHOTO_HEIGHT } from '../../constants/settings'
 
 const VideoWrapper = styled.div`
-  height: 693px;
-  width: 572px;
-  display: inline-block
+  width: ${PHOTO_WIDTH}px;
+  height: ${PHOTO_HEIGHT}px;
+  display: inline-block;
+  text-align: center;
 `
 
 class PhotoTaker extends Component {
@@ -18,43 +20,51 @@ class PhotoTaker extends Component {
     mediaStream: null
   }
 
-  componentDidMount () {
-    const constraints = {
-      audio: false,
-      video: {
-        width: 572,
-        height: 693
-      }
-    } 
+  videoLoaded = (ref) => {
+    if (ref) {
+      this.video = ref
 
-    navigator.mediaDevices.getUserMedia(constraints)
+      const constraints = {
+        audio: false,
+        video: {
+          width: PHOTO_WIDTH,
+          height: PHOTO_HEIGHT
+        }
+      } 
+
+      navigator.mediaDevices.getUserMedia(constraints)
       .then(mediaStream => {
-        this.setState({
-          mediaStream
-        })
+        ref.srcObject = mediaStream
+        ref.onloadedmetadata = () => {
+          ref.play()
+        }
       })
       .catch((err) => console.log(err.name + ": " + err.message))
-  }
-
-  videoLoaded = (ref) => {
-    if (ref && this.state.mediaStream) {
-      ref.srcObject = this.state.mediaStream
-      ref.onloadedmetadata = () => {
-        ref.play()
-      }
     }
   }
 
-  render () {
-    const { classes } = this.props
+  savePhoto = () => {
+    if (!this.video) {
+      console.error('No video element..')
+    }
 
+    const canvas = document.createElement('canvas')
+    canvas.width = PHOTO_WIDTH
+    canvas.height = PHOTO_HEIGHT
+    canvas.getContext('2d').drawImage(this.video, 0, 0, PHOTO_WIDTH, PHOTO_HEIGHT, 0, 0, PHOTO_WIDTH, PHOTO_HEIGHT)
+    const img = canvas.toDataURL('image/png')
+
+    this.props.onPhoto(img)
+  }
+
+  render () {
     return (
       <VideoWrapper>
-        <Button color="primary" onClick={this.saveRider}>OK</Button>
-        <video height={693} width={572} ref={this.videoLoaded}></video>
+        <video height={PHOTO_HEIGHT} width={PHOTO_WIDTH} ref={this.videoLoaded}></video>
+        <Button color="primary" onClick={this.savePhoto}>Take photo</Button>
       </VideoWrapper>
     )
   }
 }
 
-export default RiderForm
+export default PhotoTaker

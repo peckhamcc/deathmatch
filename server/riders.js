@@ -1,19 +1,10 @@
 const debug = require('debug')('riders')
 const shortid = require('shortid')
 const { load, save } = require('./files')
+const { writeFileSync } = require('fs')
+const path = require('path')
 
 let riders = load('riders.json')
-
-const images = {
-  male: {
-    max: 2,
-    last: 2
-  },
-  female: {
-    max: 2,
-    last: 2
-  }
-}
 
 module.exports = {
   get: () => riders,
@@ -24,23 +15,18 @@ module.exports = {
   },
 
   create: (rider) => {
-    const next = riders.filter(r => r.gender === rider.gender).pop() || { image: 0 }
-
-    if (next.image === images[rider.gender].max) {
-      images[rider.gender].last = 0
-    }
-
     riders.push({
       id: shortid.generate(),
       name: rider.name,
       age: rider.age,
       gender: rider.gender,
       weight: rider.weight,
-      image: images[rider.gender].last,
-      races: 0
+      races: 0,
+      photoSelect: rider.photoSelect,
+      photoWin: rider.photoWin,
+      photoLose: rider.photoLose,
+      photoPower: rider.photoPower
     })
-
-    images[rider.gender].last++
 
     save(riders, 'riders.json')
 
@@ -55,6 +41,10 @@ module.exports = {
         r.age = rider.age
         r.gender = rider.gender
         r.weight = rider.weight
+        r.photoSelect = rider.photoSelect
+        r.photoWin = rider.photoWin
+        r.photoLose = rider.photoLose
+        r.photoPower = rider.photoPower
       })
 
     save(riders, 'riders.json')
@@ -65,6 +55,25 @@ module.exports = {
   delete: (rider) => {
     riders = riders
       .filter(r => rider.id !== r.id)
+
+    save(riders, 'riders.json')
+
+    return riders
+  },
+
+  addPhoto: (rider, type, photo) => {
+    rider = riders
+      .find(r => r.id === rider.id)
+
+    if (!rider) {
+      return riders
+    }
+
+    writeFileSync(path.join(path.resolve(path.join(__dirname, '..', 'photos')), `${rider.id}-${type}.png`), photo.replace(/^data:image\/\w+;base64,/, ''), {
+      encoding: 'base64'
+    })
+
+    rider[`photo${type.substring(0, 1).toUpperCase()}${type.substring(1)}`] = `/photos/${rider.id}-${type}.png`
 
     save(riders, 'riders.json')
 

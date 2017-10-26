@@ -93,7 +93,7 @@ class Champion extends Component {
 
         <SelectedRider>
           <img
-            src={riderImages[champion.gender][champion.image]}
+            src={champion.photoWin || riderImages[champion.gender][champion.image]}
             width='200'
             height='225'
           />

@@ -7,11 +7,13 @@ const debug = require('debug')('server')
 const bluetooth = require('./devices')
 const riders = require('./riders')
 const game = require('./game')
+const photos = require('./photos')
 
 const adminToken = 'something-random'
 
 const app = express()
 app.use('/deathmatch', serveStatic(path.resolve(path.join(__dirname, '..', 'dist'))))
+app.use('/deathmatch/photos', serveStatic(path.resolve(path.join(__dirname, '..', 'photos'))))
 app.use((req, res) => {
   res.redirect(301, '/deathmatch')
 })
@@ -44,6 +46,14 @@ io.on('connection', (client) => {
     }
 
     io.emit('riders', riders.delete(rider))
+  })
+
+  client.on('admin:photo:upload', (token, id, photo) => {
+    if (token !== adminToken) {
+      return debug('Invalid admin token')
+    }
+
+    client.emit(`admin:photo:uploaded:${id}`, photos.upload(photo))
   })
 
   client.on('admin:devices:search:start', (token) => {

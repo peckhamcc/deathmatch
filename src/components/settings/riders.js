@@ -62,14 +62,22 @@ class Riders extends Component {
         name: rider.name,
         age: rider.age,
         weight: rider.weight,
-        gender: rider.gender
+        gender: rider.gender,
+        photoSelect: rider.photoSelect,
+        photoWin: rider.photoWin,
+        photoLose: rider.photoLose,
+        photoPower: rider.photoPower
       })
     } else {
       socket.emit('admin:riders:create', this.props.adminToken, {
         name: rider.name,
         age: rider.age,
         weight: rider.weight,
-        gender: rider.gender
+        gender: rider.gender,
+        photoSelect: rider.photoSelect,
+        photoWin: rider.photoWin,
+        photoLose: rider.photoLose,
+        photoPower: rider.photoPower
       })
     }
 
@@ -113,7 +121,11 @@ class Riders extends Component {
           <Toolbar>
             <IconButton color="contrast" aria-label="Add rider" onClick={this.addRider}>
               <PersonAddIcon />
-              <EditRider open={this.state.addingRider} onSave={this.saveRider} onCancel={this.hideAddRider} />
+              <EditRider
+                open={this.state.addingRider}
+                onSave={this.saveRider}
+                onCancel={this.hideAddRider}
+              />
             </IconButton>
           </Toolbar>
         </AppBar>

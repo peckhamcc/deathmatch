@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
+import { connect } from 'react-redux'
 import Button from 'material-ui/Button'
+import { withStyles } from 'material-ui/styles'
 import MenuIcon from 'material-ui-icons/Menu'
 import keycode from 'keycode'
 import Checkbox from 'material-ui/Checkbox'
@@ -15,20 +16,23 @@ import Dialog, {
 import TextField from 'material-ui/TextField'
 import MenuItem from 'material-ui/Menu/MenuItem'
 import styled from 'styled-components'
+import shortid from 'shortid'
+import socket from '../../socket'
+import Photo from './photo'
+import { PHOTO_WIDTH, PHOTO_HEIGHT } from '../../constants/settings'
 
 const styles = {
 
 }
 
-const VideoWrapper = styled.div`
+const PhotosWrapper = styled.div`
   height: 693px;
-  width: 572px;
-  display: inline-block
 `
 
-class RiderForm extends Component {
+class EditRider extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    adminToken: PropTypes.string.isRequired,
     open: PropTypes.bool.isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
@@ -51,7 +55,7 @@ class RiderForm extends Component {
         width: 572,
         height: 693
       }
-    } 
+    }
 
     navigator.mediaDevices.getUserMedia(constraints)
       .then(mediaStream => {
@@ -67,14 +71,18 @@ class RiderForm extends Component {
       name: props.rider && props.rider.name,
       age: props.rider && props.rider.age,
       weight: props.rider && props.rider.weight,
-      gender: (props.rider && props.rider.gender) || 'male'
+      gender: (props.rider && props.rider.gender) || 'male',
+      photoSelect: (props.rider && props.rider.photoSelect),
+      photoWin: (props.rider && props.rider.photoWin),
+      photoLose: (props.rider && props.rider.photoLose),
+      photoPower: (props.rider && props.rider.photoPower)
     })
   }
 
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
-    });
+    })
   }
 
   saveRider = () => {
@@ -86,22 +94,44 @@ class RiderForm extends Component {
       name: this.state.name,
       age: this.state.age,
       weight: this.state.weight,
-      gender: this.state.gender
+      gender: this.state.gender,
+      photoSelect: this.state.photoSelect,
+      photoWin: this.state.photoWin,
+      photoLose: this.state.photoLose,
+      photoPower: this.state.photoPower
     })
 
     this.setState({
       name: null,
       age: null,
       weight: null,
-      gender: 'male'
+      gender: 'male',
+      photoSelect: null,
+      photoWin: null,
+      photoLose: null,
+      photoPower: null
     })
+  }
+
+  onPhotoTaken = (type) => (photo) => {
+    const id = shortid.generate()
+
+    socket.once(`admin:photo:uploaded:${id}`, (path) => {
+      this.setState(s => {
+        return {
+          [`photo${type.substring(0, 1).toUpperCase()}${type.substring(1)}`]: path
+        }
+      })
+    })
+
+    socket.emit('admin:photo:upload', this.props.adminToken, id, photo)
   }
 
   render () {
     const { classes } = this.props
 
     return (
-      <Dialog open={this.props.open} onRequestClose={this.props.onCancel}>
+      <Dialog open={this.props.open} onRequestClose={this.props.onCancel} maxWidth='md'>
         <DialogTitle>Add rider</DialogTitle>
         <DialogContent>
           <form>
@@ -150,30 +180,12 @@ class RiderForm extends Component {
                 Female
               </MenuItem>
             </TextField>
-            <video height={693} width={572} ref={ref => {
-              if (ref && this.state.mediaStream) {
-                ref.srcObject = this.state.mediaStream
-                ref.onloadedmetadata = () => {
-                  ref.play()
-                }
-              }
-            }}></video>
-             <video height={693} width={572} ref={ref => {
-              if (ref && this.state.mediaStream) {
-                ref.srcObject = this.state.mediaStream
-                ref.onloadedmetadata = () => {
-                  ref.play()
-                }
-              }
-            }}></video>
-             <video height={693} width={572} ref={ref => {
-              if (ref && this.state.mediaStream) {
-                ref.srcObject = this.state.mediaStream
-                ref.onloadedmetadata = () => {
-                  ref.play()
-                }
-              }
-            }}></video>
+            <PhotosWrapper>
+              <Photo text='Game face' image={this.state.photoSelect} onPhotoTaken={this.onPhotoTaken('select')} />
+              <Photo text='Happy face' image={this.state.photoWin} onPhotoTaken={this.onPhotoTaken('win')} />
+              <Photo text='Sad face' image={this.state.photoLose} onPhotoTaken={this.onPhotoTaken('lose')} />
+              <Photo text='Power face' image={this.state.photoPower} onPhotoTaken={this.onPhotoTaken('power')} />
+            </PhotosWrapper>
           </form>
         </DialogContent>
         <DialogActions>
@@ -186,4 +198,16 @@ class RiderForm extends Component {
   }
 }
 
-export default withStyles(styles)(RiderForm);
+const mapStateToProps = ({ admin: { token } }) => ({
+  adminToken: token
+})
+
+const mapDispatchToProps = {
+  
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(EditRider))
+

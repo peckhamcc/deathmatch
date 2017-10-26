@@ -208,7 +208,7 @@ class Victory extends Component {
          <SelectedRider bike={player1.bike}>
             <SelectedRiderTitle>1P</SelectedRiderTitle>
             <img
-              src={riderImages[player1.gender][player1.image]}
+              src={(player1.winner ? player1.photoWin : player1.photoLose) || riderImages[player1.gender][player1.image]}
               width='200'
               height='225'
             />
@@ -222,14 +222,13 @@ class Victory extends Component {
           <SelectedRider bike={player2.bike}>
             <SelectedRiderTitle>2P</SelectedRiderTitle>
             <img
-              src={riderImages[player2.gender][player2.image]}
+              src={(player2.winner ? player2.photoWin : player2.photoLose) || riderImages[player2.gender][player2.image]}
               width='200'
               height='225'
             />
             <SelectedRiderName>{player2.name}</SelectedRiderName>
           </SelectedRider>
         </Riders>
-        
 
         <Quote>&quot;{quote.quote}&quot;</Quote>
         <AttributedTo>&nbsp;- {quote.saidBy}</AttributedTo>

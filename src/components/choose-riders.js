@@ -232,7 +232,7 @@ class ChooseRiders extends Component {
           <SelectedRider bike={player1.bike}>
             <SelectedRiderTitle>1P</SelectedRiderTitle>
             <img
-              src={riderImages[player1.gender][player1.image]}
+              src={player1.photoSelect || riderImages[player1.gender][player1.image]}
               width='200'
               height='225'
               onClick={this.onDropOut(player1)}
@@ -247,7 +247,7 @@ class ChooseRiders extends Component {
           <SelectedRider bike={player2.bike}>
             <SelectedRiderTitle>2P</SelectedRiderTitle>
             <img
-              src={riderImages[player2.gender][player2.image]}
+              src={player2.photoSelect || riderImages[player2.gender][player2.image]}
               width='200'
               height='225'
               onClick={this.onDropOut(player2)}
@@ -260,7 +260,7 @@ class ChooseRiders extends Component {
               return (
                 <Rider key={rider.id} selected={rider.selected} bike={rider.bike} eliminated={rider.eliminated}>
                   <img
-                    src={riderImages[rider.gender][rider.image]}
+                    src={rider.photoSelect || riderImages[rider.gender][rider.image]}
                     width='100'
                     height='120'
                   />
