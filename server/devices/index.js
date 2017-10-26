@@ -4,12 +4,13 @@ const EventEmitter = require('events').EventEmitter
 const { load, save } = require('../files')
 const powerMeasurement = require('./power-measurement')
 const cadenceMeasurement = require('./cadence-measurement')
+const DEVICE_STATUSES = require('../../src/constants/devices')
 
 const emitter = new EventEmitter()
 const peripherals = load('devices.json')
 
 peripherals.forEach(device => {
-  device.status = 'unknown'
+  device.status = DEVICE_STATUSES.unknown
 })
 
 const SERVICE_TYPES = {
@@ -53,7 +54,8 @@ noble.on('discover', (peripheral) => {
       id: peripheral.id,
       name: peripheral.id,
       services: [],
-      signal: peripheral.advertisement.rssi
+      signal: peripheral.advertisement.rssi,
+      status: DEVICE_STATUSES.disconnected
     }
 
     peripherals.push(device)
@@ -107,7 +109,7 @@ emitter.connect = (id) => {
     return
   }
 
-  device.state = 'connecting'
+  device.status = DEVICE_STATUSES.connecting
   emitter.emit('devices', peripherals)
 
   device.peripheral.connect((error) => {
@@ -115,7 +117,7 @@ emitter.connect = (id) => {
       return debug(`Error connecting to ${device.name}: ${error}`)
     }
 
-    device.state = 'connected'
+    device.status = DEVICE_STATUSES.connected
     emitter.emit('devices', peripherals)
 
     debug(`connected to ${device.name}`)

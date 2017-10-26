@@ -33,6 +33,12 @@ import BatteryIcon from 'material-ui-icons/BatteryStd'
 import BluetoothConnectIcon from 'material-ui-icons/BluetoothConnected'
 import FlashOnIcon from 'material-ui-icons/FlashOn'
 import ConnectIcon from 'material-ui-icons/AddBox'
+import LoadingIcon from 'material-ui-icons/Refresh'
+import UnknownIcon from 'material-ui-icons/Warning'
+
+const styles = {
+
+}
 
 class Devices extends Component {
   static propTypes = {
@@ -54,6 +60,10 @@ class Devices extends Component {
     return () => socket.emit('admin:devices:connect', this.props.adminToken, device.id)
   }
 
+  assignDevice = (device) => {
+    return (event) => socket.emit('admin:devices:assign', this.props.adminToken, device.id, event.value)
+  }
+
   render () {
     return (
       <div>
@@ -72,7 +82,23 @@ class Devices extends Component {
         <Table>
           <TableBody>
             {this.props.devices
-              .filter(device => device.services.length)
+              .filter(device => {
+                if (!device.services.length) {
+                  return false
+                }
+
+                // power
+                if (!device.services.includes('1818')) {
+                  return false
+                }
+
+                // cadence
+                if (!device.services.includes('1816')) {
+                  return false
+                }
+
+                return true
+              })
               .sort((a, b) => a.name - b.name)
               .map(device => {
               const serviceIcons = {
@@ -96,6 +122,31 @@ class Devices extends Component {
                 return null
               }
 
+              const statuses = [
+                <UnknownIcon />,
+                <ConnectIcon onClick={this.connect(device)} />,
+                <LoadingIcon />,
+                <TextField
+                  id="assign-to"
+                  label="Assign to"
+                  margin="normal"
+                  className={this.props.classes.textField}
+                  onChange={this.assignDevice(device)}
+                  value={this.state.gender}
+                  select
+                >
+                  <MenuItem key='none' value='none'>
+                    None
+                  </MenuItem>
+                  <MenuItem key='a' value='a'>
+                    Player A
+                  </MenuItem>
+                  <MenuItem key='b' value='b'>
+                    Player B
+                  </MenuItem>
+              </TextField>
+              ]
+
               return (
                 <TableRow
                 key={device.id}
@@ -105,7 +156,7 @@ class Devices extends Component {
                 <TableCell>{device.power || '-'}</TableCell>
                 <TableCell>{device.cadence || '-'}</TableCell>
                 <TableCell>
-                  <ConnectIcon onClick={this.connect(device)} />
+                  {statuses[device.status]}
                 </TableCell>
               </TableRow>
               )
@@ -114,18 +165,6 @@ class Devices extends Component {
         </Table>
       </div>
     )
-    
-    /*<div>
-      <ul>
-        <li onClick={this.startScan}>Scan</li>
-      </ul>
-      <ul>
-        {this.props.devices.map(device => {
-          return <div key={device.id}>device.name</div>
-        })}
-      </ul>
-      {this.state.scanning && <p onClick={this.stopScan}>Stop scanning</p>}
-    </div>*/
   }
 }
 
@@ -142,4 +181,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Devices)
+)(withStyles(styles)(Devices))
