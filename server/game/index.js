@@ -13,7 +13,7 @@ emitter.state = GAME_STATE.intro
 emitter.startGame = (trackLength) => {
   const getWatts = (player) => {
     const device = devices.get()
-      .find(device => (device.player || '').toLowerCase() === player.bike)
+      .find(device => (device.player || '').toLowerCase() === player.bike && device.power !== undefined)
 
     if (!device) {
       return parseInt(200 + (Math.random() * 800), 10)
@@ -23,7 +23,7 @@ emitter.startGame = (trackLength) => {
   }
   const getCadence = (player) => {
     const device = devices.get()
-      .find(device => (device.player || '').toLowerCase() === player.bike)
+      .find(device => (device.player || '').toLowerCase() === player.bike && device.cadence !== undefined)
 
     if (!device) {
       return parseInt(20 + (Math.random() * 100), 10)

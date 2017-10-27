@@ -13,7 +13,7 @@ emitter.startGame = (trackLength) => {
   const getWatts = () => parseInt(300 + (Math.random() * 100), 10)
   const getCadence = () => parseInt(50 + (Math.random() * 100), 10)
 
-  startGame(emitter, getWatts, getCadence, trackLength, riders)
+  startGame(emitter, getWatts, getCadence, trackLength, Date.now(), riders)
 
   setTimeout(() => {
     emitter.state = GAME_STATE.countingDown
