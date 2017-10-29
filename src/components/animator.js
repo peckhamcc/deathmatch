@@ -2,7 +2,13 @@
 let animatables = []
 
 const animate = () => {
-  animatables.forEach(animatable => animatable())
+  animatables.forEach(animatable => {
+    try {
+      animatable()
+    } catch(error) {
+      console.error(error)
+    }
+  })
 
   window.requestAnimationFrame(animate)
 }

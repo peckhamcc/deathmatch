@@ -1,7 +1,5 @@
-
-const read = (flags, measurements) => {
-
-}
+const readBytes = require('./read-bytes')
+const debug = require('debug')('cadence-measurement')
 
 const cadenceMeasurement = (buffer) => {
   const flags = buffer.readInt8(0)
@@ -12,17 +10,28 @@ const cadenceMeasurement = (buffer) => {
     flags: flags
   }
 
-  if (flags && parseInt('1', 2)) {
-    output.cumulativeWheelRevolutions = buffer.readInt32BE(offset)
+  debug('-- s/c buffer start --')
+  for(var i = 0; i < buffer.length; i++) {
+    var string = buffer[i].toString(2)
+
+    debug('00000000'.substring(0, 8 - string.length) + string)
+  }
+  debug('-- s/c buffer end --')
+
+  const wheelRevolutionDataPresent = flags & 0b01
+  const crankRevolutionDataPresent = flags & 0b10
+
+  if (wheelRevolutionDataPresent) {
+    output.cumulativeWheelRevolutions = readBytes(buffer, offset, 4)
     offset += 4
-    output.lastWheelEventTime = buffer.readInt16BE(offset)
+    output.lastWheelEventTime = readBytes(buffer, offset, 2)
     offset +=2
   }
 
-  if (flags && parseInt('10', 2)) {
-    output.cumulativeCrankRevolutions = buffer.readInt16BE(offset)
+  if (crankRevolutionDataPresent) {
+    output.cumulativeCrankRevolutions = readBytes(buffer, offset, 2)
     offset += 2
-    output.lastCrankEventTime = buffer.readInt16BE(offset)
+    output.lastCrankEventTime = readBytes(buffer, offset, 2)
     offset +=2
   }
 

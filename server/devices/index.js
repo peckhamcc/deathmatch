@@ -1,5 +1,5 @@
 const noble = require('noble')
-const debug = require('debug')('bluetooth')
+const debug = require('debug')('devices')
 const EventEmitter = require('events').EventEmitter
 const { load, save } = require('../files')
 const powerMeasurement = require('./power-measurement')
@@ -34,6 +34,12 @@ const CHARACTERISTIC_TYPES = {
   CYCLING_POWER_CONTROL_POINT: '2a66'
 }
 
+const TYRE_CIRCUMFERENCES = {
+  '20C': 2079.73,
+  '23C': 2098.58,
+  '25C': 2111.15
+}
+
 emitter.state = noble.state
 
 noble.on('stateChange', (state) => {
@@ -59,6 +65,10 @@ noble.on('discover', (peripheral) => {
     }
 
     peripherals.push(device)
+  }
+
+  if (device.status === DEVICE_STATUSES.unknown) {
+    device.status = DEVICE_STATUSES.disconnected
   }
 
   if (peripheral.advertisement) {
@@ -148,13 +158,22 @@ emitter.connect = (id) => {
         if (error) {
           debug(`Error subscribing to power characteristic of ${device.name}: ${error}`)
         }
+
+        device.power = 0
       })
 
       cadence.subscribe((error) => {
         if (error) {
           debug(`Error subscribing to power characteristic of ${device.name}: ${error}`)
         }
+
+        device.cadence = 0
       })
+
+      let lastWheelEventTimeMs = -1
+      let lastCrankEventTimeMs = -1
+      let lastWheelRevolutions = -1
+      let lastCrankRevolutions = -1
 
       power.on('data', (data) => {
         const measurement = powerMeasurement(data)
@@ -168,10 +187,55 @@ emitter.connect = (id) => {
       cadence.on('data', (data) => {
         const measurement = cadenceMeasurement(data)
 
-        debug(`Got cadence data from ${device.name}`, measurement)
+        debug(`Got cadence data from ${device.name}`, JSON.stringify(measurement, null, 2))
 
-        device.cadence = measurement.cumulativeWheelRevolutions
-        emitter.emit('devices', peripherals)
+        if (lastWheelEventTimeMs !== -1 && lastCrankEventTimeMs !== -1) {
+          // calculate cadence
+          if (measurement.lastCrankEventTime) {
+            const timeMs = measurement.lastCrankEventTime - lastCrankEventTimeMs
+            const revolutions = measurement.cumulativeCrankRevolutions - lastCrankRevolutions
+
+            if (revolutions === 0 || timeMs < 0) {
+              device.rpm = 0
+            } else {
+              const revolutionsPerMs = revolutions / timeMs
+              const revolutionsPerMinute = revolutionsPerMs * 60000
+
+              device.cadence = parseInt(revolutionsPerMinute, 10)
+            }
+          }
+
+          // calculate speed
+          if (measurement.lastWheelEventTime) {
+            const timeMs = measurement.lastWheelEventTime - lastWheelEventTimeMs
+            const revolutions = measurement.cumulativeWheelRevolutions - lastWheelRevolutions
+
+            if (revolutions === 0 || timeMs < 0) {
+              device.speed = 0
+            } else {
+              const distanceTravelledMm = revolutions * TYRE_CIRCUMFERENCES['23C']
+              const mmPerMs = distanceTravelledMm / timeMs
+              const mmPerHour = mmPerMs * 3600000
+              const kmPerHour = mmPerHour / 1000000
+
+              device.speed = kmPerHour.toPrecision(2)
+            }
+          }
+
+          debug(`Emitting ${device.name}`, JSON.stringify(device, null, 2))
+
+          emitter.emit('devices', peripherals)
+        }
+
+        if (measurement.lastWheelEventTime) {
+          lastWheelEventTimeMs = measurement.lastWheelEventTime
+          lastWheelRevolutions = measurement.cumulativeWheelRevolutions
+        }
+
+        if (measurement.lastCrankEventTime) {
+          lastCrankEventTimeMs = measurement.lastCrankEventTime
+          lastCrankRevolutions = measurement.cumulativeCrankRevolutions
+        }
       })
     })
   })

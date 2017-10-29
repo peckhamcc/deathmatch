@@ -1,7 +1,8 @@
-import { GAME_MODE, TRACK_LENGTH_SET, DEMO_SET } from '../actions'
+import { GAME_MODE, TRACK_LENGTH_SET, DEMO_SET, LOADED_SET} from '../actions'
 import GAME_STATE from '../../constants/game-state'
 
 const initialState = {
+  loaded: 0,
   state: GAME_STATE.connecting,
   trackLength: 400,
   demo: false
@@ -25,6 +26,11 @@ const updateGameState = (state = initialState, action) => {
       return {
         ...state,
         demo: action.payload
+      }
+    case LOADED_SET:
+      return {
+        ...state,
+        loaded: action.payload
       }
     default:
       return state

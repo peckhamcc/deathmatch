@@ -6,6 +6,7 @@ import rangeMap from 'range-map'
 import FF7 from './ff7'
 import GAME_STATE from '../constants/game-state'
 import powerBar from '../../assets/background-power.png'
+import assets from '../css/assets'
 
 const FF7Canvas = ({ width, height, x, y, children }) => {
   return (
@@ -57,20 +58,6 @@ class PlayerStats extends Component {
     players: PropTypes.array.isRequired
   }
 
-  state = {
-
-  }
-
-  componentDidMount () {
-    const image = new window.Image()
-    image.src = powerBar
-    image.onload = () => {
-      this.setState({
-        powerBarBackground: image
-      })
-    }
-  }
-
   render () {
     const player = this.props.players[this.props.index]
     const powerBarWidth = rangeMap(player.power > 1000 ? 1000 : player.power, 0, 1000, 0, 255)
@@ -103,15 +90,15 @@ class PlayerStats extends Component {
         />
         <Image
           fill={player.power > 1000 ? '#d54c38' : undefined}
-          fillPatternImage={player.power > 1000 ? undefined : this.state.powerBarBackground}
+          fillPatternImage={player.power > 1000 ? undefined : assets.get(powerBar)}
           x={this.props.x + 229}
           y={this.props.y + 74}
           width={powerBarWidth}
           height={67}
         />
         <Text
-          text={player.power}
-          x={this.props.x + 228 + (player.power.toString().length === 4 ? 0 : 58)}
+          text={player.power || '0'}
+          x={this.props.x + 228 + ((4 - player.power.toString().length) * 58)}
           y={this.props.y + 81}
           fill='white'
           fontFamily='"Press Start 2P", cursive'

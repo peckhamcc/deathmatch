@@ -6,6 +6,7 @@ import { Layer, Rect, Stage, Group, Text, Image, Sprite } from 'react-konva'
 import finishLineImage from '../../assets/finish-line.png'
 import { addAnimateable, removeAnimateable } from './animator'
 import GAME_STATE from '../constants/game-state'
+import assets from '../css/assets'
 
 class FinshLine extends Component {
 
@@ -14,19 +15,10 @@ class FinshLine extends Component {
   }
 
   state = {
-    xOffset: 0,
-    image: null
+    xOffset: 0
   }
 
   componentDidMount () {
-    const image = new window.Image()
-    image.src = finishLineImage
-    image.onload = () => {
-      this.setState({
-        image: image
-      })
-    }
-
     addAnimateable(this.animate)
    
     this.setState({
@@ -53,7 +45,7 @@ class FinshLine extends Component {
   render () {
     return (
       <Image
-        image={this.state.image}
+        image={assets.get(finishLineImage)}
         x={0 + this.state.xOffset}
         y={640}
         width={1152}

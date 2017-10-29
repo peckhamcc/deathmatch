@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import GAME_STATE from '../constants/game-state'
-import { Game, Intro, Victory, Connecting, ChooseRiders, Champion } from '../components'
+import { Game, Intro, Victory, Connecting, ChooseRiders, Champion, LoadingAssets } from '../components'
 import debug from 'debug'
 import { connect } from 'react-redux'
 import { updateGameState } from '../store/actions'
@@ -26,6 +26,12 @@ class GameContainer extends Component {
   }
 
   render () {
+    if (this.props.gameState === GAME_STATE.loading) {
+      return (
+        <LoadingAssets />
+      )
+    }
+
     if (this.props.gameState === GAME_STATE.intro) {
       return (
         <Intro

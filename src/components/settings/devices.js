@@ -35,6 +35,8 @@ import FlashOnIcon from 'material-ui-icons/FlashOn'
 import ConnectIcon from 'material-ui-icons/AddBox'
 import LoadingIcon from 'material-ui-icons/Refresh'
 import UnknownIcon from 'material-ui-icons/Warning'
+import TextField from 'material-ui/TextField'
+import MenuItem from 'material-ui/Menu/MenuItem'
 
 const styles = {
 
@@ -61,7 +63,7 @@ class Devices extends Component {
   }
 
   assignDevice = (device) => {
-    return (event) => socket.emit('admin:devices:assign', this.props.adminToken, device.id, event.value)
+    return (event) => socket.emit('admin:devices:assign', this.props.adminToken, device.id, event.target.value)
   }
 
   render () {
@@ -83,6 +85,7 @@ class Devices extends Component {
           <TableBody>
             {this.props.devices
               .filter(device => {
+                console.info('device services', device.services)
                 if (!device.services.length) {
                   return false
                 }
@@ -132,16 +135,16 @@ class Devices extends Component {
                   margin="normal"
                   className={this.props.classes.textField}
                   onChange={this.assignDevice(device)}
-                  value={this.state.gender}
+                  value={device.player || 'none'}
                   select
                 >
                   <MenuItem key='none' value='none'>
                     None
                   </MenuItem>
-                  <MenuItem key='a' value='a'>
+                  <MenuItem key='a' value='A'>
                     Player A
                   </MenuItem>
-                  <MenuItem key='b' value='b'>
+                  <MenuItem key='b' value='B'>
                     Player B
                   </MenuItem>
               </TextField>
@@ -153,8 +156,8 @@ class Devices extends Component {
               >
                 <TableCell padding="none">{device.name}</TableCell>
                 <TableCell>{services}</TableCell>
-                <TableCell>{device.power || '-'}</TableCell>
-                <TableCell>{device.cadence || '-'}</TableCell>
+                <TableCell>{device.power === undefined ? '-' : device.power}</TableCell>
+                <TableCell>{device.cadence === undefined ? '-' : device.cadence}</TableCell>
                 <TableCell>
                   {statuses[device.status]}
                 </TableCell>

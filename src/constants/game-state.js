@@ -1,5 +1,6 @@
 const GAME_STATE = {
   connecting: 'CONNECTING',
+  loading: 'LOADING_ASSETS',
   intro: 'INTRO',
   riders: 'TWO_PEOPLE_ENTER_ONE_PERSON_LEAVES',
   countingDown: 'GET_READY',

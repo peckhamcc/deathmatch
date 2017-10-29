@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import styled, { css } from 'styled-components'
 import { Layer, Rect, Stage, Group, Text, Image, Sprite } from 'react-konva'
 import { addAnimateable, removeAnimateable } from './animator'
+import assets from '../css/assets'
 
 class Background extends Component {
   static propTypes = {
@@ -15,19 +16,10 @@ class Background extends Component {
   }
 
   state = {
-    xOffset: 0,
-    image: null
+    xOffset: 0
   }
 
   componentDidMount () {
-    const image = new window.Image()
-    image.src = this.props.image
-    image.onload = () => {
-      this.setState({
-        image: image
-      })
-    }
-
     addAnimateable(this.animate)
   }
 
@@ -52,7 +44,7 @@ class Background extends Component {
   render () {
     return (
       <Image
-        image={this.state.image}
+        image={assets.get(this.props.image)}
         x={0 + this.state.xOffset}
         y={this.props.y}
         width={this.props.width}

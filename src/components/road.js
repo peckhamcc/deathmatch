@@ -7,23 +7,15 @@ import backgroundRoad from '../../assets/background-road.png'
 import { addAnimateable, removeAnimateable } from './animator'
 import GAME_STATE from '../constants/game-state'
 import { STAGE_WIDTH } from '../constants/settings'
+import assets from '../css/assets'
 
 class Road extends Component {
 
   state = {
-    xOffset: 0,
-    image: null
+    xOffset: 0
   }
 
   componentDidMount () {
-    const image = new window.Image()
-    image.src = backgroundRoad
-    image.onload = () => {
-      this.setState({
-        image: image
-      })
-    }
-
     addAnimateable(this.animate)
   }
 
@@ -42,7 +34,7 @@ class Road extends Component {
   render () {
     return (
       <Image
-        fillPatternImage={this.state.image}
+        fillPatternImage={assets.get(backgroundRoad)}
         fillPatternRepeat='repeat-x'
         x={0 + this.state.xOffset}
         y={640}

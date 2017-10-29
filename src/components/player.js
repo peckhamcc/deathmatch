@@ -7,6 +7,7 @@ import riderSprite from '../../assets/rider-sprite.png'
 import { addAnimateable, removeAnimateable } from './animator'
 import GAME_STATE from '../constants/game-state'
 import rangeMap from 'range-map'
+import assets from '../css/assets'
 
 const PlayerName = styled.div`
   background-color: #FFF;
@@ -39,14 +40,6 @@ class Player extends Component {
   }
 
   componentDidMount() {
-    const image = new window.Image()
-    image.src = riderSprite
-    image.onload = () => {
-      this.setState({
-        image: image
-      })
-    }
-
     this.setState({
       x: 0 - SPRITE_WIDTH
     })
@@ -119,7 +112,7 @@ class Player extends Component {
         />
         <Sprite
           ref={this.setSprite}
-          image={this.state.image}
+          image={assets.get(riderSprite)}
           x={this.state.x}
           y={this.props.yOffset + NAME_SIZE}
           width={SPRITE_WIDTH}

@@ -8,16 +8,24 @@ import {
   setDevices,
   addDevice,
   setPlayers,
-  setDemo
+  setDemo,
+  setLoadProgress
 } from '../store/actions'
 import GAME_STATE from '../constants/game-state'
+import assets from '../css/assets'
 
 export default (store) => {
   socket.on('init', ({ bluetoothStatus, riders, devices, state }) => {
     store.dispatch(updateBluetoothStatus(bluetoothStatus))
     store.dispatch(setRiders(riders))
     store.dispatch(setDevices(devices))
-    store.dispatch(updateGameState(state))
+    store.dispatch(updateGameState(GAME_STATE.loading))
+
+    assets.load(riders, (done, total) => {
+      store.dispatch(setLoadProgress(parseInt((done / total) * 100, 10)))
+    }, () => {
+      store.dispatch(updateGameState(state))
+    })
   })
 
   socket.on('bluetooth:status', ({status}) => {
@@ -80,6 +88,6 @@ export default (store) => {
   })
 
   socket.on('demo', () => {
-    store.dispatch(setDemo())
+    store.dispatch(setDemo(true))
   })
 }

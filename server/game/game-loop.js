@@ -61,7 +61,9 @@ module.exports = {
     }
 
     gameInterval = setInterval(gameLoop(emitter, getWatts, getCadence, trackLength, Date.now(), setUpPlayers(
-      riders.get().filter(rider => rider.selected),
+      riders.get()
+        .filter(rider => rider.selected)
+        .sort((a, b) => a.bike.localeCompare(b.bike)),
       trackLength
     )), 1000)
   },

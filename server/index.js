@@ -85,7 +85,7 @@ io.on('connection', (client) => {
       return debug('Invalid admin token')
     }
 
-    devices.assign(deviceId, player)
+    bluetooth.assign(deviceId, player)
   })
 
   client.on('admin:game:new', (token) => {
