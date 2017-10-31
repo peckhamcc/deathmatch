@@ -4,7 +4,7 @@ import GAME_STATE from '../../constants/game-state'
 const initialState = {
   loaded: 0,
   state: GAME_STATE.connecting,
-  trackLength: 400,
+  trackLength: 250,
   demo: false
 }
 

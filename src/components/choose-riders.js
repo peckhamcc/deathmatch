@@ -8,6 +8,8 @@ import clubLogo from '../../assets/pcc-logo@2x.png'
 import riderImages from './rider-images'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 import FF7 from './ff7'
+import player1Outline from '../../assets/player1-outline.png'
+import player2Outline from '../../assets/player2-outline.png'
 
 const RiderContainer = styled.div`
   width: ${STAGE_WIDTH}px;
@@ -19,6 +21,7 @@ const RiderContainer = styled.div`
 
 const Riders = styled.div`
   padding: 10px;
+  margin-top: 20px;
 `
 
 const Rider = styled.div`
@@ -28,19 +31,31 @@ const Rider = styled.div`
   border: 5px solid;
   border-color: ${props => {
     if (props.bike === 'A') {
-      return 'red'
+      return '#ea3423'
     }
 
     if (props.bike === 'B') {
-      return 'blue'
-    }
-
-    if (props.eliminated) {
-      return 'grey'
+      return '#2354b3'
     }
 
     return 'white'
   }};
+
+  img {
+    filter: ${props => {
+      if (props.eliminated) {
+        return 'grayscale(100%)'
+      }
+
+      return 'none'
+    }};
+  }
+`
+
+const PlayerOutline = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
 `
 
 const SelectedRiderTitle = styled.div`
@@ -49,33 +64,31 @@ const SelectedRiderTitle = styled.div`
 
 const SelectedRiderName = styled.div`
   font-size: 20px;
-  width: 200px;
   line-height: 1.2;
+  width: 200px;
+  margin-left: 26px;
+  text-overflow: ellipsis;
+  height: 50px;
+  overflow: hidden;
 `
 
 const SelectedRider = styled.div`
   text-align: center;
   display: inline-block;
-  padding: 10px;
-  border: 5px solid;
   margin-top: 10px;
   height: 323px;
+  width: 254px;
   vertical-align: top;
-  border-color: ${props => {
-    if (props.bike === 'A') {
-      return 'red'
-    }
+  position: relative;
+`
 
-    if (props.bike === 'B') {
-      return 'blue'
-    }
-
-    return 'white'
-  }};
+const SelectedRiderImage = styled.img`
+  margin: 26px 0 10px 0;
 `
 
 const ClubLogo = styled.div`
   display: inline-block;
+  margin-top: 30px;
 `
 
 const StartRace = FF7.extend`
@@ -134,7 +147,7 @@ class ChooseRiders extends Component {
   }
 
   selectRiders = () => {
-    if (this.state.loop === 18) {
+    if (this.state.loop === 15) {
       this.setState({
         done: true
       })
@@ -230,8 +243,8 @@ class ChooseRiders extends Component {
             <Button onClick={this.onStart}>Start Race &gt;</Button>
           </StartRace>}
           <SelectedRider bike={player1.bike}>
-            <SelectedRiderTitle>1P</SelectedRiderTitle>
-            <img
+            <PlayerOutline src={player1Outline} width='254' height='338' />
+            <SelectedRiderImage
               src={player1.photoSelect || riderImages[player1.gender][player1.image]}
               width='200'
               height='225'
@@ -245,8 +258,8 @@ class ChooseRiders extends Component {
           </ClubLogo>
 
           <SelectedRider bike={player2.bike}>
-            <SelectedRiderTitle>2P</SelectedRiderTitle>
-            <img
+            <PlayerOutline src={player2Outline} width='253' height='338' />
+            <SelectedRiderImage
               src={player2.photoSelect || riderImages[player2.gender][player2.image]}
               width='200'
               height='225'
@@ -260,7 +273,7 @@ class ChooseRiders extends Component {
               return (
                 <Rider key={rider.id} selected={rider.selected} bike={rider.bike} eliminated={rider.eliminated}>
                   <img
-                    src={rider.photoSelect || riderImages[rider.gender][rider.image]}
+                    src={rider.eliminated ? rider.photoLose : rider.photoSelect}
                     width='100'
                     height='120'
                   />

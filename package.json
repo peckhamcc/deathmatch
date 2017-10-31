@@ -16,6 +16,7 @@
     "clean": "rm -rf dist",
     "build": "npm run clean && webpack --config webpack.config.demo.js",
     "start": "npm run clean && (webpack --progress --colors --watch & node server)",
+    "demo": "npm run clean && (webpack --config webpack.config.demo.js --progress --colors --watch & node server)",
     "deploy": "NODE_ENV=production npm run build && NODE_DEBUG=gh-pages gh-pages -d dist",
     "lint": "standard"
   },

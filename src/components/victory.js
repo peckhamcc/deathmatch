@@ -162,8 +162,9 @@ const SelectedRider = styled.div`
   }
   `
 
-  const ClubLogo = styled.div`
+const ClubLogo = styled.div`
   display: inline-block;
+  padding-top: 30px;
 `
 
 const Quote = styled.div`

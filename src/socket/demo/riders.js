@@ -2,19 +2,80 @@ import shortid from 'shortid'
 
 const createRiders = () => ([{
   'id': shortid.generate(),
+  'name': 'Alex Denise',
+  'age': '35',
+  'gender': 'male',
+  'weight': '68',
+  'photoSelect': './photos/alexd-select.png',
+  'photoWin': './photos/alexd-happy.png',
+  'photoLose': './photos/alexd-sad.png',
+  'photoPower': './photos/alexd-power.png',
+  'races': 0
+}, {
+  'id': shortid.generate(),
   'name': 'Alex Potsides',
   'age': '37',
   'gender': 'male',
   'weight': '74',
-  'image': 0,
+  'photoSelect': './photos/alexp-select.png',
+  'photoWin': './photos/alexp-happy.png',
+  'photoLose': './photos/alexp-sad.png',
+  'photoPower': './photos/alexp-power.png',
   'races': 0
 }, {
   'id': shortid.generate(),
-  'name': 'Katherine Potsides',
-  'age': '35',
-  'gender': 'female',
-  'weight': '68',
-  'image': 0,
+  'name': 'Chris Durham',
+  'age': '32',
+  'gender': 'male',
+  'weight': '74',
+  'photoSelect': './photos/chris-select.png',
+  'photoWin': './photos/chris-happy.png',
+  'photoLose': './photos/chris-sad.png',
+  'photoPower': './photos/chris-power.png',
+  'races': 0
+}, {
+  'id': shortid.generate(),
+  'name': 'Geoff Davies',
+  'age': '32',
+  'gender': 'male',
+  'weight': '74',
+  'photoSelect': './photos/geoff-select.png',
+  'photoWin': './photos/geoff-happy.png',
+  'photoLose': './photos/geoff-sad.png',
+  'photoPower': './photos/geoff-power.png',
+  'races': 0
+}, {
+  'id': shortid.generate(),
+  'name': 'James Mcfarlane',
+  'age': '32',
+  'gender': 'male',
+  'weight': '74',
+  'photoSelect': './photos/james-select.png',
+  'photoWin': './photos/james-happy.png',
+  'photoLose': './photos/james-sad.png',
+  'photoPower': './photos/james-power.png',
+  'races': 0
+}, {
+  'id': shortid.generate(),
+  'name': 'Tim Clark',
+  'age': '30',
+  'gender': 'male',
+  'weight': '70',
+  'photoSelect': './photos/oldtim-select.png',
+  'photoWin': './photos/oldtim-happy.png',
+  'photoLose': './photos/oldtim-sad.png',
+  'photoPower': './photos/oldtim-power.png',
+  'races': 0
+}, {
+  'id': shortid.generate(),
+  'name': 'Paul Schneider',
+  'age': '30',
+  'gender': 'male',
+  'weight': '70',
+  'photoSelect': './photos/paul-select.png',
+  'photoWin': './photos/paul-happy.png',
+  'photoLose': './photos/paul-sad.png',
+  'photoPower': './photos/paul-power.png',
   'races': 0
 }, {
   'id': shortid.generate(),
@@ -22,31 +83,32 @@ const createRiders = () => ([{
   'age': '30',
   'gender': 'male',
   'weight': '70',
-  'image': 1,
+  'photoSelect': './photos/rob-select.png',
+  'photoWin': './photos/rob-happy.png',
+  'photoLose': './photos/rob-sad.png',
+  'photoPower': './photos/rob-power.png',
   'races': 0
 }, {
   'id': shortid.generate(),
-  'name': 'Tegwen Owen',
+  'name': 'Tim El-Oun',
   'age': '36',
-  'gender': 'female',
-  'weight': '72',
-  'image': 1,
-  'races': 0
-}, {
-  'id': shortid.generate(),
-  'name': 'Jon Arm',
-  'age': '39',
   'gender': 'male',
-  'weight': '75',
-  'image': 2,
+  'weight': '72',
+  'photoSelect': './photos/tim-select.png',
+  'photoWin': './photos/tim-happy.png',
+  'photoLose': './photos/tim-sad.png',
+  'photoPower': './photos/tim-power.png',
   'races': 0
 }, {
   'id': shortid.generate(),
-  'name': 'Hannah Sender',
-  'age': '32',
-  'gender': 'female',
-  'weight': '62',
-  'image': 2,
+  'name': 'Tom Meakin',
+  'age': '30',
+  'gender': 'male',
+  'weight': '72',
+  'photoSelect': './photos/tom-select.png',
+  'photoWin': './photos/tom-happy.png',
+  'photoLose': './photos/tom-sad.png',
+  'photoPower': './photos/tom-power.png',
   'races': 0
 }
 ])
