@@ -69,7 +69,7 @@ class PlayerStats extends Component {
           x={this.props.x + 14}
           y={this.props.y + 14}
           fill='white'
-          fontFamily='"Press Start 2P", cursive'
+          fontFamily='"Press Start 2P", monospace'
           fontSize={24}
           shadowColor='#424542'
           shadowOffsetX={0}
@@ -81,7 +81,7 @@ class PlayerStats extends Component {
           x={this.props.x + 229}
           y={this.props.y + 50}
           fill='white'
-          fontFamily='"Press Start 2P", cursive'
+          fontFamily='"Press Start 2P", monospace'
           fontSize={16}
           shadowColor='#424542'
           shadowOffsetX={0}
@@ -101,7 +101,7 @@ class PlayerStats extends Component {
           x={this.props.x + 228 + ((4 - player.power.toString().length) * 58)}
           y={this.props.y + 81}
           fill='white'
-          fontFamily='"Press Start 2P", cursive'
+          fontFamily='"Press Start 2P", monospace'
           fontSize={58}
           shadowColor='#424542'
           shadowOffsetX={0}
@@ -113,7 +113,7 @@ class PlayerStats extends Component {
           x={this.props.x + 460}
           y={this.props.y + 111}
           fill='white'
-          fontFamily='"Press Start 2P", cursive'
+          fontFamily='"Press Start 2P", monospace'
           fontSize={24}
           shadowColor='#424542'
           shadowOffsetX={0}
@@ -125,7 +125,7 @@ class PlayerStats extends Component {
           x={this.props.x + 14}
           y={this.props.y + 50}
           fill='white'
-          fontFamily='"Press Start 2P", cursive'
+          fontFamily='"Press Start 2P", monospace'
           fontSize={16}
           shadowColor='#424542'
           shadowOffsetX={0}
@@ -137,7 +137,7 @@ class PlayerStats extends Component {
           x={this.props.x + 14 + (player.metersRemaining.toString().length === 3 ? 0 : 58)}
           y={this.props.y + 81}
           fill='white'
-          fontFamily='"Press Start 2P", cursive'
+          fontFamily='"Press Start 2P", monospace'
           fontSize={58}
           shadowColor='#424542'
           shadowOffsetX={0}
@@ -149,7 +149,7 @@ class PlayerStats extends Component {
           x={this.props.x + 190}
           y={this.props.y + 111}
           fill='white'
-          fontFamily='"Press Start 2P", cursive'
+          fontFamily='"Press Start 2P", monospace'
           fontSize={24}
           shadowColor='#424542'
           shadowOffsetX={0}

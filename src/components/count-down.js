@@ -40,7 +40,7 @@ class CountDown extends Component {
           x={x}
           y={200}
           fill='black'
-          fontFamily='"Press Start 2P", cursive'
+          fontFamily='"Press Start 2P", monospace'
           fontSize={300}
         />
       </Group>

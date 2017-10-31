@@ -103,7 +103,7 @@ class Player extends Component {
           x={this.state.x + this.props.xOffset}
           y={this.props.yOffset}
           fill='black'
-          fontFamily='"Press Start 2P", cursive'
+          fontFamily='"Press Start 2P", monospace'
           fontSize={NAME_SIZE}
           shadowColor='white'
           shadowOffsetX={0}

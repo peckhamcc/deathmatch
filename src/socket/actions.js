@@ -22,7 +22,7 @@ export default (store) => {
     store.dispatch(updateGameState(GAME_STATE.loading))
 
     assets.load(riders, (done, total) => {
-      store.dispatch(setLoadProgress(parseInt((done / total) * 100, 10)))
+      store.dispatch(setLoadProgress(100 - parseInt((done / total) * 100, 10)))
     }, () => {
       store.dispatch(updateGameState(state))
     })
