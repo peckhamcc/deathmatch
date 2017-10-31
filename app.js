@@ -23070,7 +23070,7 @@
 	    store.dispatch((0, _actions.updateGameState)(_gameState2.default.loading));
 
 	    _assets2.default.load(riders, function (done, total) {
-	      store.dispatch((0, _actions.setLoadProgress)(parseInt(done / total * 100, 10)));
+	      store.dispatch((0, _actions.setLoadProgress)(100 - parseInt(done / total * 100, 10)));
 	    }, function () {
 	      store.dispatch((0, _actions.updateGameState)(state));
 	    });
