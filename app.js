@@ -61807,7 +61807,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  color: #FFF;\n  width: 150px;\n  position: absolute;\n  top: 50px;\n  left: 50%;\n  margin-left: -75px;\n  font-size: 16px;\n'], ['\n  color: #FFF;\n  width: 150px;\n  position: absolute;\n  top: 50px;\n  left: 50%;\n  margin-left: -75px;\n  font-size: 16px;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  color: #FFF;\n  width: 150px;\n  position: absolute;\n  top: 50px;\n  left: 50%;\n  margin-left: -75px;\n  font-size: 16px;\n  text-align: center;\n'], ['\n  color: #FFF;\n  width: 150px;\n  position: absolute;\n  top: 50px;\n  left: 50%;\n  margin-left: -75px;\n  font-size: 16px;\n  text-align: center;\n']);
 
 	var _react = __webpack_require__(3);
 
@@ -84310,7 +84310,7 @@
 	  value: true
 	});
 
-	var _templateObject = _taggedTemplateLiteral(['\n  color: #FFF;\n  width: 150px;\n  position: absolute;\n  top: 50px;\n  left: 50%;\n  margin-left: -75px;\n  font-size: 16px;\n'], ['\n  color: #FFF;\n  width: 150px;\n  position: absolute;\n  top: 50px;\n  left: 50%;\n  margin-left: -75px;\n  font-size: 16px;\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  color: #FFF;\n  width: 250px;\n  position: absolute;\n  top: 50px;\n  left: 50%;\n  margin-left: -125px;\n  font-size: 16px;\n  text-align: center;\n'], ['\n  color: #FFF;\n  width: 250px;\n  position: absolute;\n  top: 50px;\n  left: 50%;\n  margin-left: -125px;\n  font-size: 16px;\n  text-align: center;\n']);
 
 	var _react = __webpack_require__(3);
 
@@ -84342,7 +84342,7 @@
 	      null,
 	      'Loading ',
 	      loaded,
-	      '%...'
+	      '%'
 	    )
 	  );
 	};
