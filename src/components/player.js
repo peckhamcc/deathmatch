@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled, { css } from 'styled-components'
 import { Layer, Rect, Stage, Group, Text, Image, Sprite } from 'react-konva'
-import riderSprite from '../../assets/rider-sprite.png'
 import { addAnimateable, removeAnimateable } from './animator'
 import GAME_STATE from '../constants/game-state'
 import rangeMap from 'range-map'
@@ -22,13 +21,18 @@ export const SPRITE_HEIGHT = 400
 export const NAME_SIZE = 24
 export const UPDATE_FREQUENCY_MS = 1000
 
+const ANIMATION_FRAMES = {
+  'riding': 8
+}
+
 class Player extends Component {
 
   static propTypes = {
     player: PropTypes.object.isRequired,
     gameState: PropTypes.string.isRequired,
     xOffset: PropTypes.number.isRequired,
-    yOffset: PropTypes.number.isRequired
+    yOffset: PropTypes.number.isRequired,
+    sprite: PropTypes.string.isRequired
   }
 
   state = {
@@ -96,6 +100,9 @@ class Player extends Component {
   }
 
   render () {
+    const rps = this.props.player.cadence / 60
+    const fps = parseInt(rps * ANIMATION_FRAMES[this.state.animation], 10)
+
     return (
       <Group>
         <Text
@@ -112,7 +119,7 @@ class Player extends Component {
         />
         <Sprite
           ref={this.setSprite}
-          image={assets.get(riderSprite)}
+          image={assets.get(this.props.sprite)}
           x={this.state.x}
           y={this.props.yOffset + NAME_SIZE}
           width={SPRITE_WIDTH}
@@ -123,10 +130,14 @@ class Player extends Component {
               0, 0, 500, 400,
               500, 0, 500, 400,
               1000, 0, 500, 400,
-              1500, 0, 500, 400
+              1500, 0, 500, 400,
+              2000, 0, 500, 400,
+              2500, 0, 500, 400,
+              3000, 0, 500, 400,
+              3500, 0, 500, 400
             ]
           }}
-          frameRate={4}
+          frameRate={fps}
           frameIndex={this.sprite && this.sprite.frameIndex() || 0}
         />
       </Group>

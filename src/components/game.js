@@ -15,6 +15,8 @@ import backgroundCity from '../../assets/background-city.png'
 import backgroundTerraces from '../../assets/background-terraces.png'
 import backgroundRoad from '../../assets/background-road.png'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
+import riderASprite from '../../assets/rider-a-sprite.png'
+import riderBSprite from '../../assets/rider-b-sprite.png'
 
 const StageWrapper = styled.div`
   width: ${STAGE_WIDTH}px;
@@ -22,6 +24,11 @@ const StageWrapper = styled.div`
   background-color: #FFF;
   margin: auto;
 `
+
+const SPRITES = [
+  riderASprite,
+  riderBSprite
+]
 
 class Game extends Component {
 
@@ -76,6 +83,7 @@ class Game extends Component {
                   key={player.id}
                   yOffset={index === 0 ? 250 : 300}
                   xOffset={index === 0 ? 50 : 0}
+                  sprite={SPRITES[index]}
                 />
               ))
             }

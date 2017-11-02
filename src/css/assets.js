@@ -8,7 +8,8 @@ import backgroundTerraces from '../../assets/background-terraces.png'
 import backgroundRoad from '../../assets/background-road.png'
 import introBackground from '../../assets/intro.png'
 import powerBar from '../../assets/background-power.png'
-import riderSprite from '../../assets/rider-sprite.png'
+import riderASprite from '../../assets/rider-a-sprite.png'
+import riderBSprite from '../../assets/rider-b-sprite.png'
 import riderMale0 from '../../assets/rider-male-0.png'
 import riderMale1 from '../../assets/rider-male-1.png'
 import riderMale2 from '../../assets/rider-male-2.png'
@@ -28,7 +29,8 @@ const list = [
   backgroundRoad,
   introBackground,
   powerBar,
-  riderSprite,
+  riderASprite,
+  riderBSprite,
   riderMale0,
   riderMale1,
   riderMale2,
