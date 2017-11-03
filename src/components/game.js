@@ -84,6 +84,7 @@ class Game extends Component {
                   yOffset={index === 0 ? 250 : 300}
                   xOffset={index === 0 ? 50 : 0}
                   sprite={SPRITES[index]}
+                  x={player.x}
                 />
               ))
             }

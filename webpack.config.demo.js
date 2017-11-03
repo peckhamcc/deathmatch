@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'production'
+
 const webpack = require('webpack')
 const config = require('./webpack.config.template.js')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -13,5 +15,7 @@ config.plugins.push(new CopyWebpackPlugin([{
   to: 'photos',
   ignore: ['*.pxm', '.gitignore']
 }]))
+
+config.devtool = 'source-map'
 
 module.exports = config
