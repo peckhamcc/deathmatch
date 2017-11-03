@@ -10,6 +10,7 @@ import PlayerStats from './player-stats'
 import CountDown from './count-down'
 import GAME_STATE from '../constants/game-state'
 import FinishLine from './finish-line'
+import Sky from './sky'
 import backgroundClouds from '../../assets/background-clouds.png'
 import backgroundCity from '../../assets/background-city.png'
 import backgroundTerraces from '../../assets/background-terraces.png'
@@ -59,6 +60,7 @@ class Game extends Component {
           ref={ref => this.canvas = ref}
           >
           <Layer>
+            <Sky />
             <Background image={backgroundClouds} width={4096} height={200} speed={2} y={60} />
             <Background image={backgroundCity} width={4096} height={451} speed={4} y={25} />
             <Background image={backgroundTerraces} width={4056} height={306} speed={8} y={334} />
