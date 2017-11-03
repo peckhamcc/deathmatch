@@ -16,6 +16,4 @@ config.plugins.push(new CopyWebpackPlugin([{
   ignore: ['*.pxm', '.gitignore']
 }]))
 
-config.devtool = 'source-map'
-
 module.exports = config
