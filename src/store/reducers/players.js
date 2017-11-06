@@ -2,6 +2,7 @@ import { PLAYERS_SET } from '../actions'
 import rangeMap from 'range-map'
 import { SPRITE_WIDTH } from '../../components/player'
 import { STAGE_WIDTH } from '../../constants/settings'
+import PLAYER_STATUS from '../../constants/player-status'
 
 const initialState = {
   players: []
@@ -35,6 +36,22 @@ const playerReducer = (state = initialState, action) => {
 
       player1.x = rangeMap(p2Diff, -(MAX_DIFF), MAX_DIFF, 0, STAGE_WIDTH - SPRITE_WIDTH - 50)
       player2.x = rangeMap(p1Diff, -(MAX_DIFF), MAX_DIFF, 0, STAGE_WIDTH - SPRITE_WIDTH - 50)
+
+      action.payload.forEach(player => {
+        player.status = PLAYER_STATUS.NORMAL
+
+        if (player.power > 400) {
+          player.status = PLAYER_STATUS.FAST
+        }
+
+        if (player.power > 600) {
+          player.status = PLAYER_STATUS.FASTER
+        }
+
+        if (player.power > 800) {
+          player.status = PLAYER_STATUS.FASTEST
+        }
+      })
 
       return {
         ...state,

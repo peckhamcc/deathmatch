@@ -18,6 +18,9 @@ import backgroundRoad from '../../assets/background-road.png'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 import riderASprite from '../../assets/rider-a-sprite.png'
 import riderBSprite from '../../assets/rider-b-sprite.png'
+import riderASpotlight from '../../assets/rider-a-spotlight.png'
+import riderBSpotlight from '../../assets/rider-b-spotlight.png'
+import Spotlight from './spotlight'
 
 const StageWrapper = styled.div`
   width: ${STAGE_WIDTH}px;
@@ -26,9 +29,14 @@ const StageWrapper = styled.div`
   margin: auto;
 `
 
-const SPRITES = [
+const RIDER_SPRITES = [
   riderASprite,
   riderBSprite
+]
+
+const SPOTLIGHT_SPRITES = [
+  riderASpotlight,
+  riderBSpotlight
 ]
 
 class Game extends Component {
@@ -67,6 +75,28 @@ class Game extends Component {
             <Road y={640} />
             <FinishLine y={640} />
             {
+              this.props.players.map((player, index) => (
+                <Group key={player.id}>
+                  <Spotlight
+                    key={player.id + '-spotlight'}
+                    x={player.x}
+                    yOffset={index === 0 ? -50 : 0}
+                    power={player.power}
+                    sprite={SPOTLIGHT_SPRITES[index]}
+                    status={player.status}
+                  />
+                  <Player
+                    player={player}
+                    key={player.id + '-player'}
+                    yOffset={index === 0 ? 250 : 300}
+                    xOffset={index === 0 ? 50 : 0}
+                    sprite={RIDER_SPRITES[index]}
+                    x={player.x}
+                  />
+                </Group>
+              ))
+            }
+            {
               this.props.gameState !== GAME_STATE.countingDown && this.props.players.map((player, index) => (
                 <PlayerStats
                   x={index === 0 ? 10 : 519}
@@ -75,18 +105,6 @@ class Game extends Component {
                   height={154}
                   index={index}
                   key={player.id}
-                />
-              ))
-            }
-            {
-              this.props.players.map((player, index) => (
-                <Player
-                  player={player}
-                  key={player.id}
-                  yOffset={index === 0 ? 250 : 300}
-                  xOffset={index === 0 ? 50 : 0}
-                  sprite={SPRITES[index]}
-                  x={player.x}
                 />
               ))
             }

@@ -21,6 +21,8 @@ import riderFemale2 from '../../assets/rider-female-2.png'
 import pccAvatar from '../../assets/pcc-avatar.png'
 import player1Outline from '../../assets/player1-outline.png'
 import player2Outline from '../../assets/player2-outline.png'
+import riderASpotlight from '../../assets/rider-a-spotlight.png'
+import riderBSpotlight from '../../assets/rider-b-spotlight.png'
 
 const list = [
   clubLogo,
@@ -43,7 +45,9 @@ const list = [
   riderFemale2,
   pccAvatar,
   player1Outline,
-  player2Outline
+  player2Outline,
+  riderASpotlight,
+  riderBSpotlight
 ]
 
 const assets = {}

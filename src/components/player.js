@@ -7,6 +7,7 @@ import { addAnimateable, removeAnimateable } from './animator'
 import GAME_STATE from '../constants/game-state'
 import rangeMap from 'range-map'
 import assets from '../css/assets'
+import frames from '../utils/frames'
 
 const PlayerName = styled.div`
   background-color: #FFF;
@@ -126,16 +127,7 @@ class Player extends Component {
           height={SPRITE_HEIGHT}
           animation={this.state.animation}
           animations={{
-            riding: [
-              0, 0, 500, 400,
-              500, 0, 500, 400,
-              1000, 0, 500, 400,
-              1500, 0, 500, 400,
-              2000, 0, 500, 400,
-              2500, 0, 500, 400,
-              3000, 0, 500, 400,
-              3500, 0, 500, 400
-            ]
+            riding: frames(SPRITE_WIDTH, SPRITE_HEIGHT, 0, 8)
           }}
           frameRate={fps}
           frameIndex={this.sprite && this.sprite.frameIndex() || 0}
