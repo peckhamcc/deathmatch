@@ -7,6 +7,8 @@ import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 import { addAnimateable, removeAnimateable } from './animator'
 import assets from '../css/assets'
 import PLAYER_STATUS from '../constants/player-status'
+import GAME_STATE from '../constants/game-state'
+
 class Sky extends Component {
   static propTypes = {
     players: PropTypes.array.isRequired,
@@ -27,6 +29,14 @@ class Sky extends Component {
   }
 
   animate = () => {
+    if (this.props.gameState === GAME_STATE.countingDown) {
+      this.setState({
+        colour: 'transparent'
+      })
+
+      return
+    }
+
     let colour = '#' + Math.floor(Math.random()*16777215).toString(16)
 
     this.setState({

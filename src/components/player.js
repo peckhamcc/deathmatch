@@ -8,6 +8,7 @@ import GAME_STATE from '../constants/game-state'
 import rangeMap from 'range-map'
 import assets from '../css/assets'
 import frames from '../utils/frames'
+import playerPosition from '../constants/player-position'
 
 const PlayerName = styled.div`
   background-color: #FFF;
@@ -17,8 +18,8 @@ const PlayerName = styled.div`
   display: inline-block;
 `
 
-export const SPRITE_WIDTH = 500
-export const SPRITE_HEIGHT = 400
+export const PLAYER_SPRITE_WIDTH = 500
+export const PLAYER_SPRITE_HEIGHT = 400
 export const NAME_SIZE = 24
 export const UPDATE_FREQUENCY_MS = 1000
 
@@ -29,6 +30,7 @@ const ANIMATION_FRAMES = {
 class Player extends Component {
 
   static propTypes = {
+    index: PropTypes.number.isRequired,
     player: PropTypes.object.isRequired,
     gameState: PropTypes.string.isRequired,
     xOffset: PropTypes.number.isRequired,
@@ -46,8 +48,10 @@ class Player extends Component {
 
   componentDidMount() {
     this.setState({
-      x: 0 - SPRITE_WIDTH
+      x: 0 - PLAYER_SPRITE_WIDTH
     })
+
+    playerPosition[this.props.index] = 0 - PLAYER_SPRITE_WIDTH
 
     addAnimateable(this.animate)
   }
@@ -65,31 +69,29 @@ class Player extends Component {
   }
 
   animate = () => {
+    let x = this.state.x
+    let animation = 'riding'
+
     if (this.props.gameState === GAME_STATE.countingDown) {
-      return this.setState(s => {
-        return {
-          x: s.x + 2
-        }
-      })
-    }
+      x = x + 2
+    } else if (this.props.gameState === GAME_STATE.finishing) {
+      // animation = 'lunge'
+      x = x + 10
+    } else {
+      const through = Date.now() - this.state.startXTime
 
-    if (this.props.gameState === GAME_STATE.finishing) {
-      return this.setState(s => {
-        return {
-          //animation: 'lunge',
-          x: s.x + 10
-        }
-      })
+      animation = 'riding'
+      x = rangeMap(through > UPDATE_FREQUENCY_MS ? UPDATE_FREQUENCY_MS : through, 0, UPDATE_FREQUENCY_MS, this.state.lastX, this.state.nextX)
     }
-
-    const through = Date.now() - this.state.startXTime
 
     this.setState(s => {
       return {
-        animation: 'riding',
-        x: rangeMap(through > UPDATE_FREQUENCY_MS ? UPDATE_FREQUENCY_MS : through, 0, UPDATE_FREQUENCY_MS, this.state.lastX, this.state.nextX)
+        animation,
+        x
       }
     })
+
+    playerPosition[this.props.index] = x
   }
 
   setSprite = (sprite) => {
@@ -123,11 +125,11 @@ class Player extends Component {
           image={assets.get(this.props.sprite)}
           x={this.state.x}
           y={this.props.yOffset + NAME_SIZE}
-          width={SPRITE_WIDTH}
-          height={SPRITE_HEIGHT}
+          width={PLAYER_SPRITE_WIDTH}
+          height={PLAYER_SPRITE_HEIGHT}
           animation={this.state.animation}
           animations={{
-            riding: frames(SPRITE_WIDTH, SPRITE_HEIGHT, 0, 8)
+            riding: frames(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 0, 8)
           }}
           frameRate={fps}
           frameIndex={this.sprite && this.sprite.frameIndex() || 0}

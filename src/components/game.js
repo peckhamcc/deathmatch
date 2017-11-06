@@ -21,6 +21,7 @@ import riderBSprite from '../../assets/rider-b-sprite.png'
 import riderASpotlight from '../../assets/rider-a-spotlight.png'
 import riderBSpotlight from '../../assets/rider-b-spotlight.png'
 import Spotlight from './spotlight'
+import Screen from './screen'
 
 const StageWrapper = styled.div`
   width: ${STAGE_WIDTH}px;
@@ -72,22 +73,22 @@ class Game extends Component {
             <Background image={backgroundClouds} width={4096} height={200} speed={2} y={60} />
             <Background image={backgroundCity} width={4096} height={451} speed={4} y={25} />
             <Background image={backgroundTerraces} width={4056} height={306} speed={8} y={334} />
+            <Screen />
             <Road y={640} />
             <FinishLine y={640} />
             {
               this.props.players.map((player, index) => (
                 <Group key={player.id}>
                   <Spotlight
-                    key={player.id + '-spotlight'}
-                    x={player.x}
+                    index={index}
                     yOffset={index === 0 ? -50 : 0}
                     power={player.power}
                     sprite={SPOTLIGHT_SPRITES[index]}
                     status={player.status}
                   />
                   <Player
+                    index={index}
                     player={player}
-                    key={player.id + '-player'}
                     yOffset={index === 0 ? 250 : 300}
                     xOffset={index === 0 ? 50 : 0}
                     sprite={RIDER_SPRITES[index]}

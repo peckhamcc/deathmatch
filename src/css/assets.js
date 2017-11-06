@@ -1,5 +1,3 @@
-
-
 import clubLogo from '../../assets/pcc-logo@2x.png'
 import finishLineImage from '../../assets/finish-line.png'
 import backgroundClouds from '../../assets/background-clouds.png'

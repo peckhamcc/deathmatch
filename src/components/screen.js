@@ -4,10 +4,14 @@ import { connect } from 'react-redux'
 import styled, { css } from 'styled-components'
 import { Image, Layer, Sprite } from 'react-konva'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
-import { addAnimateable, removeAnimateable } from './animator'
 import backgroundExplosion from '../../assets/background-explosion.png'
 import backgroundBlueTunnel from '../../assets/background-blue-tunnel.png'
 import assets from '../css/assets'
+import GAME_STATE from '../constants/game-state'
+import PLAYER_STATUS from '../constants/player-status'
+import frames from '../utils/frames'
+
+const ANIMATIONS = ['blue', 'explosion']
 
 class Screen extends Component {
   static propTypes = {
@@ -17,24 +21,25 @@ class Screen extends Component {
 
   state = {
     animating: false,
-    colour: 'transparent'
+    image: 'transparent'
   }
 
   componentDidMount () {
-    addAnimateable(this.animate)
+    this.interval = setInterval(() => {
+      if (this.props.gameState !== GAME_STATE.countingDown && this.props.players.some(player => player.status === PLAYER_STATUS.FASTEST)) {
+        this.setState({
+          image: ANIMATIONS[Math.floor(Math.random() * ANIMATIONS.length)]
+        })
+      } else {
+        this.setState({
+          image: 'transparent'
+        })
+      }
+    }, 200)
   }
 
   componentWillUnmount = () => {
-    removeAnimateable(this.animate)
-  }
-
-  animate = () => {
-    //let colour = 'transparent'
-    let colour = '#' + Math.floor(Math.random()*16777215).toString(16)
-
-    this.setState({
-      colour
-    })
+    clearInterval(this.interval)
   }
 
   setSprite = (sprite) => {
@@ -47,9 +52,9 @@ class Screen extends Component {
 
   render () {
     const backgrounds = {
-      colour: () => (
+      transparent: () => (
         <Image
-          fill={this.state.colour}
+          opacity={0}
           x={0}
           y={0}
           width={STAGE_WIDTH}
@@ -66,12 +71,7 @@ class Screen extends Component {
           height={STAGE_WIDTH}
           animation='default'
           animations={{
-            default: [
-              0, 0, 240, 160,
-              240, 0, 240, 160,
-              480, 0, 240, 160,
-              720, 0, 240, 160
-            ]
+            default: frames(240, 260, 0, 4)
           }}
           frameRate={8}
           frameIndex={this.sprite && this.sprite.frameIndex() || 0}
@@ -85,31 +85,25 @@ class Screen extends Component {
         <Sprite
           ref={this.setSprite}
           image={assets.get(backgroundExplosion)}
-          x={-87}
-          y={-150}
+          x={0}
+          y={0}
           width={STAGE_WIDTH}
           height={STAGE_WIDTH}
           animation='default'
           animations={{
-            default: [
-              0, 0, 240, 281,
-              240, 0, 240, 281,
-              480, 0, 240, 281,
-              720, 0, 240, 281
-            ]
+            default: frames(500, 281, 0, 22)
           }}
           frameRate={8}
           frameIndex={this.sprite && this.sprite.frameIndex() || 0}
           scale={{
-            x: 5,
-            y: 5
+            x: 2.5,
+            y: 2.5
           }}
         />
       )
     }
 
-    return backgrounds.explosion()
-    //return null
+    return backgrounds[this.state.image]()
   }
 }
 

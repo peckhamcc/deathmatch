@@ -7,18 +7,46 @@ import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 import assets from '../css/assets'
 import frames from '../utils/frames'
 import PLAYER_STATUS from '../constants/player-status'
+import GAME_STATE from '../constants/game-state'
+import playerPosition from '../constants/player-position'
+import { addAnimateable, removeAnimateable } from './animator'
+import { PLAYER_SPRITE_WIDTH } from './player'
 
 const SPRITE_FRAME_WIDTH = 153
 const SPRITE_FRAME_HEIGHT = 400
 
 class Spotlight extends Component {
   static propTypes = {
+    index: PropTypes.number.isRequired,
     sprite: PropTypes.string.isRequired,
-    x: PropTypes.number.isRequired,
     yOffset: PropTypes.number.isRequired,
     power: PropTypes.number.isRequired,
     gameState: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired
+  }
+
+  state = {
+    x: 0
+  }
+
+  componentDidMount() {
+    this.setState({
+      x: 0 - PLAYER_SPRITE_WIDTH + 120
+    })
+
+    playerPosition[this.props.index] = 0 - PLAYER_SPRITE_WIDTH + 120
+
+    addAnimateable(this.animate)
+  }
+
+  componentWillUnmount = () => {
+    removeAnimateable(this.animate)
+  }
+
+  animate = () => {
+    this.setState({
+      x: playerPosition[this.props.index] + 120
+    })
   }
 
   setSprite = (sprite) => {
@@ -32,7 +60,7 @@ class Spotlight extends Component {
   render () {
     let opacity = 1
 
-    if (this.props.status !== PLAYER_STATUS.FASTEST) {
+    if (this.props.status !== PLAYER_STATUS.FASTEST || this.props.gameState === GAME_STATE.countingDown) {
       opacity = 0
     }
 
@@ -41,7 +69,7 @@ class Spotlight extends Component {
         ref={this.setSprite}
         opacity={opacity}
         image={assets.get(this.props.sprite)}
-        x={this.props.x + 120}
+        x={this.state.x}
         y={0 + this.props.yOffset}
         width={SPRITE_FRAME_WIDTH}
         height={SPRITE_FRAME_HEIGHT}
