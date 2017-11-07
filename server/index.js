@@ -10,6 +10,7 @@ const game = require('./game')
 const photos = require('./photos')
 
 const adminToken = 'something-random'
+const PORT = 6000
 
 const app = express()
 app.use('/deathmatch', serveStatic(path.resolve(path.join(__dirname, '..', 'dist'))))
@@ -193,7 +194,7 @@ game.on('game:players', (players) => {
   io.emit('game:players', players)
 })
 
-server.listen(5000, () => {
-  debug('Listening on port 5000')
+server.listen(PORT, () => {
+  debug(`Listening on port ${PORT}`)
   debug(`window.adminToken = '${adminToken}'`)
 })

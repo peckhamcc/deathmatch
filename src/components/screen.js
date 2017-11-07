@@ -56,7 +56,7 @@ class Screen extends Component {
           image: 'transparent'
         })
       }
-    }, 500)
+    }, 1000)
   }
 
   componentWillUnmount = () => {
@@ -75,21 +75,24 @@ class Screen extends Component {
     let scale = 1
 
     if (width > height) {
-      // landscape
-      scale = Math.ceil(STAGE_WIDTH / width)
-    } else {
-      // portrait
+      // landscape, make height fill stage
       scale = Math.ceil(STAGE_HEIGHT / height)
+    } else {
+      // portrait, make width fill stage
+      scale = Math.ceil(STAGE_WIDTH / width)
     }
+
+    // offsetX={-Math.floor((STAGE_WIDTH - (width * scale)) / 2)}
+    // offsetY={-Math.floor((STAGE_HEIGHT - (height * scale)) / 2)}
 
     return (
       <Sprite
         ref={this.setSprite}
         image={assets.get(sprite)}
-        x={Math.floor((STAGE_WIDTH - (width * scale)) / 2)}
-        y={Math.floor((STAGE_HEIGHT - (height * scale)) / 2)}
-        width={STAGE_WIDTH}
-        height={STAGE_HEIGHT}
+        x={(STAGE_WIDTH - (width * scale)) / 2}
+        y={(STAGE_HEIGHT - (height * scale)) / 2}
+        width={width * scale}
+        height={height * scale}
         animation='default'
         animations={{
           default: frames(width, height, 0, numFrames)
