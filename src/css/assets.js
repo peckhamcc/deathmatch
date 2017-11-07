@@ -4,8 +4,6 @@ import backgroundClouds from '../../assets/background-clouds.png'
 import backgroundCity from '../../assets/background-city.png'
 import backgroundTerraces from '../../assets/background-terraces.png'
 import backgroundRoad from '../../assets/background-road.png'
-import backgroundExplosion from '../../assets/background-explosion.png'
-import backgroundBlueTunnel from '../../assets/background-blue-tunnel.png'
 import introBackground from '../../assets/intro.png'
 import powerBar from '../../assets/background-power.png'
 import riderASprite from '../../assets/rider-a-sprite.png'
@@ -21,6 +19,18 @@ import player1Outline from '../../assets/player1-outline.png'
 import player2Outline from '../../assets/player2-outline.png'
 import riderASpotlight from '../../assets/rider-a-spotlight.png'
 import riderBSpotlight from '../../assets/rider-b-spotlight.png'
+import stripes from '../../assets/stripes.png'
+import screenBatman from '../../assets/screen-batman.png'
+import screenBike from '../../assets/screen-bike.png'
+import screenDog from '../../assets/screen-dog.png'
+import screenDoge from '../../assets/screen-doge.png'
+import screenFalcon from '../../assets/screen-falcon.png'
+import screenKim from '../../assets/screen-kim.png'
+import screenNuclear from '../../assets/screen-nuclear.png'
+import screenPow from '../../assets/screen-pow.png'
+import screenScream from '../../assets/screen-scream.png'
+import screenTunnel from '../../assets/screen-tunnel.png'
+import screenWrestler from '../../assets/screen-wrestler.png'
 
 const list = [
   clubLogo,
@@ -29,8 +39,6 @@ const list = [
   backgroundCity,
   backgroundTerraces,
   backgroundRoad,
-  backgroundExplosion,
-  backgroundBlueTunnel,
   introBackground,
   powerBar,
   riderASprite,
@@ -45,7 +53,18 @@ const list = [
   player1Outline,
   player2Outline,
   riderASpotlight,
-  riderBSpotlight
+  riderBSpotlight,
+  stripes,
+  screenBatman,
+  screenDog,
+  screenDoge,
+  screenFalcon,
+  screenKim,
+  screenNuclear,
+  screenPow,
+  screenScream,
+  screenTunnel,
+  screenWrestler
 ]
 
 const assets = {}

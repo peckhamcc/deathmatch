@@ -4,14 +4,35 @@ import { connect } from 'react-redux'
 import styled, { css } from 'styled-components'
 import { Image, Layer, Sprite } from 'react-konva'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
-import backgroundExplosion from '../../assets/background-explosion.png'
-import backgroundBlueTunnel from '../../assets/background-blue-tunnel.png'
 import assets from '../css/assets'
 import GAME_STATE from '../constants/game-state'
 import PLAYER_STATUS from '../constants/player-status'
 import frames from '../utils/frames'
+import screenBatman from '../../assets/screen-batman.png'
+import screenBike from '../../assets/screen-bike.png'
+import screenDog from '../../assets/screen-dog.png'
+import screenDoge from '../../assets/screen-doge.png'
+import screenFalcon from '../../assets/screen-falcon.png'
+import screenKim from '../../assets/screen-kim.png'
+import screenNuclear from '../../assets/screen-nuclear.png'
+import screenPow from '../../assets/screen-pow.png'
+import screenScream from '../../assets/screen-scream.png'
+import screenTunnel from '../../assets/screen-tunnel.png'
+import screenWrestler from '../../assets/screen-wrestler.png'
 
-const ANIMATIONS = ['blue', 'explosion']
+const ANIMATIONS = [
+  'batman',
+  'bike',
+  'dog',
+  'doge',
+  'falcon',
+  'kim',
+  'nuclear',
+  'pow',
+  'scream',
+  'tunnel',
+  'wrestler'
+]
 
 class Screen extends Component {
   static propTypes = {
@@ -35,7 +56,7 @@ class Screen extends Component {
           image: 'transparent'
         })
       }
-    }, 200)
+    }, 500)
   }
 
   componentWillUnmount = () => {
@@ -50,6 +71,39 @@ class Screen extends Component {
     }
   }
 
+  createSprite = (sprite, width, height, numFrames) => {
+    let scale = 1
+
+    if (width > height) {
+      // landscape
+      scale = Math.ceil(STAGE_WIDTH / width)
+    } else {
+      // portrait
+      scale = Math.ceil(STAGE_HEIGHT / height)
+    }
+
+    return (
+      <Sprite
+        ref={this.setSprite}
+        image={assets.get(sprite)}
+        x={Math.floor((STAGE_WIDTH - (width * scale)) / 2)}
+        y={Math.floor((STAGE_HEIGHT - (height * scale)) / 2)}
+        width={STAGE_WIDTH}
+        height={STAGE_HEIGHT}
+        animation='default'
+        animations={{
+          default: frames(width, height, 0, numFrames)
+        }}
+        frameRate={8}
+        frameIndex={this.sprite && this.sprite.frameIndex() || 0}
+        scale={{
+          x: scale,
+          y: scale
+        }}
+      />
+    )
+  }
+
   render () {
     const backgrounds = {
       transparent: () => (
@@ -61,46 +115,17 @@ class Screen extends Component {
           height={STAGE_HEIGHT}
         />
       ),
-      blue: () => (
-        <Sprite
-          ref={this.setSprite}
-          image={assets.get(backgroundBlueTunnel)}
-          x={-87}
-          y={-150}
-          width={STAGE_WIDTH}
-          height={STAGE_WIDTH}
-          animation='default'
-          animations={{
-            default: frames(240, 260, 0, 4)
-          }}
-          frameRate={8}
-          frameIndex={this.sprite && this.sprite.frameIndex() || 0}
-          scale={{
-            x: 5,
-            y: 5
-          }}
-        />
-      ),
-      explosion: () => (
-        <Sprite
-          ref={this.setSprite}
-          image={assets.get(backgroundExplosion)}
-          x={0}
-          y={0}
-          width={STAGE_WIDTH}
-          height={STAGE_WIDTH}
-          animation='default'
-          animations={{
-            default: frames(500, 281, 0, 22)
-          }}
-          frameRate={8}
-          frameIndex={this.sprite && this.sprite.frameIndex() || 0}
-          scale={{
-            x: 2.5,
-            y: 2.5
-          }}
-        />
-      )
+      batman: () => this.createSprite(screenBatman, 500, 269, 13),
+      bike: () => this.createSprite(screenBike, 640, 640, 33),
+      dog: () => this.createSprite(screenDog, 640, 640, 33),
+      doge: () => this.createSprite(screenDoge, 385, 640, 24),
+      falcon: () => this.createSprite(screenFalcon, 500, 209, 19),
+      kim: () => this.createSprite(screenKim, 687, 680, 44),
+      nuclear: () => this.createSprite(screenNuclear, 200, 200, 55),
+      pow: () => this.createSprite(screenPow, 100, 100, 7),
+      scream: () => this.createSprite(screenScream, 480, 268, 43),
+      tunnel: () => this.createSprite(screenTunnel, 160, 240, 4),
+      wrestler: () => this.createSprite(screenWrestler, 480, 320, 44)
     }
 
     return backgrounds[this.state.image]()

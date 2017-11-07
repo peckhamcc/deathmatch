@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { Layer, Rect, Stage, Group, Text, Image, Sprite } from 'react-konva'
 import { setCountingDown } from '../store/actions'
 import GAME_STATE from '../constants/game-state'
+import stripes from '../../assets/stripes.png'
+import assets from '../css/assets'
 
 class CountDown extends Component {
   state = {
@@ -39,7 +41,7 @@ class CountDown extends Component {
           text={message}
           x={x}
           y={200}
-          fill='black'
+          fillPatternImage={assets.get(stripes)}
           fontFamily='"Press Start 2P", monospace'
           fontSize={300}
         />
