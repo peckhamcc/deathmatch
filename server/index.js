@@ -10,7 +10,7 @@ const game = require('./game')
 const photos = require('./photos')
 
 const adminToken = 'something-random'
-const PORT = 6000
+const PORT = 5000
 
 const app = express()
 app.use('/deathmatch', serveStatic(path.resolve(path.join(__dirname, '..', 'dist'))))

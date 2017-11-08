@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
-import Proptypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Layer, Rect, Stage, Group, Text, Image, Sprite } from 'react-konva'
-import { setCountingDown } from '../store/actions'
-import GAME_STATE from '../constants/game-state'
-import stripes from '../../assets/stripes.png'
-import assets from '../css/assets'
+import ColouredText from './coloured-text'
 
 class CountDown extends Component {
   state = {
@@ -27,25 +21,18 @@ class CountDown extends Component {
   }
 
   render () {
-    let message = this.state.count
-    let x = 400
+    let message = '' + this.state.count
 
     if (this.state.count < 1) {
       message = 'Go!'
-      x = 150
     }
 
     return (
-      <Group>
-        <Text
-          text={message}
-          x={x}
-          y={200}
-          fillPatternImage={assets.get(stripes)}
-          fontFamily='"Press Start 2P", monospace'
-          fontSize={300}
-        />
-      </Group>
+      <ColouredText
+        message={message}
+        size={300}
+        font='"Press Start 2P", monospace'
+      />
     )
   }
 }
