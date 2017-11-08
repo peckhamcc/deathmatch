@@ -8,6 +8,7 @@ import Road from './road'
 import Player from './player'
 import PlayerStats from './player-stats'
 import CountDown from './count-down'
+import SprintMessage from './sprint-message'
 import GAME_STATE from '../constants/game-state'
 import FinishLine from './finish-line'
 import Sky from './sky'
@@ -116,7 +117,8 @@ class Game extends Component {
               width={10}
               height={10}
             />
-            { this.props.gameState === GAME_STATE.countingDown && <CountDown data-id='count-down' /> }
+            { this.props.gameState === GAME_STATE.countingDown && <CountDown /> }
+            { this.props.gameState === GAME_STATE.sprint && <SprintMessage /> }
           </Layer>
         </Stage>
       </StageWrapper>

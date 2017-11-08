@@ -75,7 +75,7 @@ export default (store) => {
   })
 
   socket.on('game:sprint', () => {
-
+    store.dispatch(updateGameState(GAME_STATE.sprint))
   })
 
   socket.on('game:finishing', () => {
