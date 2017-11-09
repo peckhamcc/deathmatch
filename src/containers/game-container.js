@@ -47,6 +47,7 @@ class GameContainer extends Component {
 
     if (this.props.gameState === GAME_STATE.countingDown || 
       this.props.gameState === GAME_STATE.race ||
+      this.props.gameState === GAME_STATE.sprint ||
       this.props.gameState === GAME_STATE.finishing) {
       return <Game width={STAGE_WIDTH} height={STAGE_HEIGHT} />
     }

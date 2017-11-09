@@ -8,6 +8,7 @@ import clubLogo from '../../assets/pcc-logo@2x.png'
 import riderImages from './rider-images'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 import FF7 from './ff7'
+import tape from '../../assets/tape.gif'
 
 const QUOTES = [{
   quote: 'Ride as much or as little, as long or as short as you feel. But ride.',
@@ -108,6 +109,8 @@ const Wrapper = styled.div`
   width: ${STAGE_WIDTH}px;
   height: ${STAGE_HEIGHT}px;
   background-color: #FFF;
+  background-image: url('${tape}');
+  background-size: cover;
   margin: auto;
 `
 

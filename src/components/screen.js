@@ -82,9 +82,6 @@ class Screen extends Component {
       scale = Math.ceil(STAGE_WIDTH / width)
     }
 
-    // offsetX={-Math.floor((STAGE_WIDTH - (width * scale)) / 2)}
-    // offsetY={-Math.floor((STAGE_HEIGHT - (height * scale)) / 2)}
-
     return (
       <Sprite
         ref={this.setSprite}

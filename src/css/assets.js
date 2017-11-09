@@ -31,6 +31,7 @@ import screenPow from '../../assets/screen-pow.png'
 import screenScream from '../../assets/screen-scream.png'
 import screenTunnel from '../../assets/screen-tunnel.png'
 import screenWrestler from '../../assets/screen-wrestler.png'
+import tape from '../../assets/tape.gif'
 
 const list = [
   clubLogo,
@@ -64,7 +65,8 @@ const list = [
   screenPow,
   screenScream,
   screenTunnel,
-  screenWrestler
+  screenWrestler,
+  tape
 ]
 
 const assets = {}

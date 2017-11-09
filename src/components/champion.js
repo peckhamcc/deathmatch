@@ -8,11 +8,14 @@ import clubLogo from '../../assets/pcc-logo@2x.png'
 import riderImages from './rider-images'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 import FF7 from './ff7'
+import tape from '../../assets/tape.gif'
 
 const Wrapper = styled.div`
   width: ${STAGE_WIDTH}px;
   height: ${STAGE_HEIGHT}px;
   background-color: #FFF;
+  background-image: url('${tape}');
+  background-size: cover;
   margin: auto;
 `
 
@@ -25,7 +28,6 @@ const WinnerText = styled.div`
 
 const SelectedRiderName = styled.div`
   font-size: 20px;
-  width: 200px;
   text-overflow: ellipsis;
   line-height: 1.2;
 `
@@ -35,29 +37,13 @@ const SelectedRider = styled.div`
   text-align: center;
   display: inline-block;
   padding: 10px;
-  border: 5px solid;
-  margin-top: 10px;
-  height: 323px;
+  margin: 50px;
   vertical-align: top;
-  border-color: ${props => {
-    if (props.bike === 'A') {
-      return 'red'
-    }
+`
 
-    if (props.bike === 'B') {
-      return 'blue'
-    }
-
-    return 'white'
-  }};
-
-  p {
-    font-size: 10px;
-  }
-  `
-
-  const ClubLogo = styled.div`
+const ClubLogo = styled.div`
   display: inline-block;
+  padding-top: 140px;
 `
 
 const NewGame = FF7.extend`
@@ -94,8 +80,8 @@ class Champion extends Component {
         <SelectedRider>
           <img
             src={champion.photoWin || riderImages[champion.gender][champion.image]}
-            width='200'
-            height='225'
+            width='400'
+            height='450'
           />
           <SelectedRiderName>{champion.name}</SelectedRiderName>
         </SelectedRider>

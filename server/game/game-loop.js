@@ -2,7 +2,7 @@ const rangeMap = require('range-map')
 const setUpPlayers = require('./setup-players')
 const GAME_STATE = require('../../src/constants/game-state')
 
-const SPRINT_DISTANCE_FROM_FINISH = 10
+const SPRINT_DISTANCE_FROM_FINISH = 30
 const SHOW_FINISH_DISTANCE_FROM_FINISH = 2
 const POWER_STATES = {
   normal: 'NORMAL',
