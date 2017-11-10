@@ -24,7 +24,7 @@ export const NAME_SIZE = 24
 export const UPDATE_FREQUENCY_MS = 1000
 
 const ANIMATION_FRAMES = {
-  'riding': 8
+  'riding': 16
 }
 
 class Player extends Component {
@@ -129,7 +129,7 @@ class Player extends Component {
           height={PLAYER_SPRITE_HEIGHT}
           animation={this.state.animation}
           animations={{
-            riding: frames(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 0, 8)
+            riding: frames(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 0, ANIMATION_FRAMES['riding'])
           }}
           frameRate={fps}
           frameIndex={this.sprite && this.sprite.frameIndex() || 0}
