@@ -31,7 +31,12 @@ const ANIMATIONS = [
   'pow',
   'scream',
   'tunnel',
-  'wrestler'
+  'wrestler',
+  'rider',
+  'rider',
+  'rider',
+  'rider',
+  'rider'
 ]
 
 class Screen extends Component {
@@ -56,7 +61,7 @@ class Screen extends Component {
           image: 'transparent'
         })
       }
-    }, 1000)
+    }, 200)
   }
 
   componentWillUnmount = () => {
@@ -71,7 +76,7 @@ class Screen extends Component {
     }
   }
 
-  createSprite = (sprite, width, height, numFrames) => {
+  createSprite = (sprite, width, height, numFrames, frameRate) => {
     let scale = 1
 
     if (width > height) {
@@ -94,7 +99,7 @@ class Screen extends Component {
         animations={{
           default: frames(width, height, 0, numFrames)
         }}
-        frameRate={8}
+        frameRate={frameRate}
         frameIndex={this.sprite && this.sprite.frameIndex() || 0}
         scale={{
           x: scale,
@@ -115,17 +120,35 @@ class Screen extends Component {
           height={STAGE_HEIGHT}
         />
       ),
-      batman: () => this.createSprite(screenBatman, 500, 269, 13),
-      bike: () => this.createSprite(screenBike, 640, 640, 33),
-      dog: () => this.createSprite(screenDog, 640, 640, 33),
-      doge: () => this.createSprite(screenDoge, 385, 640, 24),
-      falcon: () => this.createSprite(screenFalcon, 500, 209, 19),
-      kim: () => this.createSprite(screenKim, 687, 680, 44),
-      nuclear: () => this.createSprite(screenNuclear, 200, 200, 55),
-      pow: () => this.createSprite(screenPow, 100, 100, 7),
-      scream: () => this.createSprite(screenScream, 480, 268, 43),
-      tunnel: () => this.createSprite(screenTunnel, 160, 240, 4),
-      wrestler: () => this.createSprite(screenWrestler, 480, 320, 44)
+      batman: () => this.createSprite(screenBatman, 500, 269, 13, 12),
+      bike: () => this.createSprite(screenBike, 640, 640, 33, 8),
+      dog: () => this.createSprite(screenDog, 640, 640, 33, 16),
+      doge: () => this.createSprite(screenDoge, 385, 640, 24, 16),
+      falcon: () => this.createSprite(screenFalcon, 500, 209, 19, 12),
+      kim: () => this.createSprite(screenKim, 687, 680, 44, 12),
+      nuclear: () => this.createSprite(screenNuclear, 200, 200, 111, 24),
+      pow: () => this.createSprite(screenPow, 100, 100, 7, 8),
+      scream: () => this.createSprite(screenScream, 480, 268, 43, 12),
+      tunnel: () => this.createSprite(screenTunnel, 240, 160, 4, 8),
+      wrestler: () => this.createSprite(screenWrestler, 480, 320, 44, 24)
+    }
+
+    if (this.state.image === 'rider') {
+      const rider = this.props.players.find(player => player.status === PLAYER_STATUS.FASTEST)
+
+      if (rider && rider.photoPower) {
+        return (
+          <Image
+            image={assets.get(rider.photoPower)}
+            x={0}
+            y={0}
+            width={STAGE_WIDTH}
+            height={STAGE_HEIGHT}
+          />
+        )
+      } else {
+        return backgrounds.transparent()
+      }
     }
 
     return backgrounds[this.state.image]()

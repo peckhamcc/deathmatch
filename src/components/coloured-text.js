@@ -12,6 +12,11 @@ class ColouredText extends Component {
     font: PropTypes.string.isRequired
   }
 
+  static defaultProps = {
+    size: 300,
+    font: '"Press Start 2P", monospace'
+  }
+
   scene = (ctx) => {
     const textWidth = this.props.message.length * this.props.size
     const offsetLeft = parseInt((STAGE_WIDTH - textWidth) / 2, 10)

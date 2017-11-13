@@ -11,7 +11,7 @@ const MESSAGES = [
   ['You', ' ', 'can', ' ', 'do', ' ', 'it!']
 ]
 
-const DISPLAY_TIME = 4000
+const DISPLAY_TIME = 3000
 
 class CountDown extends Component {
   state = {
@@ -62,7 +62,6 @@ class CountDown extends Component {
       <ColouredText
         message={word}
         size={this.state.size}
-        font='"Press Start 2P", monospace'
       />
     )
   }

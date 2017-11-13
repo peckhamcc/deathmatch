@@ -30,8 +30,6 @@ class CountDown extends Component {
     return (
       <ColouredText
         message={message}
-        size={300}
-        font='"Press Start 2P", monospace'
       />
     )
   }
