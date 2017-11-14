@@ -24,7 +24,10 @@ export const NAME_SIZE = 24
 export const UPDATE_FREQUENCY_MS = 1000
 
 const ANIMATION_FRAMES = {
-  'riding': 16
+  riding: 16,
+  fast: 16,
+  faster: 16,
+  fastest: 16
 }
 
 class Player extends Component {
@@ -80,9 +83,18 @@ class Player extends Component {
     } else {
       const through = Date.now() - this.state.startXTime
 
-      animation = 'riding'
+      if (this.props.player.power > 600) {
+        animation = 'fastest'  
+      } else if (this.props.player.power > 400) {
+        animation = 'faster'  
+      } else if (this.props.player.power > 200) {
+        animation = 'fast'  
+      } else {
+        animation = 'riding'
+      }
+
       x = rangeMap(through > UPDATE_FREQUENCY_MS ? UPDATE_FREQUENCY_MS : through, 0, UPDATE_FREQUENCY_MS, this.state.lastX, this.state.nextX)
-    }
+    } 
 
     this.setState(s => {
       return {
@@ -129,7 +141,10 @@ class Player extends Component {
           height={PLAYER_SPRITE_HEIGHT}
           animation={this.state.animation}
           animations={{
-            riding: frames(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, 0, ANIMATION_FRAMES['riding'])
+            riding: frames(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, PLAYER_SPRITE_HEIGHT * 0, ANIMATION_FRAMES['riding']),
+            fast: frames(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, PLAYER_SPRITE_HEIGHT * 1, ANIMATION_FRAMES['fast']),
+            faster: frames(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, PLAYER_SPRITE_HEIGHT * 2, ANIMATION_FRAMES['faster']),
+            fastest: frames(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, PLAYER_SPRITE_HEIGHT * 3, ANIMATION_FRAMES['fastest'])
           }}
           frameRate={fps}
           frameIndex={this.sprite && this.sprite.frameIndex() || 0}

@@ -4,7 +4,7 @@ export default frames = (width, height, yOffset, frames) => {
 
   for(let i = 0; i < frames; i++) {
     output.push(width * i)
-    output.push(yOffset * i)
+    output.push(yOffset)
     output.push(width)
     output.push(height)
   }
