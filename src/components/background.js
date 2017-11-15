@@ -19,12 +19,14 @@ class Background extends Component {
     xOffset: 0
   }
 
-  componentDidMount () {
-    addAnimateable(this.animate)
+  componentDidUpdate () {
+    if (!this.animating) {
+      this.animating = addAnimateable(this.animate)
+    }
   }
 
   componentWillUnmount = () => {
-    removeAnimateable(this.animate)
+    this.animating = removeAnimateable(this.animate)
   }
 
   animate = () => {

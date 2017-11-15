@@ -16,7 +16,7 @@ emitter.startGame = (trackLength) => {
       .find(device => (device.player || '') === player.bike && device.power !== undefined)
 
     if (!device) {
-      return parseInt(200 + (Math.random() * 800), 10)
+      return parseInt(150 + (Math.random() * 400), 10)
     }
 
     return device.power

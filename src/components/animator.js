@@ -17,6 +17,8 @@ window.requestAnimationFrame(animate)
 
 export const addAnimateable = animatable => {
   animatables.push(animatable)
+
+  return true
 }
 
 export const removeAnimateable = animatable => {
