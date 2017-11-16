@@ -19,6 +19,9 @@ import screenPow from '../../assets/screen-pow.png'
 import screenScream from '../../assets/screen-scream.png'
 import screenTunnel from '../../assets/screen-tunnel.png'
 import screenWrestler from '../../assets/screen-wrestler.png'
+import screenSantaRudolph from '../../assets/screen-santa-rudolph.png'
+import screenChristmasHouse from '../../assets/screen-christmas-house.png'
+import screenMegaSanta from '../../assets/screen-mega-santa.png'
 
 const ANIMATIONS = [
   'batman',
@@ -32,12 +35,17 @@ const ANIMATIONS = [
   'scream',
   'tunnel',
   'wrestler',
+  'santaRudolph',
+  'christmasHouse',
+  'megaSanta',
   'rider',
   'rider',
   'rider',
   'rider',
   'rider'
 ]
+
+const VISIBLE_FOR = 300
 
 class Screen extends Component {
   static propTypes = {
@@ -61,7 +69,7 @@ class Screen extends Component {
           image: 'transparent'
         })
       }
-    }, 200)
+    }, VISIBLE_FOR)
   }
 
   componentWillUnmount = () => {
@@ -76,7 +84,7 @@ class Screen extends Component {
     }
   }
 
-  createSprite = (sprite, width, height, numFrames, frameRate) => {
+  createSprite = (sprite, width, height, numFrames) => {
     let scale = 1
 
     if (width > height) {
@@ -86,6 +94,8 @@ class Screen extends Component {
       // portrait, make width fill stage
       scale = Math.ceil(STAGE_WIDTH / width)
     }
+
+    const frameRate = parseInt((1000 / VISIBLE_FOR) * numFrames, 10)
 
     return (
       <Sprite
@@ -120,17 +130,20 @@ class Screen extends Component {
           height={STAGE_HEIGHT}
         />
       ),
-      batman: () => this.createSprite(screenBatman, 500, 269, 13, 12),
-      bike: () => this.createSprite(screenBike, 640, 640, 33, 8),
-      dog: () => this.createSprite(screenDog, 640, 640, 33, 16),
-      doge: () => this.createSprite(screenDoge, 385, 640, 24, 16),
-      falcon: () => this.createSprite(screenFalcon, 500, 209, 19, 12),
-      kim: () => this.createSprite(screenKim, 687, 680, 44, 12),
-      nuclear: () => this.createSprite(screenNuclear, 200, 200, 111, 24),
-      pow: () => this.createSprite(screenPow, 100, 100, 7, 8),
-      scream: () => this.createSprite(screenScream, 480, 268, 43, 12),
-      tunnel: () => this.createSprite(screenTunnel, 240, 160, 4, 8),
-      wrestler: () => this.createSprite(screenWrestler, 480, 320, 44, 24)
+      batman: () => this.createSprite(screenBatman, 500, 269, 13),
+      bike: () => this.createSprite(screenBike, 640, 640, 33),
+      dog: () => this.createSprite(screenDog, 640, 640, 33),
+      doge: () => this.createSprite(screenDoge, 385, 640, 24),
+      falcon: () => this.createSprite(screenFalcon, 500, 209, 19),
+      kim: () => this.createSprite(screenKim, 687, 680, 44),
+      nuclear: () => this.createSprite(screenNuclear, 200, 200),
+      pow: () => this.createSprite(screenPow, 100, 100, 7),
+      scream: () => this.createSprite(screenScream, 480, 268, 43),
+      tunnel: () => this.createSprite(screenTunnel, 240, 160, 4),
+      wrestler: () => this.createSprite(screenWrestler, 480, 320, 44),
+      santaRudolph: () => this.createSprite(screenSantaRudolph, 450, 272, 22),
+      christmasHouse: () => this.createSprite(screenChristmasHouse, 500, 282, 16),
+      megaSanta: () => this.createSprite(screenMegaSanta, 450, 256, 14)
     }
 
     if (this.state.image === 'rider') {

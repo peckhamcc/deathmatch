@@ -31,6 +31,9 @@ import screenPow from '../../assets/screen-pow.png'
 import screenScream from '../../assets/screen-scream.png'
 import screenTunnel from '../../assets/screen-tunnel.png'
 import screenWrestler from '../../assets/screen-wrestler.png'
+import screenSantaRudolph from '../../assets/screen-santa-rudolph.png'
+import screenChristmasHouse from '../../assets/screen-christmas-house.png'
+import screenMegaSanta from '../../assets/screen-mega-santa.png'
 import tape from '../../assets/tape.gif'
 
 const list = [
@@ -66,6 +69,9 @@ const list = [
   screenScream,
   screenTunnel,
   screenWrestler,
+  screenSantaRudolph,
+  screenChristmasHouse,
+  screenMegaSanta,
   tape
 ]
 
