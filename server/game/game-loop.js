@@ -1,14 +1,10 @@
 const rangeMap = require('range-map')
 const setUpPlayers = require('./setup-players')
 const GAME_STATE = require('../../src/constants/game-state')
+const POWER = require('../../src/constants/power')
 
 const SPRINT_DISTANCE_FROM_FINISH = 30
 const SHOW_FINISH_DISTANCE_FROM_FINISH = 2
-const POWER_STATES = {
-  normal: 'NORMAL',
-  fast: 'FAST',
-  max: 'MAX'
-}
 
 let gameInterval
 
@@ -48,16 +44,6 @@ const gameLoop = (emitter, getWatts, getCadence, trackLength, then, players) => 
       if (emitter.state === GAME_STATE.sprinting && player.totalJoules > (player.targetJoules - ((player.targetJoules / 100) * SHOW_FINISH_DISTANCE_FROM_FINISH))) {
         emitter.state = GAME_STATE.finishing
         emitter.emit('game:finishing')
-      }
-
-      player.powerState = POWER_STATES.normal
-
-      if (player.power > 400) {
-        player.powerState.fast
-      }
-
-      if (player.power > 800) {
-        player.powerState.max
       }
 
       return player

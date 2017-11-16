@@ -22,6 +22,10 @@ import screenWrestler from '../../assets/screen-wrestler.png'
 import screenSantaRudolph from '../../assets/screen-santa-rudolph.png'
 import screenChristmasHouse from '../../assets/screen-christmas-house.png'
 import screenMegaSanta from '../../assets/screen-mega-santa.png'
+import screenSausageRolls1 from '../../assets/screen-sausage-rolls-1.png'
+import screenSausageRolls2 from '../../assets/screen-sausage-rolls-2.png'
+import screenSausageRolls3 from '../../assets/screen-sausage-rolls-3.png'
+import screenSausageRolls4 from '../../assets/screen-sausage-rolls-4.png'
 
 const ANIMATIONS = [
   'batman',
@@ -38,6 +42,10 @@ const ANIMATIONS = [
   'santaRudolph',
   'christmasHouse',
   'megaSanta',
+  'sausageRolls1',
+  'sausageRolls2',
+  'sausageRolls3',
+  'sausageRolls4',
   'rider',
   'rider',
   'rider',
@@ -95,7 +103,11 @@ class Screen extends Component {
       scale = Math.ceil(STAGE_WIDTH / width)
     }
 
-    const frameRate = parseInt((1000 / VISIBLE_FOR) * numFrames, 10)
+    let frameRate = parseInt((1000 / VISIBLE_FOR) * numFrames, 10)
+
+    if (numFrames < frameRate) {
+      frameRate = numFrames
+    }
 
     return (
       <Sprite
@@ -143,7 +155,11 @@ class Screen extends Component {
       wrestler: () => this.createSprite(screenWrestler, 480, 320, 44),
       santaRudolph: () => this.createSprite(screenSantaRudolph, 450, 272, 22),
       christmasHouse: () => this.createSprite(screenChristmasHouse, 500, 282, 16),
-      megaSanta: () => this.createSprite(screenMegaSanta, 450, 256, 14)
+      megaSanta: () => this.createSprite(screenMegaSanta, 450, 256, 14),
+      sausageRolls1: () => this.createSprite(screenSausageRolls1, 640, 480, 8),
+      sausageRolls2: () => this.createSprite(screenSausageRolls2, 640, 480, 8),
+      sausageRolls3: () => this.createSprite(screenSausageRolls3, 640, 480, 8),
+      sausageRolls4: () => this.createSprite(screenSausageRolls4, 640, 480, 8)
     }
 
     if (this.state.image === 'rider') {

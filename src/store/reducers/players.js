@@ -3,6 +3,7 @@ import rangeMap from 'range-map'
 import { PLAYER_SPRITE_WIDTH } from '../../components/player'
 import { STAGE_WIDTH } from '../../constants/settings'
 import PLAYER_STATUS from '../../constants/player-status'
+import POWER from '../../constants/power'
 
 const initialState = {
   players: []
@@ -40,15 +41,15 @@ const playerReducer = (state = initialState, action) => {
       action.payload.forEach(player => {
         player.status = PLAYER_STATUS.NORMAL
 
-        if (player.power > 400) {
+        if (player.power > POWER.FAST) {
           player.status = PLAYER_STATUS.FAST
         }
 
-        if (player.power > 600) {
+        if (player.power > POWER.FASTER) {
           player.status = PLAYER_STATUS.FASTER
         }
 
-        if (player.power > 800) {
+        if (player.power > POWER.FASTEST) {
           player.status = PLAYER_STATUS.FASTEST
         }
       })

@@ -34,6 +34,10 @@ import screenWrestler from '../../assets/screen-wrestler.png'
 import screenSantaRudolph from '../../assets/screen-santa-rudolph.png'
 import screenChristmasHouse from '../../assets/screen-christmas-house.png'
 import screenMegaSanta from '../../assets/screen-mega-santa.png'
+import screenSausageRolls1 from '../../assets/screen-sausage-rolls-1.png'
+import screenSausageRolls2 from '../../assets/screen-sausage-rolls-2.png'
+import screenSausageRolls3 from '../../assets/screen-sausage-rolls-3.png'
+import screenSausageRolls4 from '../../assets/screen-sausage-rolls-4.png'
 import tape from '../../assets/tape.gif'
 
 const list = [
@@ -72,6 +76,10 @@ const list = [
   screenSantaRudolph,
   screenChristmasHouse,
   screenMegaSanta,
+  screenSausageRolls1,
+  screenSausageRolls2,
+  screenSausageRolls3,
+  screenSausageRolls4,
   tape
 ]
 

@@ -9,6 +9,7 @@ import rangeMap from 'range-map'
 import assets from '../css/assets'
 import frames from '../utils/frames'
 import playerPosition from '../constants/player-position'
+import POWER from '../constants/power'
 
 const PlayerName = styled.div`
   background-color: #FFF;
@@ -83,11 +84,11 @@ class Player extends Component {
     } else {
       const through = Date.now() - this.state.startXTime
 
-      if (this.props.player.power > 600) {
+      if (this.props.player.power > POWER.FASTEST) {
         animation = 'fastest'  
-      } else if (this.props.player.power > 400) {
+      } else if (this.props.player.power > POWER.FASTER) {
         animation = 'faster'  
-      } else if (this.props.player.power > 200) {
+      } else if (this.props.player.power > POWER.FAST) {
         animation = 'fast'  
       } else {
         animation = 'riding'
