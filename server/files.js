@@ -2,13 +2,13 @@ const { readFileSync, writeFileSync } = require('fs')
 const debug = require('debug')('files')
 
 module.exports = {
-  load: (file) => {
+  load: (file, defaultValue = []) => {
     try {
       return JSON.parse(readFileSync(file))
     } catch (error) {
       debug(error)
 
-      return []
+      return JSON.parse(JSON.stringify(defaultValue))
     }
   },
 
