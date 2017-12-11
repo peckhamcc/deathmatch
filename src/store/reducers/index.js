@@ -4,6 +4,7 @@ import { default as devices } from './devices'
 import { default as game } from './game'
 import { default as players } from './players'
 import { default as riders } from './riders'
+import { default as leaderboard } from './leaderboard'
 
 const reducers = {
   admin,
@@ -11,7 +12,8 @@ const reducers = {
   devices,
   game,
   players,
-  riders
+  riders,
+  leaderboard
 }
 
 export default reducers

@@ -1,7 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import GAME_STATE from '../constants/game-state'
-import { Game, Intro, Victory, Connecting, ChooseRiders, Champion, LoadingAssets } from '../components'
+import {
+  Game, 
+  Intro, 
+  Victory, 
+  Connecting, 
+  SelectingRiders, 
+  ChooseRiders, 
+  Champion, 
+  LoadingAssets
+} from '../components'
 import debug from 'debug'
 import { connect } from 'react-redux'
 import { updateGameState } from '../store/actions'
@@ -11,7 +20,7 @@ import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 const log = debug('GameContainer')
 
 class GameContainer extends Component {
-  
+
   static propTypes = {
     adminToken: PropTypes.string.isRequired,
     gameState: PropTypes.string.isRequired
@@ -23,6 +32,10 @@ class GameContainer extends Component {
 
   continueGame = () => {
     socket.emit('admin:game:continue', this.props.adminToken)
+  }
+
+  onFreePlay = () => {
+    socket.emit('admin:game:freeplay', this.props.adminToken)
   }
 
   render () {
@@ -37,11 +50,16 @@ class GameContainer extends Component {
         <Intro
           onStart={this.continueGame}
           onReset={this.newGame}
+          onFreePlay={this.onFreePlay}
         />
       )
     }
 
     if (this.props.gameState === GAME_STATE.riders) {
+      return <SelectingRiders />
+    }
+
+    if (this.props.gameState === GAME_STATE.freeplay) {
       return <ChooseRiders />
     }
 

@@ -59,7 +59,7 @@ class Champion extends Component {
   }
 
   newGame = () => {
-    socket.emit('admin:game:new', this.props.adminToken)
+    socket.emit('admin:game:intro', this.props.adminToken)
   }
 
   render () {
@@ -72,7 +72,7 @@ class Champion extends Component {
     return (
       <Wrapper className="game-over" onClick={this.newGame}>
         <NewGame>
-          <Button onClick={this.newGame}>New Game &gt;</Button>
+          <Button onClick={this.newGame}>Done &gt;</Button>
         </NewGame>
 
         <WinnerText>Winner: {champion.name}!</WinnerText>

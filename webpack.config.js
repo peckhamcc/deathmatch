@@ -16,6 +16,7 @@ config.plugins.push(new webpack.DefinePlugin({
   }
 }))
 
+config.debug = true
 config.devtool = 'source-map'
 
 module.exports = config

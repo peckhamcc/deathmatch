@@ -5,9 +5,9 @@ const socket = require('socket.io')
 const http = require('http')
 const debug = require('debug')('server')
 const bluetooth = require('./devices')
-const riders = require('./riders')
 const game = require('./game')
 const photos = require('./photos')
+const GAME_STATE = require('../src/constants/game-state')
 
 const adminToken = 'something-random'
 const PORT = 5000
@@ -21,6 +21,7 @@ app.use((req, res) => {
 
 const server = http.createServer(app)
 const io = socket(server)
+const state = require('./state')(io)
 
 io.on('connection', (client) => {
   debug('client', client.id, 'connected')
@@ -30,7 +31,7 @@ io.on('connection', (client) => {
       return debug('Invalid admin token')
     }
 
-    io.emit('riders', riders.create(rider))
+    state.createRider(rider)
   })
 
   client.on('admin:riders:update', (token, rider) => {
@@ -38,7 +39,7 @@ io.on('connection', (client) => {
       return debug('Invalid admin token')
     }
 
-    io.emit('riders', riders.update(rider))
+    state.updateRider(rider)
   })
 
   client.on('admin:riders:delete', (token, rider) => {
@@ -46,7 +47,7 @@ io.on('connection', (client) => {
       return debug('Invalid admin token')
     }
 
-    io.emit('riders', riders.delete(rider))
+    state.deleteRider(rider)
   })
 
   client.on('admin:photo:upload', (token, id, photo) => {
@@ -89,12 +90,20 @@ io.on('connection', (client) => {
     bluetooth.assign(deviceId, player)
   })
 
+  client.on('admin:game:intro', (token) => {
+    if (token !== adminToken) {
+      return debug('Invalid admin token')
+    }
+
+    state.reset()
+  })
+
   client.on('admin:game:new', (token) => {
     if (token !== adminToken) {
       return debug('Invalid admin token')
     }
 
-    riders.reset()
+    state.reset()
     game.selectRiders()
   })
 
@@ -111,7 +120,8 @@ io.on('connection', (client) => {
       return debug('Invalid admin token')
     }
 
-    game.riderHasQuit(rider)
+    state.eliminateRider(rider)
+    game.selectRiders()
   })
 
   client.on('admin:game:start', (token, trackLength) => {
@@ -128,8 +138,6 @@ io.on('connection', (client) => {
     }
 
     game.cancelGame()
-
-    io.emit('game:stop')
   })
 
   client.once('disconnect', () => {
@@ -137,10 +145,7 @@ io.on('connection', (client) => {
   })
 
   client.emit('init', {
-    bluetoothStatus: bluetooth.state,
-    riders: riders.get(),
-    devices: bluetooth.get(),
-    state: game.state
+    state: state.get()
   })
 })
 
@@ -160,38 +165,13 @@ bluetooth.on('devices', (devices) => {
   io.emit('devices', devices)
 })
 
-game.on('game:countdown', () => {
-  io.emit('game:countdown')
-})
-
-game.on('game:go', () => {
-  io.emit('game:go')
-})
-
-game.on('game:sprint', () => {
-  io.emit('game:sprint')
-})
-
-game.on('game:finishing', () => {
-  io.emit('game:finishing')
-})
-
-game.on('game:riders', (riders) => {
-  io.emit('game:riders', riders)
-})
-
-game.on('game:done', (riders) => {
-  io.emit('game:done', riders)
-})
-
 game.on('game:finished', (winner, loser) => {
-  riders.raceResult(winner, loser)
-
-  io.emit('game:finished', riders.get())
+  io.emit('riders', state.raceResult(winner, loser))
+  io.emit('game:state', GAME_STATE.finished)
 })
 
 game.on('game:players', (players) => {
-  io.emit('game:players', players)
+  io.emit('players', players)
 })
 
 server.listen(PORT, () => {

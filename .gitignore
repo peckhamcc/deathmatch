@@ -22,3 +22,4 @@ webpack-assets.json
 package-lock.json
 riders.json
 devices.json
+state.json

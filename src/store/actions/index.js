@@ -10,6 +10,7 @@ export const RIDERS_SELECT = 'RIDERS/SELECT'
 export const TRACK_LENGTH_SET = 'TRACK_LENGTH/SET'
 export const DEMO_SET = 'DEMO/SET'
 export const LOADED_SET = 'LOADED/SET'
+export const LEADERBOARD_SET = 'LEADERBOARD/SET'
 
 const setAction = (type) => (payload) => ({
   type,
@@ -29,3 +30,4 @@ export const setRiders = setAction(RIDERS_SET)
 export const selectRiders = setAction(RIDERS_SELECT)
 export const setTrackLength = setAction(TRACK_LENGTH_SET)
 export const setLoadProgress = setAction(LOADED_SET)
+export const setLeaderboard = setAction(LEADERBOARD_SET)

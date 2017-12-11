@@ -1,14 +1,12 @@
 const EventEmitter = require('events').EventEmitter
 const rangeMap = require('range-map')
-const riders = require('../riders')
+const state = require('../state')
 const devices = require('../devices')
 const selectRiders = require('./select-riders')
 const { startGame, stopGame } = require('./game-loop')
 const GAME_STATE = require('../../src/constants/game-state')
 
 const emitter = new EventEmitter()
-
-emitter.state = GAME_STATE.intro
 
 emitter.startGame = (trackLength) => {
   const getWatts = (player) => {
@@ -32,46 +30,26 @@ emitter.startGame = (trackLength) => {
     return device.cadence
   }
 
-  startGame(emitter, getWatts, getCadence, trackLength, riders)
+  startGame(emitter, getWatts, getCadence, trackLength, state)
 
   setTimeout(() => {
-    emitter.state = GAME_STATE.countingDown
-    emitter.emit('game:countdown')
+    state.setGameState(GAME_STATE.countingDown)
   }, 1000)
 
   setTimeout(() => {
-    emitter.state = GAME_STATE.race
-    emitter.emit('game:go')
+    state.setGameState(GAME_STATE.race)
   }, 7000)
 }
 
-emitter.riderHasQuit = (rider) => {
-  const r = riders
-    .get()
-    .map(r => {
-      if (r.id === rider.id) {
-        r.eliminated = true
-      }
-
-      return r
-    })
-
-  riders.set(r)
-  emitter.selectRiders(emitter, r)
-}
-
 emitter.selectRiders = () => {
-  const r = riders.get()
+  const r = state.get().riders.riders
   const willRace = selectRiders(emitter, r)
 
-  riders.set(r)
+  state.setRiders(r)
 
-  if (willRace) {
-    emitter.emit('game:riders', r)
-  } else {
+  if (!willRace) {
     // we have a champion
-    emitter.state = GAME_STATE.done
-    emitter.emit('game:done', r)
+    state.setGameState(GAME_STATE.done)
   }
 }
 

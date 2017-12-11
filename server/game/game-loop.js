@@ -8,7 +8,7 @@ const SHOW_FINISH_DISTANCE_FROM_FINISH = 2
 
 let gameInterval
 
-const gameLoop = (emitter, getWatts, getCadence, trackLength, then, players) => {
+const gameLoop = (emitter, getWatts, getCadence, trackLength, then, players, state) => {
   return () => {
     let now = Date.now()
 
@@ -36,14 +36,12 @@ const gameLoop = (emitter, getWatts, getCadence, trackLength, then, players) => 
 
       // within 5% of the end, show the finish line!
       if (emitter.state === GAME_STATE.race && player.totalJoules > (player.targetJoules - ((player.targetJoules / 100) * SPRINT_DISTANCE_FROM_FINISH))) {
-        emitter.state = GAME_STATE.sprinting
-        emitter.emit('game:sprint')
+        state.setGameState(GAME_STATE.sprinting)
       }
 
       // within 2% of the end, show the finish line!
       if (emitter.state === GAME_STATE.sprinting && player.totalJoules > (player.targetJoules - ((player.targetJoules / 100) * SHOW_FINISH_DISTANCE_FROM_FINISH))) {
-        emitter.state = GAME_STATE.finishing
-        emitter.emit('game:finishing')
+        state.setGameState(GAME_STATE.finishing)
       }
 
       return player
@@ -51,22 +49,26 @@ const gameLoop = (emitter, getWatts, getCadence, trackLength, then, players) => 
 
     then = now
 
-    emitter.emit('game:players', players)
+    state.setPlayers(players)
   }
 }
 
 module.exports = {
-  startGame: (emitter, getWatts, getCadence, trackLength, riders) => {
+  startGame: (emitter, getWatts, getCadence, trackLength, state) => {
     if (gameInterval) {
       module.exports.stopGame()
     }
 
-    gameInterval = setInterval(gameLoop(emitter, getWatts, getCadence, trackLength, Date.now(), setUpPlayers(
-      riders.get()
+    const players = setUpPlayers(
+      state.get().riders.riders
         .filter(rider => rider.selected)
         .sort((a, b) => a.bike.localeCompare(b.bike)),
-      trackLength
-    )), 1000)
+        trackLength
+    )
+
+    state.setPlayers(players)
+
+    gameInterval = setInterval(gameLoop(emitter, getWatts, getCadence, trackLength, Date.now(), players, state), 1000)
   },
 
   stopGame: () => {

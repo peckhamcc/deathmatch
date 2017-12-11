@@ -47,13 +47,21 @@ class Intro extends Component {
     alert('Please add some riders first!')
   }
 
+  onFreePlay = () => {
+    if (this.props.riders.length) {
+      return this.props.onFreePlay()
+    }
+
+    alert('Please add some riders first!')
+  }
+
   render () {
     return (
       <IntroWrapper>
         <StartGame>
-          <p>PCC Max Turbo</p>
           <Button onClick={this.onReset}>New Game &gt;</Button>
           <Button onClick={this.onStart}>Continue &gt;</Button>
+          <Button onClick={this.onFreePlay}>Free play &gt;</Button>
         </StartGame>
       </IntroWrapper>
     )
