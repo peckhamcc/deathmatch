@@ -1,6 +1,5 @@
 const EventEmitter = require('events').EventEmitter
 const rangeMap = require('range-map')
-const state = require('../state')
 const devices = require('../devices')
 const selectRiders = require('./select-riders')
 const { startGame, stopGame } = require('./game-loop')
@@ -8,7 +7,7 @@ const GAME_STATE = require('../../src/constants/game-state')
 
 const emitter = new EventEmitter()
 
-emitter.startGame = (trackLength) => {
+emitter.startGame = (trackLength, state) => {
   const getWatts = (player) => {
     const device = devices.get()
       .find(device => (device.player || '') === player.bike && device.power !== undefined)
@@ -41,7 +40,7 @@ emitter.startGame = (trackLength) => {
   }, 7000)
 }
 
-emitter.selectRiders = () => {
+emitter.selectRiders = (state) => {
   const r = state.get().riders.riders
   const willRace = selectRiders(emitter, r)
 
@@ -50,6 +49,8 @@ emitter.selectRiders = () => {
   if (!willRace) {
     // we have a champion
     state.setGameState(GAME_STATE.done)
+  } else {
+    state.setGameState(GAME_STATE.riders)
   }
 }
 

@@ -104,7 +104,7 @@ io.on('connection', (client) => {
     }
 
     state.reset()
-    game.selectRiders()
+    game.selectRiders(state)
   })
 
   client.on('admin:game:continue', (token) => {
@@ -112,7 +112,7 @@ io.on('connection', (client) => {
       return debug('Invalid admin token')
     }
 
-    game.selectRiders()
+    game.selectRiders(state)
   })
 
   client.on('admin:game:rider-quit', (token, rider) => {
@@ -121,7 +121,7 @@ io.on('connection', (client) => {
     }
 
     state.eliminateRider(rider)
-    game.selectRiders()
+    game.selectRiders(state)
   })
 
   client.on('admin:game:start', (token, trackLength) => {
@@ -129,7 +129,7 @@ io.on('connection', (client) => {
       return debug('Invalid admin token')
     }
 
-    game.startGame(trackLength)
+    game.startGame(trackLength, state)
   })
 
   client.on('admin:game:stop', (token) => {
@@ -163,11 +163,6 @@ bluetooth.on('search:stop', (state) => {
 
 bluetooth.on('devices', (devices) => {
   io.emit('devices', devices)
-})
-
-game.on('game:finished', (winner, loser) => {
-  io.emit('riders', state.raceResult(winner, loser))
-  io.emit('game:state', GAME_STATE.finished)
 })
 
 game.on('game:players', (players) => {

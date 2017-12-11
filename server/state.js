@@ -140,84 +140,19 @@ const state = {
 
     socket.emit('riders', state.riders.riders)
   },
-/*
-  addRiderPhoto: (rider, type, photo) => {
-    rider = s.riders.riders
-      .find(r => r.id === rider.id)
 
-    if (!rider) {
-      return riders
-    }
-
-    writeFileSync(path.join(path.resolve(path.join(__dirname, '..', 'photos')), `${rider.id}-${type}.png`), photo.replace(/^data:image\/\w+;base64,/, ''), {
-      encoding: 'base64'
-    })
-
-    rider[`photo${type.substring(0, 1).toUpperCase()}${type.substring(1)}`] = `/photos/${rider.id}-${type}.png`
-
-    state.save()
-
-    socket.emit('riders', state.riders.riders)
-  },
-*/
-
-/*
-  selectPlayers: () => {
-    s.riders.riders.forEach(rider => {
-      delete rider.winner
-      delete rider.loser
-      delete rider.selected
-      delete rider.bike
-    })
-
-    const player1 = findRider(riders)
-    const player2 = findRider(riders, player1.id)
-
-    player1.selected = true
-    player1.bike = 'A'
-    player2.selected = true
-    player2.bike = 'B'
-
-    state.save()
-
-    return s.riders.riders
-  },
-*/
   setPlayers: (players) => {
     s.players.players = players
 
     socket.emit('players', s.players.players)
   },
 
-  raceResult: (winner, loser) => {
-    s.riders.riders
-      .forEach(rider => {
-        delete rider.winner
-        delete rider.loser
-
-        if (rider.id === loser) {
-          rider.eliminated = true
-          rider.loser = true
-          rider.races = rider.races + 1
-        }
-
-        if (rider.id === winner) {
-          rider.winner = true
-          rider.races = rider.races + 1
-        }
-      })
+  setGameState: (gameState) => {
+    s.game.state = gameState
 
     state.save()
 
-    return s.riders.riders
-  },
-
-  setGameState: (state) => {
-    s.game.state = state
-
-    state.save()
-
-    io.emit('game:state', s.game.state)
+    socket.emit('game:state', s.game.state)
   }
 }
 

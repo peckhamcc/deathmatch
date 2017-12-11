@@ -1,13 +1,13 @@
 const GAME_STATE = {
   connecting: 'CONNECTING',
-  loading: 'LOADING_ASSETS',
+  loading: 'LOADING',
   intro: 'INTRO',
-  riders: 'TWO_PEOPLE_ENTER_ONE_PERSON_LEAVES',
-  countingDown: 'GET_READY',
-  race: 'GO',
-  sprint: 'DIG_DEEP',
-  finishing: 'THE_END_IS_IN_SIGHT',
-  finished: 'AND_ACROSS_THE_LINE',
+  riders: 'RIDERS',
+  countingDown: 'COUNT_DOWN',
+  race: 'RACE',
+  sprint: 'SPRINT',
+  finishing: 'FINISHING',
+  finished: 'FINISHED',
   done: 'THERE_CAN_BE_ONLY_ONE'
 }
 
