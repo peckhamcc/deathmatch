@@ -10,7 +10,8 @@ import {
   setPlayers,
   setDemo,
   setLoadProgress,
-  setLeaderboard
+  setLeaderboard,
+  setFreeplay
 } from '../store/actions'
 import GAME_STATE from '../constants/game-state'
 
@@ -53,5 +54,9 @@ export default (store) => {
 
   socket.on('leaderboard', (leaderboard) => {
     store.dispatch(setLeaderboard(leaderboard))
+  })
+
+  socket.on('game:freeplay', (freeplay) => {
+    store.dispatch(setFreeplay(freeplay))
   })
 }

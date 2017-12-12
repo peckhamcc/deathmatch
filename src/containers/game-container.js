@@ -56,11 +56,11 @@ class GameContainer extends Component {
     }
 
     if (this.props.gameState === GAME_STATE.riders) {
-      return <SelectingRiders />
-    }
-
-    if (this.props.gameState === GAME_STATE.freeplay) {
-      return <ChooseRiders />
+      if (this.props.freeplay) {
+        return <ChooseRiders />
+      } else {
+        return <SelectingRiders />
+      }
     }
 
     if (this.props.gameState === GAME_STATE.countingDown || 
@@ -82,9 +82,10 @@ class GameContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ admin: { token }, game: { state } }) => ({
+const mapStateToProps = ({ admin: { token }, game: { state, freeplay } }) => ({
   adminToken: token,
-  gameState: state
+  gameState: state,
+  freeplay: freeplay
 })
 
 const mapDispatchToProps = {

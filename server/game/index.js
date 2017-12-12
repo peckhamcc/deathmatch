@@ -54,6 +54,30 @@ emitter.selectRiders = (state) => {
   }
 }
 
+emitter.startFreeplay = (state, players, trackLength) => {
+  const r = state.get().riders.riders
+    .map(rider => {
+      delete rider.selected
+      delete rider.bike
+
+      if (players.indexOf(rider.id) === 0) {
+        rider.selected = true
+        rider.bike = 'A'
+      }
+
+      if (players.indexOf(rider.id) === 1) {
+        rider.selected = true
+        rider.bike = 'B'
+      }
+
+      return rider
+    })
+
+  state.setRiders(r)
+
+  emitter.startGame(trackLength, state)
+}
+
 emitter.cancelGame = () => {
   stopGame()
 }

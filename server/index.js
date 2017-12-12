@@ -96,6 +96,25 @@ io.on('connection', (client) => {
     }
 
     state.reset()
+    state.setFreeplay(false)
+  })
+
+  client.on('admin:game:freeplay', (token) => {
+    if (token !== adminToken) {
+      return debug('Invalid admin token')
+    }
+
+    state.reset()
+    state.setFreeplay(true)
+    state.setGameState(GAME_STATE.riders)
+  })
+
+  client.on('admin:game:freeplay:start', (token, trackLength, players) => {
+    if (token !== adminToken) {
+      return debug('Invalid admin token')
+    }
+
+    game.startFreeplay(state, players, trackLength)
   })
 
   client.on('admin:game:new', (token) => {
@@ -104,6 +123,7 @@ io.on('connection', (client) => {
     }
 
     state.reset()
+    state.setFreeplay(false)
     game.selectRiders(state)
   })
 

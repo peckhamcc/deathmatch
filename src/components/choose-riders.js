@@ -96,6 +96,11 @@ const StartRace = FF7.extend`
   margin: 670px 0 0 755px;
 `
 
+const Back = FF7.extend`
+  position: absolute;
+  margin: 670px 0 0 20px;
+`
+
 const findRider = (riders, id) => {
   let output
   
@@ -119,136 +124,71 @@ class ChooseRiders extends Component {
   }
 
   state = {
-    riders: [],
     player1Index: 0,
     player2Index: 1,
-    player1StartingIndex: 0,
-    player2StartingIndex: 1,
-    loop: 0,
-    done: false,
-    timeout: 100
+    selectIndex: 1
   }
 
   componentWillMount () {
     this.setState({
-      riders: [],
       player1Index: 0,
-      player2Index: 1,
-      loop: 0,
-      done: false,
-      timeout: 50
+      player2Index: 1
     })
-
-    this.selectRiders()
-  }
-
-  componentWillUnmount () {
-    clearTimeout(this.timeout)
-  }
-
-  selectRiders = () => {
-    if (this.state.loop === 15) {
-      this.setState({
-        done: true
-      })
-
-      return
-    }
-
-    const riders = this.props.riders.map(rider => {
-      const r = JSON.parse(JSON.stringify(rider))
-      delete r.selected
-      delete r.bike
-
-      return r
-    })
-
-    let looped = false
-
-    const findNextIndex = (riders, lastIndex, notIndex) => {
-      for (let nextIndex = lastIndex + 1; nextIndex !== lastIndex; nextIndex++) {
-        if (nextIndex === riders.length) {
-          nextIndex = 0
-          looped = true
-        }
-
-        const rider = riders[nextIndex]
-
-        if (!rider.eliminated && nextIndex !== notIndex) {
-          return nextIndex
-        }
-      }
-
-      return -1
-    }
-
-    let nextPlayer1Index = findNextIndex(riders, this.state.player1Index)
-
-    if (this.state.loop > 10) {
-      nextPlayer1Index = this.props.riders.findIndex(rider => rider.bike === 'A')
-    }
-
-    const nextPlayer2Index = findNextIndex(riders, this.state.player2Index, nextPlayer1Index)
-
-    if (nextPlayer1Index === -1 || nextPlayer2Index === -1) {
-      this.setState({
-        done: true
-      })
-
-      return
-    }
-
-    const riderA = riders[nextPlayer1Index]
-    const riderB = riders[nextPlayer2Index]
-
-    riderA.selected = true
-    riderA.bike = 'A'
-    riderB.selected = true
-    riderB.bike = 'B'
-
-    this.setState(s => ({
-      riders: riders,
-      loop: looped ? s.loop + 1 : s.loop,
-      player1Index: nextPlayer1Index,
-      player2Index: nextPlayer2Index,
-      timeout: looped ? (s.timeout > 300 ? 300 : s.timeout *= 1.1) : s.timeout
-    }))
-
-    this.timeout = setTimeout(this.selectRiders, this.state.timeout)
   }
 
   onStart = () => {
-    socket.emit('admin:game:start', this.props.adminToken, this.props.trackLength)
+    socket.emit(
+      'admin:game:freeplay:start',
+      this.props.adminToken,
+      this.props.trackLength, [
+        this.state.player1Index,
+        this.state.player2Index
+      ].map(index => this.props.riders[index].id)
+    )
   }
 
-  onDropOut = (rider) => () => {
-    if (confirm('Are you sure?')) {
-      socket.emit('admin:game:rider-quit', this.props.adminToken, rider)
+  onBack = () => {
+    socket.emit('admin:game:intro', this.props.adminToken)
+  }
+
+  selectRider = (index) => {
+    return () => {
+      this.setState((s => {
+        return {
+          [`player${s.selectIndex}Index`]: index
+        }
+      }))
+    }
+  }
+
+  setSelectIndex = (index) => {
+    return () => {
+      this.setState({
+        selectIndex: index
+      })
     }
   }
 
   render () {
-    let riders = this.state.riders
+    let riders = this.props.riders
 
-    if (this.state.done) {
-      riders = this.props.riders
-    }
-
-    const player1 = riders.find(rider => rider.bike === 'A')
-    const player2 = riders.find(rider => rider.bike === 'B')
+    const player1 = riders[this.state.player1Index]
+    const player2 = riders[this.state.player2Index]
 
     return (
       <RiderContainer>
-          {this.state.done && <StartRace>
+          <StartRace>
             <Button onClick={this.onStart}>Start Race &gt;</Button>
-          </StartRace>}
-          <SelectedRider bike={player1.bike}>
+          </StartRace>
+          <Back>
+            <Button onClick={this.onBack}>&lt; Abort!</Button>
+          </Back>
+          <SelectedRider bike={player1.bike} onClick={this.setSelectIndex(1)}>
             <PlayerOutline src={player1Outline} width='254' height='338' />
             <SelectedRiderImage
               src={player1.photoSelect || riderImages[player1.gender][player1.image]}
               width='200'
               height='225'
-              onClick={this.onDropOut(player1)}
             />
             <SelectedRiderName>{player1.name}</SelectedRiderName>
           </SelectedRider>
@@ -257,25 +197,25 @@ class ChooseRiders extends Component {
             <img src={clubLogo} height='300' onClick={this.onStart} />
           </ClubLogo>
 
-          <SelectedRider bike={player2.bike}>
+          <SelectedRider bike={player2.bike} onClick={this.setSelectIndex(2)}>
             <PlayerOutline src={player2Outline} width='253' height='338' />
             <SelectedRiderImage
               src={player2.photoSelect || riderImages[player2.gender][player2.image]}
               width='200'
               height='225'
-              onClick={this.onDropOut(player2)}
             />
             <SelectedRiderName>{player2.name}</SelectedRiderName>
           </SelectedRider>
 
           <Riders>
-            {riders.map(rider => {
+            {riders.map((rider, index) => {
               return (
-                <Rider key={rider.id} selected={rider.selected} bike={rider.bike} eliminated={rider.eliminated}>
+                <Rider key={rider.id} selected={rider.selected} bike={rider.bike}>
                   <img
-                    src={rider.eliminated ? rider.photoLose : rider.photoSelect}
+                    src={rider.photoSelect}
                     width='100'
                     height='120'
+                    onClick={this.selectRider(index)}
                   />
                 </Rider>
               )

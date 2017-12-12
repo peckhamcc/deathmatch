@@ -20,7 +20,8 @@ const defaultState = () => ({
   game: {
     state: GAME_STATE.intro,
     trackLength: 250,
-    demo: false
+    demo: false,
+    freeplay: false
   },
   leaderboard: {
     power: {
@@ -153,6 +154,14 @@ const state = {
     state.save()
 
     socket.emit('game:state', s.game.state)
+  },
+
+  setFreeplay: (freeplay) => {
+    s.game.freeplay = freeplay
+
+    state.save()
+
+    socket.emit('game:freeplay', freeplay)
   }
 }
 

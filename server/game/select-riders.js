@@ -26,11 +26,7 @@ const selectRiders = (emitter, riders) => {
   })
 
   if (eligible.length > 1) {
-    // there are two or more eligible riders, we race!
-    emitter.state = GAME_STATE.riders
-
     // choose from the set of people who have ridden the fewest races
-
     if (eligible[0].races === eligible[1].races) {
       // e.g. 0, 0, 0, 1, 2 - just take the 0s
       eligible = eligible

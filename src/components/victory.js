@@ -190,7 +190,8 @@ class Victory extends Component {
 
   static propTypes = {
     adminToken: PropTypes.string.isRequired,
-    riders: PropTypes.array.isRequired
+    riders: PropTypes.array.isRequired,
+    freeplay: PropTypes.bool.isRequired
   }
 
   nextRace = () => {
@@ -241,9 +242,10 @@ class Victory extends Component {
   }
 }
 
-const mapStateToProps = ({ admin: { token }, riders: { riders } }) => ({
+const mapStateToProps = ({ admin: { token }, riders: { riders }, game: { freeplay } }) => ({
   adminToken: token,
-  riders
+  riders,
+  freeplay
 })
 
 const mapDispatchToProps = {

@@ -96,6 +96,11 @@ const StartRace = FF7.extend`
   margin: 670px 0 0 755px;
 `
 
+const Back = FF7.extend`
+  position: absolute;
+  margin: 670px 0 0 20px;
+`
+
 const findRider = (riders, id) => {
   let output
   
@@ -221,6 +226,10 @@ class SelectingRiders extends Component {
     socket.emit('admin:game:start', this.props.adminToken, this.props.trackLength)
   }
 
+  onBack = () => {
+    socket.emit('admin:game:intro', this.props.adminToken)
+  }
+
   onDropOut = (rider) => () => {
     if (confirm('Are you sure?')) {
       socket.emit('admin:game:rider-quit', this.props.adminToken, rider)
@@ -242,6 +251,9 @@ class SelectingRiders extends Component {
           {this.state.done && <StartRace>
             <Button onClick={this.onStart}>Start Race &gt;</Button>
           </StartRace>}
+          <Back>
+            <Button onClick={this.onBack}>&lt; Abort!</Button>
+          </Back>
           <SelectedRider bike={player1.bike}>
             <PlayerOutline src={player1Outline} width='254' height='338' />
             <SelectedRiderImage
