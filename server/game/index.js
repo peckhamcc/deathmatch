@@ -29,7 +29,18 @@ emitter.startGame = (trackLength, state) => {
     return device.cadence
   }
 
-  startGame(emitter, getWatts, getCadence, trackLength, state)
+  const getSpeed = (player) => {
+    const device = devices.get()
+      .find(device => (device.player || '').toLowerCase() === player.bike && device.speed !== undefined)
+
+    if (!device) {
+      return parseInt(20 + (Math.random() * 10), 10)
+    }
+
+    return device.speed
+  }
+
+  startGame(emitter, getWatts, getCadence, getSpeed, trackLength, state)
 
   setTimeout(() => {
     state.setGameState(GAME_STATE.countingDown)

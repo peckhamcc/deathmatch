@@ -27,6 +27,18 @@ const defaultState = () => ({
     power: {
       female: [],
       male: []
+    },
+    cadence: {
+      female: [],
+      male: []
+    },
+    joules: {
+      female: [],
+      male: []
+    },
+    speed: {
+      female: [],
+      male: []
     }
   },
   players: {
@@ -38,6 +50,8 @@ const defaultState = () => ({
 })
 
 let s = load('state.json', defaultState())
+s.game.state = GAME_STATE.intro
+
 let socket = null
 
 const state = {
@@ -65,6 +79,18 @@ const state = {
 
     s.leaderboard = {
       power: {
+        female: [],
+        male: []
+      },
+      cadence: {
+        female: [],
+        male: []
+      },
+      joules: {
+        female: [],
+        male: []
+      },
+      speed: {
         female: [],
         male: []
       }
@@ -162,6 +188,18 @@ const state = {
     state.save()
 
     socket.emit('game:freeplay', freeplay)
+  },
+
+  getLeaderboard: () => {
+    return s.leaderboard
+  },
+
+  setLeaderboard: (leaderboard) => {
+    s.leaderboard = leaderboard
+
+    state.save()
+
+    socket.emit('leaderboard', leaderboard)
   }
 }
 

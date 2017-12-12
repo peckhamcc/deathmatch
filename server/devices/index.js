@@ -190,6 +190,7 @@ emitter.connect = (id) => {
         debug(`Got cadence data from ${device.name}`, JSON.stringify(measurement, null, 2))
 
         if (lastWheelEventTimeMs !== -1 && lastCrankEventTimeMs !== -1) {
+          
           // calculate cadence
           if (measurement.lastCrankEventTime) {
             const timeMs = measurement.lastCrankEventTime - lastCrankEventTimeMs

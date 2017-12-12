@@ -4,6 +4,18 @@ const initialState = {
   power: {
     female: [],
     male: []
+  },
+  cadence: {
+    female: [],
+    male: []
+  },
+  joules: {
+    female: [],
+    male: []
+  },
+  speed: {
+    female: [],
+    male: []
   }
 }
 

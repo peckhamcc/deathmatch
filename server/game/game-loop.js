@@ -5,17 +5,47 @@ const POWER = require('../../src/constants/power')
 
 const SPRINT_DISTANCE_FROM_FINISH = 30
 const SHOW_FINISH_DISTANCE_FROM_FINISH = 2
+const MAX_LEADERBOARD_SIZE = 10
 
 let gameInterval
 
-const gameLoop = (emitter, getWatts, getCadence, trackLength, then, players, state) => {
+const updateLeaderboard = (leaderboard, value, player) => {
+  leaderboard.push({
+    player,
+    value
+  })
+
+  let playerEntries = 0
+
+  leaderboard = leaderboard
+    .sort((a, b) => b.value - a.value)
+    .filter(entry => {
+      if (entry.player === player) {
+        playerEntries++
+
+        return playerEntries === 1
+      }
+
+      return true
+    })
+
+  if (leaderboard.length > MAX_LEADERBOARD_SIZE) {
+    leaderboard.length = MAX_LEADERBOARD_SIZE
+  }
+
+  return leaderboard
+}
+
+const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, players, state) => {
   return () => {
     let now = Date.now()
+    const leaderboard = state.getLeaderboard()
 
     players = players.map(player => {
       player.power = getWatts(player)
       player.cadence = getCadence(player)
       player.metersRemaining = trackLength
+      player.speed = getSpeed(player)
 
       if (state.get().game.state === GAME_STATE.race || state.get().game.state === GAME_STATE.sprint || state.get().game.state === GAME_STATE.finishing) {
         const seconds = (now - then) / 1000
@@ -23,6 +53,11 @@ const gameLoop = (emitter, getWatts, getCadence, trackLength, then, players, sta
 
         player.totalJoules += joules
         player.metersRemaining = trackLength - rangeMap(player.totalJoules, 0, player.targetJoules, 0, trackLength)
+
+        leaderboard.power[player.gender] = updateLeaderboard(leaderboard.power[player.gender], player.power, player.id)
+        leaderboard.cadence[player.gender] = updateLeaderboard(leaderboard.cadence[player.gender], player.cadence, player.id)
+        leaderboard.speed[player.gender] = updateLeaderboard(leaderboard.speed[player.gender], player.speed, player.id)
+        leaderboard.joules[player.gender] = updateLeaderboard(leaderboard.joules[player.gender], player.totalJoules, player.id)
 
         if (state.get().game.state === GAME_STATE.finishing && player.totalJoules > player.targetJoules) {
           clearInterval(gameInterval)
@@ -71,12 +106,13 @@ const gameLoop = (emitter, getWatts, getCadence, trackLength, then, players, sta
 
     then = now
 
+    state.setLeaderboard(leaderboard)
     state.setPlayers(players)
   }
 }
 
 module.exports = {
-  startGame: (emitter, getWatts, getCadence, trackLength, state) => {
+  startGame: (emitter, getWatts, getCadence, getSpeed, trackLength, state) => {
     if (gameInterval) {
       module.exports.stopGame()
     }
@@ -90,7 +126,7 @@ module.exports = {
 
     state.setPlayers(players)
 
-    gameInterval = setInterval(gameLoop(emitter, getWatts, getCadence, trackLength, Date.now(), players, state), 1000)
+    gameInterval = setInterval(gameLoop(emitter, getWatts, getCadence, getSpeed, trackLength, Date.now(), players, state), 1000)
   },
 
   stopGame: () => {
