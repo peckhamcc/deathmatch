@@ -238,8 +238,6 @@ class Victory extends Component {
 
         <Quote>&quot;{quote.quote}&quot;</Quote>
         <AttributedTo>&nbsp;- {quote.saidBy}</AttributedTo>
-
-        <LeaderBoard />
       </Wrapper>
     )
   }

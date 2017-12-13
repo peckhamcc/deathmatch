@@ -9,6 +9,7 @@ import riderImages from './rider-images'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 import FF7 from './ff7'
 import tape from '../../assets/tape.gif'
+import LeaderBoard from './leader-board'
 
 const Wrapper = styled.div`
   width: ${STAGE_WIDTH}px;
@@ -23,7 +24,7 @@ const WinnerText = styled.div`
   text-align: center;
   margin: 0;
   padding: 40px 40px 20px 40px;
-  font-size: 36px;
+  font-size: 24px;
 `
 
 const SelectedRiderName = styled.div`
@@ -35,15 +36,15 @@ const SelectedRiderName = styled.div`
 const SelectedRider = styled.div`
   color: ${props => props.selected ? 'blue' : 'black'};
   text-align: center;
-  display: inline-block;
+  display: block;
   padding: 10px;
-  margin: 50px;
+  margin: 0 auto;
   vertical-align: top;
 `
 
 const ClubLogo = styled.div`
   display: inline-block;
-  padding-top: 140px;
+  /*padding-top: 140px;*/
 `
 
 const NewGame = FF7.extend`
@@ -75,20 +76,21 @@ class Champion extends Component {
           <Button onClick={this.newGame}>Done &gt;</Button>
         </NewGame>
 
-        <WinnerText>Winner: {champion.name}!</WinnerText>
+        <WinnerText>{champion.name} wins!</WinnerText>
 
         <SelectedRider>
           <img
             src={champion.photoWin || riderImages[champion.gender][champion.image]}
-            width='400'
-            height='450'
+            width='266'
+            height='300'
           />
-          <SelectedRiderName>{champion.name}</SelectedRiderName>
         </SelectedRider>
-
+{/*
         <ClubLogo>
           <img src={clubLogo} height='300' />
         </ClubLogo>
+*/}
+        <LeaderBoard />
       </Wrapper>
     )
   }

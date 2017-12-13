@@ -248,9 +248,9 @@ class SelectingRiders extends Component {
 
     return (
       <RiderContainer>
-          {this.state.done && <StartRace>
+          <StartRace>
             <Button onClick={this.onStart}>Start Race &gt;</Button>
-          </StartRace>}
+          </StartRace>
           <Back>
             <Button onClick={this.onBack}>&lt; Abort!</Button>
           </Back>

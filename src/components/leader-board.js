@@ -4,14 +4,26 @@ import { connect } from 'react-redux'
 
 const Header = styled.div`
   font-size: 18px;
+  margin: 10px;
 `
 
 const Table = styled.table`
   font-size: 16px;
+  border-spacing: 5px;
+`
+
+const TableHeader = styled.th`
+  padding: 10px;
+  background-color: #EEE;
+  border: 1px solid #333;
+  font-size: 12px;
 `
 
 const TableCell = styled.td`
   width: 12.5%;
+  padding: 10px;
+  background-color: #FFF;
+  font-size: 12px;
 `
 
 const findRider = (riders, id) => {
@@ -59,17 +71,16 @@ const LeaderBoard = ({ riders, power, cadence, joules, speed }) => {
 
   return (
     <div>
-      <Header>Leaderboard</Header>
       <Table>
         <tr>
-          <th colSpan='4'>Power</th>
-          <th colSpan='4'>Speed</th>
+          <TableHeader colSpan='4'>Power</TableHeader>
+          <TableHeader colSpan='4'>Speed</TableHeader>
         </tr>
         <tr>
-          <th colSpan='2'>Men</th>
-          <th colSpan='2'>Women</th>
-          <th colSpan='2'>Men</th>
-          <th colSpan='2'>Women</th>
+          <TableHeader colSpan='2'>Men</TableHeader>
+          <TableHeader colSpan='2'>Women</TableHeader>
+          <TableHeader colSpan='2'>Men</TableHeader>
+          <TableHeader colSpan='2'>Women</TableHeader>
         </tr>
         {
           leaderBoard.map((leaders, index) => (
