@@ -15,7 +15,8 @@
   "scripts": {
     "clean": "rm -rf dist",
     "build": "npm run clean && webpack --config webpack.config.demo.js",
-    "start": "npm run clean && (webpack --progress --colors --watch & node server)",
+    "start": "DEBUG=*,-babel,-express:*,-engine:*,-engine,-socket.io:*,-send,-socket.io-parser node --abort-on-uncaught-exception server",
+    "watch": "npm run clean && (webpack --progress --colors --watch & node server)",
     "demo": "npm run clean && (webpack --config webpack.config.demo.js --progress --colors --watch & node server)",
     "deploy": "NODE_ENV=production npm run build && NODE_DEBUG=gh-pages gh-pages -d dist",
     "lint": "standard"
@@ -26,6 +27,7 @@
   "dependencies": {
     "babel-runtime": "^6.11.6",
     "express": "^4.16.2",
+    "firmata": "^0.17.0",
     "json-stringify-safe": "^5.0.1",
     "konva": "^1.7.5",
     "less": "^2.7.1",

@@ -83,7 +83,6 @@ class Game extends Component {
                   <Spotlight
                     index={index}
                     yOffset={index === 0 ? -50 : 0}
-                    power={player.power}
                     sprite={SPOTLIGHT_SPRITES[index]}
                     status={player.status}
                   />

@@ -20,7 +20,6 @@ class Spotlight extends Component {
     index: PropTypes.number.isRequired,
     sprite: PropTypes.string.isRequired,
     yOffset: PropTypes.number.isRequired,
-    power: PropTypes.number.isRequired,
     gameState: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired
   }

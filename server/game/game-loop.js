@@ -2,6 +2,7 @@ const rangeMap = require('range-map')
 const setUpPlayers = require('./setup-players')
 const GAME_STATE = require('../../src/constants/game-state')
 const POWER = require('../../src/constants/power')
+const light = require('../light')
 
 const SPRINT_DISTANCE_FROM_FINISH = 30
 const SHOW_FINISH_DISTANCE_FROM_FINISH = 2
@@ -86,19 +87,24 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
 
           state.setRiders(riders)
           state.setGameState(GAME_STATE.finished)
+
+          light.colour((player.bike === 'A' ? 255 : 0), 0, (player.bike === 'B' ? 255 : 0))
+          light.motor(0)
         }
       }
 
       // within 5% of the end, show the finish line!
       if (state.get().game.state === GAME_STATE.race && player.totalJoules > (player.targetJoules - ((player.targetJoules / 100) * SPRINT_DISTANCE_FROM_FINISH))) {
         state.setGameState(GAME_STATE.sprint)
-      }
 
-      console.info('game state', state.get().game.state, GAME_STATE.sprint, 'is GAME_STATE.sprint', state.get().game.state === GAME_STATE.sprint)
+        light.flash(100)
+      }
 
       // within 2% of the end, show the finish line!
       if (state.get().game.state === GAME_STATE.sprint && player.totalJoules > (player.targetJoules - ((player.targetJoules / 100) * SHOW_FINISH_DISTANCE_FROM_FINISH))) {
         state.setGameState(GAME_STATE.finishing)
+
+        light.flash(10)
       }
 
       return player
@@ -108,6 +114,11 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
 
     state.setLeaderboard(leaderboard)
     state.setPlayers(players)
+
+    if (state.get().game.state === GAME_STATE.race) {
+      const remaining = players[0].metersRemaining < players[1].metersRemaining ? players[0].metersRemaining : players[1].metersRemaining
+      light.motor(rangeMap(remaining, 0, trackLength - ((trackLength / 100) * SPRINT_DISTANCE_FROM_FINISH), 255, 200))
+    }
   }
 }
 
