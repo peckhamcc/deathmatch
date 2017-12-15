@@ -28,10 +28,25 @@ const queue = []
 let timeout
 let draining
 
+const poll = (fn, frequency = 10) => {
+  return new Promise((resolve, reject) => {
+    const interval = setInterval(() => {
+      if (fn()) {
+        clearInterval(interval)
+        resolve()
+      }
+    }, frequency)
+  })
+}
+
 const write = (pin, value) => {
   queue.push({
     pin, value
   })
+
+  if (draining) {
+    return
+  }
 
   if (timeout) {
     clearTimeout(timeout)
@@ -43,36 +58,42 @@ const write = (pin, value) => {
 const drain = async () => {
   draining = true
 
-  const operation = queue.unshift()
+  while(queue.length) {
+    const operation = queue.shift()
 
-  board.analogWrite()
+    board.analogWrite(operation.pin, operation.value)
+
+    await poll(() => {
+      return board.pending === 0
+    })
+  }
 
   draining = false
 }
 
 module.exports = {
   flash: (speed) => {
-    board.analogWrite(MODE_PIN, FLASH_MODE)
+    write(MODE_PIN, FLASH_MODE)
 
-    board.analogWrite(FLASH_PIN, speed)
+    write(FLASH_PIN, speed)
 
     debug(`Setting flash speed to ${speed}`)
   },
 
   colour: (red, green, blue) => {
-    board.analogWrite(MODE_PIN, LIGHT_MODE)
+    write(MODE_PIN, LIGHT_MODE)
 
-    board.analogWrite(RED_PIN, red)
-    board.analogWrite(GREEN_PIN, green)
-    board.analogWrite(BLUE_PIN, blue)
+    write(RED_PIN, red)
+    write(GREEN_PIN, green)
+    write(BLUE_PIN, blue)
 
     debug(`Setting colour to r${red} g${green} b${blue}`)
   },
 
   motor: (speed) => {
-    board.analogWrite(MODE_PIN, LIGHT_MODE)
+    write(MODE_PIN, LIGHT_MODE)
 
-    board.analogWrite(MOTOR_PIN, speed)
+    write(MOTOR_PIN, speed)
 
     debug(`Setting motor speed to ${speed}`)
   }

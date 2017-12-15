@@ -13,6 +13,12 @@ const light = require('./light')
 const adminToken = 'something-random'
 const PORT = 5000
 
+process.on('unhandledRejection', error => {
+  console.error(error.stack)
+
+  throw error
+})
+
 const app = express()
 app.use('/deathmatch', serveStatic(path.resolve(path.join(__dirname, '..', 'dist'))))
 app.use('/deathmatch/photos', serveStatic(path.resolve(path.join(__dirname, '..', 'photos'))))
