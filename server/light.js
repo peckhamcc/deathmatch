@@ -4,8 +4,11 @@ const board = new Board('/dev/cu.usbmodem1431', {
   skipCapabilities: true
 })
 
+let ready = false
+
 board.on('ready', () => {
   debug('Light connected')
+  ready = true
   module.exports.colour(0, 0, 0)
   module.exports.motor(0)
 })
@@ -60,6 +63,12 @@ const drain = async () => {
 
   while(queue.length) {
     const operation = queue.shift()
+
+    if (!ready) {
+      queue.length = 0
+
+      break;
+    }
 
     board.analogWrite(operation.pin, operation.value)
 

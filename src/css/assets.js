@@ -4,6 +4,7 @@ import backgroundClouds from '../../assets/background-clouds.png'
 import backgroundCity from '../../assets/background-city.png'
 import backgroundTerraces from '../../assets/background-terraces.png'
 import backgroundRoad from '../../assets/background-road.png'
+import backgroundPeckham from '../../assets/background-peckham.png'
 import introBackground from '../../assets/intro.png'
 import powerBar from '../../assets/background-power.png'
 import riderASprite from '../../assets/rider-a-sprite.png'
@@ -47,6 +48,7 @@ const list = [
   backgroundCity,
   backgroundTerraces,
   backgroundRoad,
+  backgroundPeckham,
   introBackground,
   powerBar,
   riderASprite,

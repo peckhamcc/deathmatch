@@ -14,7 +14,8 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "npm run clean && webpack --config webpack.config.demo.js",
+    "build:demo": "npm run clean && webpack --config webpack.config.demo.js",
+    "build": "npm run clean && webpack",
     "start": "DEBUG=*,-babel,-express:*,-engine:*,-engine,-socket.io:*,-send,-socket.io-parser node --abort-on-uncaught-exception server",
     "watch": "npm run clean && (webpack --progress --colors --watch & node server)",
     "demo": "npm run clean && (webpack --config webpack.config.demo.js --progress --colors --watch & node server)",

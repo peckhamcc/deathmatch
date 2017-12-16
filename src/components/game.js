@@ -16,6 +16,7 @@ import backgroundClouds from '../../assets/background-clouds.png'
 import backgroundCity from '../../assets/background-city.png'
 import backgroundTerraces from '../../assets/background-terraces.png'
 import backgroundRoad from '../../assets/background-road.png'
+import backgroundPeckham from '../../assets/background-peckham.png'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 import riderASprite from '../../assets/rider-a-sprite.png'
 import riderBSprite from '../../assets/rider-b-sprite.png'
@@ -73,7 +74,8 @@ class Game extends Component {
             <Sky />
             <Background image={backgroundClouds} width={4096} height={200} speed={2} y={60} />
             <Background image={backgroundCity} width={4096} height={451} speed={4} y={25} />
-            <Background image={backgroundTerraces} width={4056} height={306} speed={8} y={334} />
+            <Background image={backgroundTerraces} width={6144} height={306} speed={6} y={334} />
+            <Background image={backgroundPeckham} width={8192} height={400} speed={8} y={240} />
             <Screen />
             <Road y={640} />
             <FinishLine y={640} />
