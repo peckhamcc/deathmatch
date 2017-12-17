@@ -6,6 +6,15 @@ const AVERAGE_SPEED_KPH = 45
 const MENS_OLYMPIC_FLYING_500_M_RECORD = 24.758 // Chris Hoy
 const WOMENS_OLYMPIC_FLYING_500_M_RECORD = 28.970 // Kristina Vogel
 
+// elite diff
+//const DIFF = MENS_OLYMPIC_FLYING_500_M_RECORD / WOMENS_OLYMPIC_FLYING_500_M_RECORD
+
+const MENS_CX_WATTS = 106.8
+const WOMENS_CX_WATTS = 75.4
+
+// normal diff
+const DIFF = WOMENS_CX_WATTS / MENS_CX_WATTS
+
 const setUpPlayers = (riders, trackLength) => {
   return riders
     .map(rider => {
@@ -21,9 +30,7 @@ const setUpPlayers = (riders, trackLength) => {
       rider.targetJoules = joules
 
       if (rider.gender === 'female') {
-        rider.targetJoules *= (
-          MENS_OLYMPIC_FLYING_500_M_RECORD / WOMENS_OLYMPIC_FLYING_500_M_RECORD
-        )
+        rider.targetJoules *= DIFF
       }
 
       return rider

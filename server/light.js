@@ -1,6 +1,8 @@
 const debug = require('debug')('light')
 const Board = require('firmata')
-const board = new Board('/dev/cu.usbmodem1431', {
+const port = '/dev/cu.usbmodem14411'
+//const port = '/dev/cu.usbmodem1431'
+const board = new Board(port, {
   skipCapabilities: true
 })
 
