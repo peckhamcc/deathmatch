@@ -8,7 +8,8 @@ const GAME_STATE = {
   sprint: 'SPRINT',
   finishing: 'FINISHING',
   finished: 'FINISHED',
-  done: 'THERE_CAN_BE_ONLY_ONE'
+  done: 'THERE_CAN_BE_ONLY_ONE',
+  results: 'THEY_THINK_ITS_ALL_OVER'
 }
 
 module.exports = GAME_STATE

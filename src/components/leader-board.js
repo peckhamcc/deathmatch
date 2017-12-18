@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import riderImages from './rider-images'
 
 const Header = styled.div`
   font-size: 18px;
   margin: 10px;
+  margin-top: 0;
+  padding-top: 10px;
 `
 
 const Table = styled.table`
@@ -20,10 +23,13 @@ const TableHeader = styled.th`
 `
 
 const TableCell = styled.td`
-  width: 12.5%;
   padding: 10px;
   background-color: #FFF;
   font-size: 12px;
+`
+
+const SmallTableCell = TableCell.extend`
+  width: 66px;
 `
 
 const findRider = (riders, id) => {
@@ -33,7 +39,9 @@ const findRider = (riders, id) => {
 const findLeaderboardEntry = (riders, entry) => {
   if (!entry) {
     return {
-      name: '-',
+      rider: {
+        name:'-'
+      },
       value: '-'
     }
   }
@@ -42,15 +50,31 @@ const findLeaderboardEntry = (riders, entry) => {
 
   if (!rider) {
     return {
-      name: '-',
+      rider: {
+        name:'-'
+      },
       value: '-'
     }
   }
 
   return {
-    name: rider.name,
-    value: entry.value
+    rider,
+    value: entry.value + 'w'
   }
+}
+
+const RiderImage = ({ rider: { photoWin, gender, image} }) => {
+  if (!gender) {
+    return null
+  }
+
+  return (
+    <img
+      src={photoWin || riderImages[gender][image]}
+      width='66'
+      height='84'
+    />
+  )
 }
 
 const LeaderBoard = ({ riders, power, cadence, joules, speed }) => {
@@ -69,36 +93,57 @@ const LeaderBoard = ({ riders, power, cadence, joules, speed }) => {
     })
   }
 
+  const mensChampion = riders
+    .filter(rider => rider.gender === 'male')
+    .sort((a, b) => a.eliminatedAt - b.eliminatedAt)
+    .pop()
+  const womensChampion = riders
+    .filter(rider => rider.gender === 'female')
+    .sort((a, b) => a.eliminatedAt - b.eliminatedAt)
+    .pop()
+
   return (
     <div>
-      <Table>
-        <tr>
-          <TableHeader colSpan='4'>Power</TableHeader>
-          <TableHeader colSpan='4'>Speed</TableHeader>
-        </tr>
-        <tr>
-          <TableHeader colSpan='2'>Men</TableHeader>
-          <TableHeader colSpan='2'>Women</TableHeader>
-          <TableHeader colSpan='2'>Men</TableHeader>
-          <TableHeader colSpan='2'>Women</TableHeader>
-        </tr>
-        {
-          leaderBoard.map((leaders, index) => (
-            <tr key={index}>
-              <TableCell>{leaders.power.male.name}</TableCell>
-              <TableCell>{leaders.power.male.value} w</TableCell>
+      <Header>Overall</Header>
+      <Table width='100%'>
+        <thead>
+          <tr>
+            <TableHeader colSpan='2' width='50%'>Men</TableHeader>
+            <TableHeader colSpan='2' width='50%'>Women</TableHeader>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <SmallTableCell><RiderImage rider={mensChampion} /></SmallTableCell>
+            <TableCell>{mensChampion.name}</TableCell>
+            <SmallTableCell><RiderImage rider={womensChampion} /></SmallTableCell>
+            <TableCell>{womensChampion.name}</TableCell>
+          </tr>
+        </tbody>
+      </Table>
+      <Header>Power</Header>
+      <Table width='100%'>
+        <thead>
+          <tr>
+            <TableHeader colSpan='3' width='50%'>Men</TableHeader>
+            <TableHeader colSpan='3' width='50%'>Women</TableHeader>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            leaderBoard.map((leaders, index) => (
+              <tr key={index}>
+                <SmallTableCell><RiderImage rider={leaders.power.male.rider} /></SmallTableCell>
+                <TableCell>{leaders.power.male.rider.name}</TableCell>
+                <SmallTableCell>{leaders.power.male.value}</SmallTableCell>
 
-              <TableCell>{leaders.power.female.name}</TableCell>
-              <TableCell>{leaders.power.female.value} w</TableCell>
-
-              <TableCell>{leaders.speed.male.name}</TableCell>
-              <TableCell>{leaders.speed.male.value} kph</TableCell>
-
-              <TableCell>{leaders.speed.female.name}</TableCell>
-              <TableCell>{leaders.speed.female.value} kph</TableCell>
-            </tr>
-          ))
-        }
+                <SmallTableCell ><RiderImage rider={leaders.power.female.rider} /></SmallTableCell>
+                <TableCell>{leaders.power.female.rider.name}</TableCell>
+                <SmallTableCell>{leaders.power.female.value}</SmallTableCell>
+              </tr>
+            ))
+          }
+        </tbody>
       </Table>
     </div>
   )

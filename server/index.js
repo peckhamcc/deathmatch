@@ -175,6 +175,14 @@ io.on('connection', (client) => {
     game.cancelGame()
   })
 
+  client.on('admin:game:results', (token) => {
+    if (token !== adminToken) {
+      return debug('Invalid admin token')
+    }
+
+    state.setGameState(GAME_STATE.results)
+  })
+
   client.once('disconnect', () => {
     debug('client', client.id, 'disconnected')
   })

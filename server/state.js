@@ -69,6 +69,7 @@ const state = {
     s.riders.riders
       .forEach(rider => {
         delete rider.eliminated
+        delete rider.eliminatedAt
         delete rider.selected
         delete rider.bike
         delete rider.winner

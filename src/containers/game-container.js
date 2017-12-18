@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import GAME_STATE from '../constants/game-state'
 import {
-  Game, 
-  Intro, 
-  Victory, 
-  Connecting, 
-  SelectingRiders, 
-  ChooseRiders, 
-  Champion, 
+  Game,
+  Intro,
+  Victory,
+  Connecting,
+  SelectingRiders,
+  ChooseRiders,
+  Champion,
+  Results,
   LoadingAssets
 } from '../components'
 import debug from 'debug'
@@ -76,6 +77,10 @@ class GameContainer extends Component {
 
     if (this.props.gameState === GAME_STATE.done) {
       return <Champion />
+    }
+
+    if (this.props.gameState === GAME_STATE.results) {
+      return <Results />
     }
 
    return <Connecting />

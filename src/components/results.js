@@ -52,44 +52,25 @@ const NewGame = FF7.extend`
   margin: 670px 0 0 755px;
 `
 
-class Champion extends Component {
+class Results extends Component {
 
   static propTypes = {
     adminToken: PropTypes.string.isRequired,
     riders: PropTypes.array.isRequired
   }
 
-  showResults = () => {
-    socket.emit('admin:game:results', this.props.adminToken)
+  newGame = () => {
+    socket.emit('admin:game:intro', this.props.adminToken)
   }
 
   render () {
-    const champion = this.props.riders.find(rider => rider.winner)
-
-    if (!champion) {
-      return null
-    }
-
     return (
       <Wrapper className="game-over" onClick={this.newGame}>
         <NewGame>
-          <Button onClick={this.showResults}>Results &gt;</Button>
+          <Button onClick={this.newGame}>Done &gt;</Button>
         </NewGame>
 
-        <WinnerText>{champion.name} wins!</WinnerText>
-
-        <SelectedRider>
-          <img
-            src={champion.photoWin || riderImages[champion.gender][champion.image]}
-            width='400'
-            height='450'
-          />
-        </SelectedRider>
-
-        <ClubLogo>
-          <img src={clubLogo} height='300' />
-        </ClubLogo>
-
+        <LeaderBoard />
       </Wrapper>
     )
   }
@@ -107,4 +88,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Champion)
+)(Results)

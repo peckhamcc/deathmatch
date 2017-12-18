@@ -73,6 +73,7 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
       
               if (rider.id === loser) {
                 rider.eliminated = true
+                rider.eliminatedAt = Date.now()
                 rider.loser = true
                 rider.races = rider.races + 1
               }
