@@ -105,7 +105,7 @@ io.on('connection', (client) => {
     state.reset()
     state.setFreeplay(false)
     light.colour(255, 255, 0)
-    light.motor(0)
+    light.motor(100)
   })
 
   client.on('admin:game:freeplay', (token) => {

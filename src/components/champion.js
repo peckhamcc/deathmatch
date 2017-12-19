@@ -56,11 +56,16 @@ class Champion extends Component {
 
   static propTypes = {
     adminToken: PropTypes.string.isRequired,
-    riders: PropTypes.array.isRequired
+    riders: PropTypes.array.isRequired,
+    freeplay: PropTypes.bool.isRequired,
   }
 
   showResults = () => {
-    socket.emit('admin:game:results', this.props.adminToken)
+    if (this.props.freeplay) {
+      socket.emit('admin:game:intro', this.props.adminToken)
+    } else {
+      socket.emit('admin:game:results', this.props.adminToken)
+    }
   }
 
   render () {
@@ -73,7 +78,7 @@ class Champion extends Component {
     return (
       <Wrapper className="game-over" onClick={this.newGame}>
         <NewGame>
-          <Button onClick={this.showResults}>Results &gt;</Button>
+          <Button onClick={this.showResults}>{this.props.freeplay ? 'Results' : 'Done'} &gt;</Button>
         </NewGame>
 
         <WinnerText>{champion.name} wins!</WinnerText>
@@ -95,9 +100,10 @@ class Champion extends Component {
   }
 }
 
-const mapStateToProps = ({ admin: { token }, riders: { riders } }) => ({
+const mapStateToProps = ({ admin: { token }, riders: { riders }, game: { freeplay } }) => ({
   adminToken: token,
-  riders
+  riders,
+  freeplay
 })
 
 const mapDispatchToProps = {

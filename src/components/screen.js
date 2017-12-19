@@ -68,7 +68,7 @@ class Screen extends Component {
 
   componentDidMount () {
     this.interval = setInterval(() => {
-      if (this.props.gameState !== GAME_STATE.countingDown && this.props.players.some(player => player.status === PLAYER_STATUS.FASTEST)) {
+      if (this.props.gameState !== GAME_STATE.countingDown && this.props.players.some(player => player.status === PLAYER_STATUS.MAX)) {
         this.setState({
           image: ANIMATIONS[Math.floor(Math.random() * ANIMATIONS.length)]
         })
@@ -163,7 +163,7 @@ class Screen extends Component {
     }
 
     if (this.state.image === 'rider') {
-      const rider = this.props.players.find(player => player.status === PLAYER_STATUS.FASTEST)
+      const rider = this.props.players.find(player => player.status === PLAYER_STATUS.MAX)
 
       if (rider && rider.photoPower) {
         return (

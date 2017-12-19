@@ -71,10 +71,22 @@ const RiderImage = ({ rider: { photoWin, gender, image} }) => {
   return (
     <img
       src={photoWin || riderImages[gender][image]}
-      width='66'
-      height='84'
+      width='52'
+      height='64'
     />
   )
+}
+
+const findWinner = (riders, gender) => {
+  const winner = riders
+    .filter(rider => rider.gender === gender)
+    .filter(rider => rider.winner)
+    .pop()
+
+  return winner || riders
+        .filter(rider => rider.gender === gender)
+        .sort((a, b) => a.eliminatedAt - b.eliminatedAt)
+        .pop()
 }
 
 const LeaderBoard = ({ riders, power, cadence, joules, speed }) => {
@@ -93,14 +105,8 @@ const LeaderBoard = ({ riders, power, cadence, joules, speed }) => {
     })
   }
 
-  const mensChampion = riders
-    .filter(rider => rider.gender === 'male')
-    .sort((a, b) => a.eliminatedAt - b.eliminatedAt)
-    .pop()
-  const womensChampion = riders
-    .filter(rider => rider.gender === 'female')
-    .sort((a, b) => a.eliminatedAt - b.eliminatedAt)
-    .pop()
+  let mensChampion = findWinner(riders, 'male')
+  let womensChampion = findWinner(riders, 'female')
 
   return (
     <div>

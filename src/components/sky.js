@@ -46,7 +46,7 @@ class Sky extends Component {
 
   render () {
     let colour = this.state.colour
-    let showSky = this.props.players.some(player => player.status === PLAYER_STATUS.FASTEST)
+    let showSky = this.props.players.some(player => player.status === PLAYER_STATUS.MAX)
 
     if (!showSky) {
       colour = 'transparent'

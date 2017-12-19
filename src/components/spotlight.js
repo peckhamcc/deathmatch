@@ -59,7 +59,7 @@ class Spotlight extends Component {
   render () {
     let opacity = 1
 
-    if (this.props.status !== PLAYER_STATUS.FASTEST || this.props.gameState === GAME_STATE.countingDown) {
+    if (this.props.status !== PLAYER_STATUS.MAX || this.props.gameState === GAME_STATE.countingDown) {
       opacity = 0
     }
 
