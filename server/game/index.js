@@ -66,11 +66,11 @@ emitter.startGame = (trackLength, state) => {
   }, 6000)
 }
 
-emitter.selectRiders = (state) => {
-  const r = state.get().riders.riders
-  const willRace = selectRiders(emitter, r)
+emitter.selectRiders = (state, otherRider) => {
+  const riders = state.get().riders.riders
+  const willRace = selectRiders(emitter, riders, otherRider)
 
-  state.setRiders(r)
+  state.setRiders(riders)
 
   if (!willRace) {
     // we have a champion
@@ -78,6 +78,25 @@ emitter.selectRiders = (state) => {
   } else {
     state.setGameState(GAME_STATE.riders)
   }
+}
+
+emitter.eliminateRider = (state, rider) => {
+  const riders = state.get().riders.riders
+
+  riders
+    .filter(r => r.id === rider.id)
+    .forEach(r => {
+      r.eliminated = true
+    })
+
+  state.setRiders(riders)
+
+  const otherRider = riders
+    .filter(r => r.id !== rider.id)
+    .filter(r => r.bike)
+    .pop()
+
+  emitter.selectRiders(state, otherRider)
 }
 
 emitter.startFreeplay = (state, players, trackLength) => {

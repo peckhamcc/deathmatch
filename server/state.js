@@ -157,18 +157,6 @@ const state = {
     socket.emit('riders', s.riders.riders)
   },
 
-  eliminateRider: (rider) => {
-    s.riders.riders
-      .filter(r => rider.id === r.id)
-      .forEach(r => {
-        r.eliminated = true
-      })
-
-    state.save()
-
-    socket.emit('riders', s.riders.riders)
-  },
-
   setPlayers: (players) => {
     s.players.players = players
 

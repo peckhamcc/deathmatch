@@ -1,13 +1,13 @@
 const GAME_STATE = require('../../src/constants/game-state')
 
-const selectRiders = (emitter, riders) => {
+const selectRiders = (emitter, riders, otherRider) => {
   // remove eliminated riders
   let eligible = riders
     .filter(rider => !rider.eliminated)
 
   if (eligible.length > 2) {
     // if we are not at the final round, remove the rider who won the last round
-    // no no-one does two races in a row
+    // so no-one does two races in a row
     eligible = eligible.filter(rider => !rider.winner)
   }
 
@@ -41,6 +41,23 @@ const selectRiders = (emitter, riders) => {
           .sort(() => 0.5 - Math.random())
           .pop()
       )
+    }
+
+    // A rider dropped out, make sure the remaining rider is still in the race
+    if (otherRider) {
+      if (otherRider.bike === 'A') {
+        if (eligible[1].id === otherRider.id) {
+          eligible[1] = eligible[0]
+        }
+
+        eligible[0] = otherRider
+      } else if (otherRider.bike === 'B') {
+        if (eligible[0].id === otherRider.id) {
+          eligible[0] = eligible[1]
+        }
+
+        eligible[1] = otherRider
+      }
     }
 
     riders.forEach(rider => {

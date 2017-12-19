@@ -155,8 +155,7 @@ io.on('connection', (client) => {
       return debug('Invalid admin token')
     }
 
-    state.eliminateRider(rider)
-    game.selectRiders(state)
+    game.eliminateRider(state, rider)
   })
 
   client.on('admin:game:start', (token, trackLength) => {

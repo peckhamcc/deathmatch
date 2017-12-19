@@ -74,9 +74,7 @@ const drain = async () => {
 
     board.analogWrite(operation.pin, operation.value)
 
-    await poll(() => {
-      return board.pending === 0
-    })
+    await poll(() => board.pending === 0)
   }
 
   draining = false
@@ -109,4 +107,3 @@ module.exports = {
     debug(`Setting motor speed to ${speed}`)
   }
 }
-
