@@ -254,13 +254,12 @@ class SelectingRiders extends Component {
           <Back>
             <Button onClick={this.onBack}>&lt; Abort!</Button>
           </Back>
-          <SelectedRider bike={player1.bike}>
+          <SelectedRider bike={player1.bike} onClick={this.onDropOut(player1)}>
             <PlayerOutline src={player1Outline} width='254' height='338' />
             <SelectedRiderImage
               src={player1.photoSelect || riderImages[player1.gender][player1.image]}
               width='200'
               height='225'
-              onClick={this.onDropOut(player1)}
             />
             <SelectedRiderName>{player1.name}</SelectedRiderName>
           </SelectedRider>
@@ -269,13 +268,12 @@ class SelectingRiders extends Component {
             <img src={clubLogo} height='300' onClick={this.onStart} />
           </ClubLogo>
 
-          <SelectedRider bike={player2.bike}>
+          <SelectedRider bike={player2.bike} onClick={this.onDropOut(player2)}>
             <PlayerOutline src={player2Outline} width='253' height='338' />
             <SelectedRiderImage
               src={player2.photoSelect || riderImages[player2.gender][player2.image]}
               width='200'
               height='225'
-              onClick={this.onDropOut(player2)}
             />
             <SelectedRiderName>{player2.name}</SelectedRiderName>
           </SelectedRider>

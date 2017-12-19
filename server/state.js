@@ -166,7 +166,7 @@ const state = {
 
     state.save()
 
-    socket.emit('riders', state.riders.riders)
+    socket.emit('riders', s.riders.riders)
   },
 
   setPlayers: (players) => {
