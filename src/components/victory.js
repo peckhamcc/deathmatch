@@ -30,11 +30,8 @@ const QUOTES = [{
   quote: 'You can’t get good by staying home. If you want to get fast, you have to go where the fast guys are',
   saidBy: 'Steve Larsen'
 }, {
-  quote: 'Give a man a fish and feed him for a day. Teach a man to fish and feed him for a lifetime. Teach a man to cycle and he will realize fishing is stupid and boring',
+  quote: 'Give a man a fish and feed him for a day. Teach a man to fish and feed him for a lifetime. Teach a man to cycle and he will realise fishing is stupid and boring',
   saidBy: 'Desmond Tutu'
-}, {
-  quote: 'The race is won by the rider who can suffer the most',
-  saidBy: 'Eddy Merckx'
 }, {
   quote: 'Cycling isn’t a game, it\'s a sport. Tough, hard and unpitying, and it requires great sacrifices. One plays football, or tennis, or hockey. One doesn’t play at cycling',
   saidBy: 'Jean de Gribaldy'
@@ -84,12 +81,6 @@ const QUOTES = [{
   quote: 'I believe in pacing. I go as hard as I can, and whether I\'m leading or not I\'ll keep the same pace. So far, this has been good enough.',
   saidBy: 'Juli Furtado'
 }, {
-  quote: 'The Tour is the only race in the world where you have to get a haircut halfway through',
-  saidBy: 'Chris Boardman'
-}, {
-  quote: 'Variable gears are only for people over forty-five. Isn’t it better to triumph by the strength of your muscles rather than by the artifice of a derailleur?',
-  saidBy: 'Henri Desgrange'
-}, {
   quote: 'Running would be much better if they invented a little seat to sit on and maybe some kind of platforms for your feet to push',
   saidBy: 'Liz Hatch'
 }, {
@@ -104,6 +95,24 @@ const QUOTES = [{
 }, {
   quote: 'I\'m at home',
   saidBy: 'Ben Rogers'
+}, {
+  quote: 'United We Roll. Except if you\'re being timed.',
+  saidBy: 'Alex Potsides'
+}, {
+  quote: 'I haven\'t been this proud since I got my 10m puffin swimming badge',
+  saidBy: 'Fran Evans'
+}, {
+  quote: 'Stop whinging and have a gel',
+  saidBy: 'Alex Potsides'
+}, {
+  quote: 'It\'s just a few 50km rides back to back...',
+  saidBy: 'Eric \'Epic\' Richardson'
+}, {
+  quote: 'Better brakes? Why would I spend money on something that makes me slower?',
+  saidBy: 'Jon Armstrong'
+}, {
+  quote: 'The less time we are stationary the slower we can ride while moving',
+  saidBy: 'Eric \'Epic\' Richardson'
 }]
 
 const Wrapper = styled.div`
