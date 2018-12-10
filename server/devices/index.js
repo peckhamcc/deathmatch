@@ -97,11 +97,18 @@ let searchStopTimeout
 
 emitter.startSearching = () => {
   emitter.emit('search:start')
-  noble.startScanning([SERVICE_TYPES.POWER, SERVICE_TYPES.SPEED_CADENCE], true)
+  noble.startScanning([SERVICE_TYPES.POWER, SERVICE_TYPES.SPEED_CADENCE], true, (err) => {
+    if (err) {
+      emitter.emit('search:error', err)
+      emitter.emit('search:stop')
 
-  searchStopTimeout = setTimeout(() => {
-    emitter.stopSearching()
-  }, 10000)
+      return
+    }
+
+    searchStopTimeout = setTimeout(() => {
+      emitter.stopSearching()
+    }, 10000)
+  })
 }
 
 emitter.stopSearching = () => {

@@ -6,31 +6,17 @@ import { addDevice } from '../../store/actions'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
 import IconButton from 'material-ui/IconButton'
-import MenuIcon from 'material-ui-icons/Menu'
-import keycode from 'keycode'
 import Table, {
   TableBody,
   TableCell,
-  TableFooter,
-  TableHead,
-  TablePagination,
   TableRow,
-  TableSortLabel,
 } from 'material-ui/Table'
-import Paper from 'material-ui/Paper'
-import Checkbox from 'material-ui/Checkbox'
-import Tooltip from 'material-ui/Tooltip'
-import DeleteIcon from 'material-ui-icons/Delete'
 import SearchIcon from 'material-ui-icons/Search'
 import StopIcon from 'material-ui-icons/Stop'
-import PowerIcon from 'material-ui-icons/Power'
 import InfoIcon from 'material-ui-icons/Info'
 import CachedIcon from 'material-ui-icons/Cached'
 import BatteryIcon from 'material-ui-icons/BatteryStd'
-import BluetoothConnectIcon from 'material-ui-icons/BluetoothConnected'
 import FlashOnIcon from 'material-ui-icons/FlashOn'
 import ConnectIcon from 'material-ui-icons/AddBox'
 import LoadingIcon from 'material-ui-icons/Refresh'
@@ -42,12 +28,15 @@ const styles = {
 
 }
 
+const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+
 class Devices extends Component {
   static propTypes = {
     adminToken: PropTypes.string.isRequired,
     devices: PropTypes.array.isRequired,
     addDevice: PropTypes.func.isRequired,
-    scanning: PropTypes.bool.isRequired
+    scanning: PropTypes.bool.isRequired,
+    numPlayers: PropTypes.number.isRequired
   }
 
   startScan = () => {
@@ -141,13 +130,16 @@ class Devices extends Component {
                   <MenuItem key='none' value='none'>
                     None
                   </MenuItem>
-                  <MenuItem key='a' value='A'>
-                    Player A
-                  </MenuItem>
-                  <MenuItem key='b' value='B'>
-                    Player B
-                  </MenuItem>
-              </TextField>
+                  {
+                    new Array(this.props.numPlayers).fill(0)
+                    .map((_, index) => letters[index])
+                    .map(letter => (
+                      <MenuItem key={letter} value={letter.toUpperCase()}>
+                        Player {letter.toUpperCase()}
+                      </MenuItem>
+                    ))
+                  }
+                </TextField>
               ]
 
               return (
@@ -171,10 +163,11 @@ class Devices extends Component {
   }
 }
 
-const mapStateToProps = ({ admin: {token}, devices: { devices }, bluetooth: { searching } }) => ({
+const mapStateToProps = ({ admin: { token }, game: { numPlayers }, devices: { devices }, bluetooth: { searching } }) => ({
   adminToken: token,
   devices: devices,
-  scanning: searching
+  scanning: searching,
+  numPlayers
 })
 
 const mapDispatchToProps = {

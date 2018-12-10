@@ -21,7 +21,8 @@ const defaultState = () => ({
     state: GAME_STATE.intro,
     trackLength: 250,
     demo: false,
-    freeplay: false
+    freeplay: false,
+    numPlayers: 2
   },
   leaderboard: {
     power: {
@@ -189,6 +190,22 @@ const state = {
     state.save()
 
     socket.emit('leaderboard', leaderboard)
+  },
+
+  setNumPlayers: (numPlayers) => {
+    s.game.numPlayers = numPlayers
+
+    state.save()
+
+    socket.emit('game:numPlayers', s.game.numPlayers)
+  },
+
+  setTrackLength: (trackLength) => {
+    s.game.trackLength = trackLength
+
+    state.save()
+
+    socket.emit('game:trackLength', s.game.trackLength)
   }
 }
 

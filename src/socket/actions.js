@@ -2,18 +2,18 @@ import socket from './index'
 import {
   updateBluetoothStatus,
   updateBluetoothSearchStatus,
+  bluetoothSearchError,
   updateGameState,
   setRiders,
-  selectRiders,
   setDevices,
   addDevice,
   setPlayers,
   setDemo,
-  setLoadProgress,
   setLeaderboard,
-  setFreeplay
+  setFreeplay,
+  setNumPlayers,
+  setTrackLength
 } from '../store/actions'
-import GAME_STATE from '../constants/game-state'
 
 export default (store) => {
   socket.on('bluetooth:status', ({status}) => {
@@ -26,6 +26,12 @@ export default (store) => {
 
   socket.on('device:search:stop', () => {
     store.dispatch(updateBluetoothSearchStatus(false))
+  })
+
+  socket.on('device:search:error', (error) => {
+    store.dispatch(bluetoothSearchError(error))
+
+    alert(error.message)
   })
 
   socket.on('device:found', (device) => {
@@ -58,5 +64,13 @@ export default (store) => {
 
   socket.on('game:freeplay', (freeplay) => {
     store.dispatch(setFreeplay(freeplay))
+  })
+
+  socket.on('game:numPlayers', (numPlayers) => {
+    store.dispatch(setNumPlayers(numPlayers))
+  })
+
+  socket.on('game:trackLength', (trackLength) => {
+    store.dispatch(setTrackLength(trackLength))
   })
 }

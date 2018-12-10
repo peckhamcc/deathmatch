@@ -1,5 +1,4 @@
 const EventEmitter = require('events').EventEmitter
-const rangeMap = require('range-map')
 const devices = require('../devices')
 const selectRiders = require('./select-riders')
 const { startGame, stopGame } = require('./game-loop')

@@ -22,9 +22,9 @@ process.on('unhandledRejection', error => {
 const app = express()
 app.use('/deathmatch', serveStatic(path.resolve(path.join(__dirname, '..', 'dist'))))
 app.use('/deathmatch/photos', serveStatic(path.resolve(path.join(__dirname, '..', 'photos'))))
-app.use((req, res) => {
-  res.redirect(301, '/deathmatch')
-})
+//app.use('/', (req, res) => {
+//  res.redirect(301, '/deathmatch')
+//})
 
 const server = http.createServer(app)
 const io = socket(server)
@@ -182,6 +182,22 @@ io.on('connection', (client) => {
     state.setGameState(GAME_STATE.results)
   })
 
+  client.on('admin:game:set-num-players', (token, numPlayers) => {
+    if (token !== adminToken) {
+      return debug('Invalid admin token')
+    }
+
+    state.setNumPlayers(numPlayers)
+  })
+
+  client.on('admin:game:set-track-length', (token, trackLength) => {
+    if (token !== adminToken) {
+      return debug('Invalid admin token')
+    }
+
+    state.setTrackLength(trackLength)
+  })
+
   client.once('disconnect', () => {
     debug('client', client.id, 'disconnected')
   })
@@ -195,12 +211,18 @@ bluetooth.on('stateChange', (state) => {
   io.emit('bluetooth:status', { status: state })
 })
 
-bluetooth.on('search:start', (state) => {
+bluetooth.on('search:start', () => {
   io.emit('device:search:start')
 })
 
-bluetooth.on('search:stop', (state) => {
+bluetooth.on('search:stop', () => {
   io.emit('device:search:stop')
+})
+
+bluetooth.on('search:error', (error) => {
+  io.emit('device:search:error', {
+    message: error.message
+  })
 })
 
 bluetooth.on('devices', (devices) => {

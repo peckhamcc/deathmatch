@@ -18,7 +18,7 @@ import IconButton from 'material-ui/IconButton'
 import SettingsIcon from 'material-ui-icons/Settings'
 import Devices from './devices'
 import Riders from './riders'
-import Authentication from './authentication'
+import Game from './game'
 import GAME_STATE from '../../constants/game-state'
 
 const styles = {
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
 const tabs = [
   Devices,
   Riders,
-  Authentication
+  Game
 ]
 
 class Settings extends Component {
@@ -84,13 +84,13 @@ class Settings extends Component {
       <Wrapper>
         <IconButton aria-label="Delete" onClick={this.showSettings}>
           <SettingsIcon />
-          <Dialog open={this.state.open} onRequestClose={this.hideSettings}>
+          <Dialog open={open} onRequestClose={this.hideSettings}>
             <DialogTitle>SETTINGS</DialogTitle>
             <DialogContent>
-              <Tabs value={this.state.tab} onChange={this.handleTabChange}>
+              <Tabs value={tab} onChange={this.handleTabChange}>
                 <Tab label='DEVICES' />
                 <Tab label='RIDERS' />
-                <Tab label='AUTHENTICATION' />
+                <Tab label='GAME' />
               </Tabs>
               <Panel socket={this.props.socket} />
             </DialogContent>

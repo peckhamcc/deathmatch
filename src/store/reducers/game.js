@@ -3,7 +3,8 @@ import {
   TRACK_LENGTH_SET,
   DEMO_SET,
   LOADED_SET,
-  FREEPLAY_SET
+  FREEPLAY_SET,
+  NUM_PLAYERS_SET
 } from '../actions'
 import GAME_STATE from '../../constants/game-state'
 
@@ -12,7 +13,8 @@ const initialState = {
   state: GAME_STATE.connecting,
   trackLength: 250,
   demo: false,
-  freeplay: false
+  freeplay: false,
+  numPlayers: 2
 }
 
 const updateGameState = (state = initialState, action) => {
@@ -43,7 +45,12 @@ const updateGameState = (state = initialState, action) => {
       return {
         ...state,
         freeplay: action.payload
-      }  
+      }
+    case NUM_PLAYERS_SET:
+      return {
+        ...state,
+        numPlayers: action.payload
+      }
     default:
       return state
   }
