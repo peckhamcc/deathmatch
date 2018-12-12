@@ -1,5 +1,5 @@
 const readBytes = require('./read-bytes')
-const debug = require('debug')('power-measurement')
+const debug = require('debug')('deathmatch:power-measurement')
 
 const powerMeasurement = (buffer) => {
   const flags = buffer.readInt16BE(0)

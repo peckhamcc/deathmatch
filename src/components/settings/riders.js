@@ -93,6 +93,12 @@ class Riders extends Component {
     }
   }
 
+  eliminateRider = (rider) => () => {
+    if (confirm('Do you really want to eliminate this rider?')) {
+      socket.emit('admin:riders:eliminate', this.props.adminToken, rider)
+    }
+  }
+
   hideAddRider = () => {
     this.setState({
       addingRider: false,

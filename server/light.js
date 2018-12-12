@@ -1,4 +1,4 @@
-const debug = require('debug')('light')
+const debug = require('debug')('deathmatch:light')
 const Board = require('firmata')
 const port = '/dev/cu.usbmodem14411'
 //const port = '/dev/cu.usbmodem1431'

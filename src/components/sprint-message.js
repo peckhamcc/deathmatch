@@ -55,7 +55,7 @@ class CountDown extends Component {
     let word = message[this.state.wordIndex]
 
     if (this.state.wordIndex >= message.length) {
-      word = ''
+      word = ' '
     }
 
     return (

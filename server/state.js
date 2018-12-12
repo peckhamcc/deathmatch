@@ -1,4 +1,4 @@
-const debug = require('debug')('state')
+const debug = require('debug')('deathmatch:state')
 const path = require('path')
 const { load, save } = require('./files')
 const bluetooth = require('./devices')
@@ -146,6 +146,19 @@ const state = {
   deleteRider: (rider) => {
     s.riders.riders = s.riders.riders
       .filter(r => rider.id !== r.id)
+
+    state.save()
+
+    socket.emit('riders', s.riders.riders)
+  },
+
+  eliminateRider: (rider) => {
+    s.riders.riders
+      .filter(r => rider.id !== r.id)
+      .forEach(r => {
+        r.eliminated = true
+        r.eliminatedAt = Date.now()
+      })
 
     state.save()
 

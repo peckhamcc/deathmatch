@@ -1,0 +1,7 @@
+const TYRE_CIRCUMFERENCES = {
+  '20C': 2079.73,
+  '23C': 2098.58,
+  '25C': 2111.15
+}
+
+module.exports = TYRE_CIRCUMFERENCES

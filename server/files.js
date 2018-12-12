@@ -1,5 +1,5 @@
 const { readFileSync, writeFileSync } = require('fs')
-const debug = require('debug')('files')
+const debug = require('debug')('deathmatch:files')
 
 module.exports = {
   load: (file, defaultValue = []) => {

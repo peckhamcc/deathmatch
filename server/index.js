@@ -3,7 +3,7 @@ const serveStatic = require('serve-static')
 const path = require('path')
 const socket = require('socket.io')
 const http = require('http')
-const debug = require('debug')('server')
+const debug = require('debug')('deathmatch:server')
 const bluetooth = require('./devices')
 const game = require('./game')
 const photos = require('./photos')
@@ -55,6 +55,14 @@ io.on('connection', (client) => {
     }
 
     state.deleteRider(rider)
+  })
+
+  client.on('admin:riders:eliminate', (token, rider) => {
+    if (token !== adminToken) {
+      return debug('Invalid admin token')
+    }
+
+    state.eliminateRider(rider)
   })
 
   client.on('admin:photo:upload', (token, id, photo) => {

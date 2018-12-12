@@ -52,6 +52,10 @@ const playerReducer = (state = initialState, action) => {
         if (player.power > POWER.FASTEST) {
           player.status = PLAYER_STATUS.FASTEST
         }
+
+        if (player.power > POWER.MAX) {
+          player.status = PLAYER_STATUS.MAX
+        }
       })
 
       return {

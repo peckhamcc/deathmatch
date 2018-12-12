@@ -1,0 +1,8 @@
+
+const SERVICE_TYPES = {
+  POWER: '1818',
+  SPEED_CADENCE: '1816',
+  DEVICE_INFORMATION: '180a'
+}
+
+module.exports = SERVICE_TYPES

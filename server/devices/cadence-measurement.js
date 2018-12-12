@@ -1,5 +1,5 @@
 const readBytes = require('./read-bytes')
-const debug = require('debug')('cadence-measurement')
+const debug = require('debug')('deathmatch:cadence-measurement')
 
 const cadenceMeasurement = (buffer) => {
   const flags = buffer.readInt8(0)
