@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Layer, Rect, Stage, Group, Text, Image } from 'react-konva'
+import { Rect, Group, Text, Image } from 'react-konva'
 import rangeMap from 'range-map'
-import FF7 from './ff7'
-import GAME_STATE from '../constants/game-state'
 import powerBar from '../../assets/background-power.png'
 import assets from '../css/assets'
 

@@ -10,20 +10,20 @@ const emitter = new EventEmitter()
 emitter.startGame = (trackLength, state) => {
   const getWatts = (player) => {
     const device = devices.get()
-      .find(device => (device.player || '') === player.bike && device.power !== undefined)
+      .find(device => device.player === player.bike && device.power !== undefined)
 
     if (!device) {
-      return parseInt(150 + (Math.random() * 400), 10)
+      return -1
     }
 
     return device.power
   }
   const getCadence = (player) => {
     const device = devices.get()
-      .find(device => (device.player || '').toLowerCase() === player.bike && device.cadence !== undefined)
+      .find(device => device.player === player.bike && device.cadence !== undefined)
 
     if (!device) {
-      return parseInt(20 + (Math.random() * 100), 10)
+      return -1
     }
 
     return device.cadence
@@ -31,10 +31,10 @@ emitter.startGame = (trackLength, state) => {
 
   const getSpeed = (player) => {
     const device = devices.get()
-      .find(device => (device.player || '').toLowerCase() === player.bike && device.speed !== undefined)
+      .find(device => device.player === player.bike && device.speed !== undefined)
 
     if (!device) {
-      return parseInt(20 + (Math.random() * 10), 10)
+      return -1
     }
 
     return device.speed
@@ -112,6 +112,16 @@ emitter.startFreeplay = (state, players, trackLength) => {
       if (players.indexOf(rider.id) === 1) {
         rider.selected = true
         rider.bike = 'B'
+      }
+
+      if (players.indexOf(rider.id) === 2) {
+        rider.selected = true
+        rider.bike = 'C'
+      }
+
+      if (players.indexOf(rider.id) === 3) {
+        rider.selected = true
+        rider.bike = 'D'
       }
 
       return rider

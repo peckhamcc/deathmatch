@@ -24,6 +24,8 @@ const cadenceMeasurement = (buffer) => {
   if (wheelRevolutionDataPresent) {
     output.cumulativeWheelRevolutions = readBytes(buffer, offset, 4)
     offset += 4
+
+    // this is when the wheels last turned (e.g. does not change while stationary)
     output.lastWheelEventTime = readBytes(buffer, offset, 2)
     offset +=2
   }
@@ -31,6 +33,8 @@ const cadenceMeasurement = (buffer) => {
   if (crankRevolutionDataPresent) {
     output.cumulativeCrankRevolutions = readBytes(buffer, offset, 2)
     offset += 2
+
+    // this is when the cranks last turned (e.g. does not change while coasting)
     output.lastCrankEventTime = readBytes(buffer, offset, 2)
     offset +=2
   }

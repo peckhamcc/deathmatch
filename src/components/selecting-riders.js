@@ -58,10 +58,6 @@ const PlayerOutline = styled.img`
   left: 0;
 `
 
-const SelectedRiderTitle = styled.div`
-  font-size: 20px;
-`
-
 const SelectedRiderName = styled.div`
   font-size: 20px;
   line-height: 1.2;
@@ -100,20 +96,6 @@ const Back = FF7.extend`
   position: absolute;
   margin: 670px 0 0 20px;
 `
-
-const findRider = (riders, id) => {
-  let output
-  
-  while(!output) {
-    output = riders[Math.floor(Math.random() * riders.length)]
-
-    if (output.eliminated || output.id === id) {
-      output = null
-    }
-  }
-
-  return output
-}
 
 class SelectingRiders extends Component {
 

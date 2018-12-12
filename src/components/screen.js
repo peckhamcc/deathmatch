@@ -53,7 +53,7 @@ const ANIMATIONS = [
   'rider'
 ]
 
-const VISIBLE_FOR = 300
+const VISIBLE_FOR = 1000
 
 class Screen extends Component {
   static propTypes = {

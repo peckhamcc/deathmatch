@@ -157,11 +157,6 @@ emitter.connect = (id) => {
         device.cadence = 0
       })
 
-      let lastWheelEventTimeMs = -1
-      let lastCrankEventTimeMs = -1
-      let lastWheelRevolutions = -1
-      let lastCrankRevolutions = -1
-
       power.on('data', (data) => {
         const measurement = powerMeasurement(data)
 
@@ -171,59 +166,60 @@ emitter.connect = (id) => {
         emitter.emit('devices', peripherals)
       })
 
+      let lastCadenceTime = -1
+      let lastWheelRevolutions = -1
+      let lastCrankRevolutions = -1
+
       cadence.on('data', (data) => {
         const measurement = cadenceMeasurement(data)
 
         debug(`Got cadence data from ${device.name}`, JSON.stringify(measurement, null, 2))
 
-        if (lastWheelEventTimeMs !== -1 && lastCrankEventTimeMs !== -1) {
-          
-          // calculate cadence
-          if (measurement.lastCrankEventTime) {
-            const timeMs = measurement.lastCrankEventTime - lastCrankEventTimeMs
-            const revolutions = measurement.cumulativeCrankRevolutions - lastCrankRevolutions
+        if (lastCadenceTime !== -1) {
+          const timeMs = Date.now() - lastCadenceTime
 
-            if (revolutions === 0 || timeMs < 0) {
-              device.rpm = 0
-            } else {
-              const revolutionsPerMs = revolutions / timeMs
-              const revolutionsPerMinute = revolutionsPerMs * 60000
+          if (measurement.cumulativeCrankRevolutions) {
+            if (lastCrankRevolutions < measurement.cumulativeCrankRevolutions) {
+              // calculate cadence
+              const revolutions = measurement.cumulativeCrankRevolutions - lastCrankRevolutions
 
-              device.cadence = parseInt(revolutionsPerMinute, 10)
+              if (revolutions === 0 || timeMs < 0) {
+                device.rpm = 0
+              } else {
+                const revolutionsPerMs = revolutions / timeMs
+                const revolutionsPerMinute = revolutionsPerMs * 60000
+
+                device.cadence = parseInt(revolutionsPerMinute, 10)
+              }
             }
+
+            lastCrankRevolutions = measurement.cumulativeCrankRevolutions
           }
 
           // calculate speed
-          if (measurement.lastWheelEventTime) {
-            const timeMs = measurement.lastWheelEventTime - lastWheelEventTimeMs
-            const revolutions = measurement.cumulativeWheelRevolutions - lastWheelRevolutions
+          if (measurement.cumulativeWheelRevolutions) {
+            if (lastWheelRevolutions < measurement.cumulativeWheelRevolutions) {
+              const revolutions = measurement.cumulativeWheelRevolutions - lastWheelRevolutions
 
-            if (revolutions === 0 || timeMs < 0) {
-              device.speed = 0
-            } else {
-              const distanceTravelledMm = revolutions * TYRE_CIRCUMFERENCES['23C']
-              const mmPerMs = distanceTravelledMm / timeMs
-              const mmPerHour = mmPerMs * 3600000
-              const kmPerHour = mmPerHour / 1000000
+              if (revolutions === 0 || timeMs < 0) {
+                device.speed = 0
+              } else {
+                const distanceTravelledMm = revolutions * TYRE_CIRCUMFERENCES['23C']
+                const mmPerMs = distanceTravelledMm / timeMs
+                const mmPerHour = mmPerMs * 3600000
+                const kmPerHour = mmPerHour / 1000000
 
-              device.speed = kmPerHour.toPrecision(2)
+                device.speed = kmPerHour.toPrecision(2)
+              }
             }
-          }
 
-          debug(`Emitting ${device.name}`, JSON.stringify(device, null, 2))
+            lastWheelRevolutions = measurement.cumulativeWheelRevolutions
+          }
 
           emitter.emit('devices', peripherals)
         }
 
-        if (measurement.lastWheelEventTime) {
-          lastWheelEventTimeMs = measurement.lastWheelEventTime
-          lastWheelRevolutions = measurement.cumulativeWheelRevolutions
-        }
-
-        if (measurement.lastCrankEventTime) {
-          lastCrankEventTimeMs = measurement.lastCrankEventTime
-          lastCrankRevolutions = measurement.cumulativeCrankRevolutions
-        }
+        lastCadenceTime = Date.now()
       })
     })
   })
@@ -237,6 +233,12 @@ emitter.assign = (deviceId, player) => {
   if (!device) {
     return perifierals
   }
+
+  peripherals.forEach(device => {
+    if (device.player === player) {
+      delete device.player
+    }
+  })
 
   device.player = player
   save(peripherals, 'devices.json')
