@@ -75,7 +75,7 @@ const devices = new Array(4)
             data.writeUInt16LE(timeDiff, 5)
 
             // 1-2 revs per second, e.g. 60-120 rpm
-            const nextCrankRevolutions = rangeMap(Math.sin(Date.now() / 10000), -1, 1, 0, 1)
+            const nextCrankRevolutions = rangeMap(Math.sin(Date.now() / 10000), -1, 1, 1, 2)
 
             lastCrankRevolutions += nextCrankRevolutions
 

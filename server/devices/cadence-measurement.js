@@ -9,7 +9,7 @@ const cadenceMeasurement = (buffer) => {
   const output = {
     flags: flags
   }
-
+/*
   debug('-- s/c buffer start --')
   for(var i = 0; i < buffer.length; i++) {
     var string = buffer[i].toString(2)
@@ -17,7 +17,7 @@ const cadenceMeasurement = (buffer) => {
     debug('00000000'.substring(0, 8 - string.length) + string)
   }
   debug('-- s/c buffer end --')
-
+*/
   const wheelRevolutionDataPresent = flags & 0b01
   const crankRevolutionDataPresent = flags & 0b10
 

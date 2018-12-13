@@ -8,7 +8,7 @@ const bluetooth = require('./devices')
 const game = require('./game')
 const photos = require('./photos')
 const GAME_STATE = require('../src/constants/game-state')
-const light = require('./light')
+const lights = require('./lights')
 
 const adminToken = 'something-random'
 const PORT = 5000
@@ -112,8 +112,8 @@ io.on('connection', (client) => {
 
     state.reset()
     state.setFreeplay(false)
-    light.colour(255, 255, 0)
-    light.motor(100)
+    lights.dome.colour(255, 255, 0)
+    lights.dome.strobe(100)
   })
 
   client.on('admin:game:freeplay', (token) => {
@@ -143,8 +143,8 @@ io.on('connection', (client) => {
     state.setFreeplay(false)
     game.selectRiders(state)
 
-    light.colour(255, 255, 255)
-    light.motor(100)
+    lights.dome.colour(255, 255, 255)
+    lights.dome.rotate(100)
   })
 
   client.on('admin:game:continue', (token) => {
@@ -154,8 +154,8 @@ io.on('connection', (client) => {
 
     game.selectRiders(state)
 
-    light.colour(255, 255, 255)
-    light.motor(100)
+    lights.dome.colour(255, 255, 255)
+    lights.dome.rotate(100)
   })
 
   client.on('admin:game:rider-quit', (token, rider) => {

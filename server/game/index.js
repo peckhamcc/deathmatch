@@ -3,7 +3,7 @@ const devices = require('../devices')
 const selectRiders = require('./select-riders')
 const { startGame, stopGame } = require('./game-loop')
 const GAME_STATE = require('../../src/constants/game-state')
-const light = require('../light')
+const lights = require('../lights')
 
 const emitter = new EventEmitter()
 
@@ -44,16 +44,16 @@ emitter.startGame = (trackLength, state) => {
 
   state.setGameState(GAME_STATE.countingDown)
 
-  light.motor(0)
+  lights.dome.rotate(0)
 
   let on = false
   const interval = setInterval(() => {
     on = !on
 
     if (on) {
-      light.colour(255, 255, 255)
+      lights.dome.colour(255, 255, 255)
     } else {
-      light.colour(0, 0, 0)
+      lights.dome.colour(0, 0, 0)
     }
   }, 500)
 
@@ -61,7 +61,7 @@ emitter.startGame = (trackLength, state) => {
     clearInterval(interval)
     state.setGameState(GAME_STATE.race)
 
-    light.motor(100)
+    lights.dome.rotate(100)
   }, 6000)
 }
 
