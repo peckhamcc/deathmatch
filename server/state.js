@@ -75,6 +75,7 @@ const state = {
         delete rider.bike
         delete rider.winner
         delete rider.loser
+        delete rider.colour
 
         rider.races = 0
       })
@@ -175,6 +176,10 @@ const state = {
     s.players.players = players
 
     socket.emit('players', s.players.players)
+  },
+
+  getNumPlayers: () => {
+    return s.game.numPlayers
   },
 
   setGameState: (gameState) => {

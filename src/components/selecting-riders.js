@@ -213,7 +213,7 @@ class SelectingRiders extends Component {
   }
 
   onDropOut = (rider) => () => {
-    if (confirm('Are you sure?')) {
+    if (confirm(`${rider.name} dropped out, remove them from the game?`)) {
       socket.emit('admin:game:rider-quit', this.props.adminToken, rider)
     }
   }

@@ -43,7 +43,9 @@ emitter.riderHasQuit = (rider) => {
 
 emitter.selectRiders = () => {
   const r = riders.get()
-  const willRace = selectRiders(emitter, r)
+  const willRace = selectRiders(emitter, {
+    getNumPlayers: () => 2
+  }. r)
 
   riders.set(r)
 

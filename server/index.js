@@ -114,6 +114,14 @@ io.on('connection', (client) => {
     state.setFreeplay(false)
     lights.dome.colour(255, 255, 0)
     lights.dome.strobe(100)
+
+    lights.spider1.motorSpeed(100)
+    lights.spider1.animate(100)
+    lights.spider2.motorSpeed(100)
+    lights.spider2.animate(100)
+
+    lights.laser.colour(255, 255, 255, 255)
+    lights.laser.animate(150)
   })
 
   client.on('admin:game:freeplay', (token) => {
@@ -145,6 +153,14 @@ io.on('connection', (client) => {
 
     lights.dome.colour(255, 255, 255)
     lights.dome.rotate(100)
+
+    lights.spider1.motorSpeed(100)
+    lights.spider1.animate(100)
+    lights.spider2.motorSpeed(100)
+    lights.spider2.animate(100)
+
+    lights.laser.colour(255, 255, 255, 255)
+    lights.laser.animate(150)
   })
 
   client.on('admin:game:continue', (token) => {
@@ -156,6 +172,14 @@ io.on('connection', (client) => {
 
     lights.dome.colour(255, 255, 255)
     lights.dome.rotate(100)
+
+    lights.spider1.motorSpeed(100)
+    lights.spider1.animate(100)
+    lights.spider2.motorSpeed(100)
+    lights.spider2.animate(100)
+
+    lights.laser.colour(255, 255, 255, 255)
+    lights.laser.animate(150)
   })
 
   client.on('admin:game:rider-quit', (token, rider) => {

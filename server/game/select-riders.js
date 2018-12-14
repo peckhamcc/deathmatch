@@ -1,11 +1,14 @@
-const GAME_STATE = require('../../src/constants/game-state')
+const PLAYER_COLOURS = require('../../src/constants/player-colours')
+const PLAYER_LETTERS = require('../../src/constants/player-letters')
 
-const selectRiders = (emitter, riders, otherRider) => {
+const selectRiders = (emitter, state, riders, otherRider) => {
+  const numPlayers = state.getNumPlayers()
+
   // remove eliminated riders
   let eligible = riders
     .filter(rider => !rider.eliminated)
 
-  if (eligible.length > 2) {
+  if (eligible.length > numPlayers) {
     // if we are not at the final round, remove the rider who won the last round
     // so no-one does two races in a row
     eligible = eligible.filter(rider => !rider.winner)
@@ -63,13 +66,15 @@ const selectRiders = (emitter, riders, otherRider) => {
     riders.forEach(rider => {
       delete rider.selected
       delete rider.bike
+      delete rider.colour
     })
 
     eligible
-      .slice(0, 2)
+      .slice(0, numPlayers)
       .forEach((rider, index) => {
         rider.selected = true
-        rider.bike = index === 0 ? 'A' : 'B'
+        rider.bike = PLAYER_LETTERS[index]
+        rider.colour = PLAYER_COLOURS[index]
       })
 
     return true

@@ -173,6 +173,7 @@ module.exports = {
         delete rider.bike
         delete rider.winner
         delete rider.loser
+        delete rider.colour
 
         rider.races = 0
       })
@@ -186,6 +187,7 @@ module.exports = {
       delete rider.loser
       delete rider.selected
       delete rider.bike
+      delete rider.colour
     })
 
     const player1 = findRider(riders)

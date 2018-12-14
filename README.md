@@ -29,6 +29,7 @@ void setup() {
   Serial.begin(9600);
   DmxSimple.usePin(3);
   DmxSimple.maxChannel(48);
+  Serial.println("OK!");
 }
 
 int value = 0;

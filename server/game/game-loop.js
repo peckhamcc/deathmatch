@@ -88,8 +88,23 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
           state.setRiders(riders)
           state.setGameState(GAME_STATE.finished)
 
-          lights.dome.colour((player.bike === 'A' ? 255 : 0), 0, (player.bike === 'B' ? 255 : 0))
+          lights.dome.colour(player.colour.r, player.colour.g, player.colour.b, player.colour.w)
           lights.dome.rotate(0)
+
+          lights.spider1.strobe(0)
+          lights.spider2.strobe(0)
+
+          lights.spider1.motorSpeed(0)
+          lights.spider2.motorSpeed(0)
+
+          lights.spider1.motorPositon(100)
+          lights.spider2.motorPositon(100)
+
+          lights.spider1.colour(player.colour.r, player.colour.g, player.colour.b, player.colour.w)
+          lights.spider2.colour(player.colour.r, player.colour.g, player.colour.b, player.colour.w)
+
+          lights.laser.colour(player.colour.r, player.colour.g, player.colour.b, player.colour.w)
+          lights.laser.animate(0)
         }
       }
 
@@ -99,6 +114,9 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
 
         lights.dome.strobe(100)
         lights.dome.rotate(255)
+
+        lights.spider1.strobe(100)
+        lights.spider2.strobe(100)
       }
 
       // within 2% of the end, show the finish line!
@@ -106,6 +124,12 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
         state.setGameState(GAME_STATE.finishing)
 
         lights.dome.strobe(255)
+
+        lights.spider1.strobe(255)
+        lights.spider2.strobe(255)
+
+        lights.spider1.motorSpeed(255)
+        lights.spider2.motorSpeed(255)
       }
 
       return player

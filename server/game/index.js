@@ -4,6 +4,8 @@ const selectRiders = require('./select-riders')
 const { startGame, stopGame } = require('./game-loop')
 const GAME_STATE = require('../../src/constants/game-state')
 const lights = require('../lights')
+const PLAYER_LETTERS = require('../../src/constants/player-letters')
+const PLAYER_COLOURS = require('../../src/constants/player-colours')
 
 const emitter = new EventEmitter()
 
@@ -45,6 +47,13 @@ emitter.startGame = (trackLength, state) => {
   state.setGameState(GAME_STATE.countingDown)
 
   lights.dome.rotate(0)
+  lights.spider1.colour(0, 0, 0, 0)
+  lights.spider2.colour(0, 0, 0, 0)
+  lights.spider1.motorPositon(100)
+  lights.spider2.motorPositon(100)
+  lights.spider1.motorSpeed(0)
+  lights.spider2.motorSpeed(0)
+  lights.laser.colour(0, 0, 0, 0)
 
   let on = false
   const interval = setInterval(() => {
@@ -52,8 +61,14 @@ emitter.startGame = (trackLength, state) => {
 
     if (on) {
       lights.dome.colour(255, 255, 255)
+      lights.spider1.colour(255, 255, 255, 255)
+      lights.spider2.colour(255, 255, 255, 255)
+      lights.laser.colour(255, 255, 255, 255)
     } else {
       lights.dome.colour(0, 0, 0)
+      lights.spider1.colour(0, 0, 0, 0)
+      lights.spider2.colour(0, 0, 0, 0)
+      lights.laser.colour(0, 0, 0, 0)
     }
   }, 500)
 
@@ -62,12 +77,21 @@ emitter.startGame = (trackLength, state) => {
     state.setGameState(GAME_STATE.race)
 
     lights.dome.rotate(100)
+
+    lights.spider1.motorSpeed(100)
+    lights.spider2.motorSpeed(100)
+
+    lights.spider1.animate(100)
+    lights.spider2.animate(100)
+
+    lights.laser.colour(255, 255, 255, 255)
+    lights.laser.animate()
   }, 6000)
 }
 
 emitter.selectRiders = (state, otherRider) => {
   const riders = state.get().riders.riders
-  const willRace = selectRiders(emitter, riders, otherRider)
+  const willRace = selectRiders(emitter, state, riders, otherRider)
 
   state.setRiders(riders)
 
@@ -103,25 +127,14 @@ emitter.startFreeplay = (state, players, trackLength) => {
     .map(rider => {
       delete rider.selected
       delete rider.bike
+      delete rider.colour
 
-      if (players.indexOf(rider.id) === 0) {
-        rider.selected = true
-        rider.bike = 'A'
-      }
+      const index = players.indexOf(rider.id)
 
-      if (players.indexOf(rider.id) === 1) {
+      if (PLAYER_LETTERS[index]) {
         rider.selected = true
-        rider.bike = 'B'
-      }
-
-      if (players.indexOf(rider.id) === 2) {
-        rider.selected = true
-        rider.bike = 'C'
-      }
-
-      if (players.indexOf(rider.id) === 3) {
-        rider.selected = true
-        rider.bike = 'D'
+        rider.bike = PLAYER_LETTERS[index]
+        rider.colour = PLAYER_COLOURS[index]
       }
 
       return rider
