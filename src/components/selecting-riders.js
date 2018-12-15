@@ -10,6 +10,7 @@ import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 import FF7 from './ff7'
 import player1Outline from '../../assets/player1-outline.png'
 import player2Outline from '../../assets/player2-outline.png'
+import PLAYER_LETTERS from '../constants/player-letters'
 
 const RiderContainer = styled.div`
   width: ${STAGE_WIDTH}px;
@@ -97,6 +98,12 @@ const Back = FF7.extend`
   margin: 670px 0 0 20px;
 `
 
+// how many times we should select a rider
+const NUM_SELECTS = 30
+
+// how many times to select after the previous rider is selected
+const SELECT_INCREMENT = 10
+
 class SelectingRiders extends Component {
 
   static propTypes = {
@@ -107,42 +114,45 @@ class SelectingRiders extends Component {
 
   state = {
     riders: [],
-    player1Index: 0,
-    player2Index: 1,
-    player1StartingIndex: 0,
-    player2StartingIndex: 1,
-    loop: 0,
+    selected: [],
     done: false,
-    timeout: 100
+    timeout: 50
   }
 
   componentWillMount () {
-    this.setState({
-      riders: [],
-      player1Index: 0,
-      player2Index: 1,
-      loop: 0,
-      done: false,
-      timeout: 50
-    })
-
-    this.selectRiders()
+    this.setupSelectRiders(this.props)
   }
 
-  componentWillUnmount () {
-    clearTimeout(this.timeout)
+  // gets called after mounting if we are being reused
+  componentWillReceiveProps (nextProps) {
+    this.setupSelectRiders(nextProps)
   }
 
-  selectRiders = () => {
-    if (this.state.loop === 15) {
-      this.setState({
-        done: true
-      })
+  setupSelectRiders (props) {
+    clearTimeout(this.selectRidersTimeout)
+    clearImmediate(this.selectRidersImmediate)
 
-      return
-    }
+    let selected = []
 
-    const riders = this.props.riders.map(rider => {
+    const riders = props.riders.map((rider, index) => {
+      if (rider.selected) {
+        console.info('rider', rider.name, 'was selected for bike', rider.bike, 'at index', index)
+
+        let steps = NUM_SELECTS + (SELECT_INCREMENT * PLAYER_LETTERS.indexOf(rider.bike))
+        let startPosition = index - steps
+
+        while (startPosition < 0) {
+          startPosition += props.riders.length
+        }
+
+        selected.push({
+          bike: rider.bike,
+          index: startPosition,
+          finish: index,
+          selects: steps
+        })
+      }
+
       const r = JSON.parse(JSON.stringify(rider))
       delete r.selected
       delete r.bike
@@ -150,58 +160,90 @@ class SelectingRiders extends Component {
       return r
     })
 
-    let looped = false
+    selected = selected.sort((a, b) => a.bike.localeCompare(b.bike))
 
-    const findNextIndex = (riders, lastIndex, notIndex) => {
-      for (let nextIndex = lastIndex + 1; nextIndex !== lastIndex; nextIndex++) {
-        if (nextIndex === riders.length) {
-          nextIndex = 0
-          looped = true
+    selected.forEach((selected) => {
+      const rider = riders[selected.finish]
+      console.info('rider', rider.name, 'was selected for bike', selected.bike, 'start index',  selected.index, 'end index', selected.finish, 'in', selected.selects, 'selects')
+    })
+
+    this.setState({
+      riders,
+      selected,
+      done: false,
+      timeout: 50
+    })
+
+    this.selectRidersImmediate = setImmediate(this.selectRiders)
+  }
+
+  componentWillUnmount () {
+    clearTimeout(this.selectRidersTimeout)
+    clearImmediate(this.selectRidersImmediate)
+  }
+
+  selectRiders = () => {
+    const {
+      selected
+    } = this.state
+
+    const riders = this.props.riders.map((rider) => {
+      const r = JSON.parse(JSON.stringify(rider))
+      delete r.selected
+      delete r.bike
+
+      return r
+    })
+
+    let willContinue = false
+
+    const selectRider = (rider, selected) => {
+      /*if (rider.eliminated) {
+        selected.index++
+        selected.selects--
+
+        if (selected.index === this.props.riders.length) {
+          selected.index = 0
         }
 
-        const rider = riders[nextIndex]
+        rider = riders[selected.index]
 
-        if (!rider.eliminated && nextIndex !== notIndex) {
-          return nextIndex
+        return selectRider(rider, selected)
+      }
+*/
+      rider.selected = true
+      rider.bike = selected.bike
+
+      console.info('rider', rider.bike, 'is index', selected.index, rider.name, 'selects left', selected.selects)
+
+      if (selected.selects > 0) {
+        willContinue = true
+        selected.selects--
+        selected.index++
+
+        if (selected.index === this.props.riders.length) {
+          selected.index = 0
         }
       }
-
-      return -1
     }
 
-    let nextPlayer1Index = findNextIndex(riders, this.state.player1Index)
+    selected.forEach(selected => {
+      selectRider(riders[selected.index], selected)
+    })
 
-    if (this.state.loop > 10) {
-      nextPlayer1Index = this.props.riders.findIndex(rider => rider.bike === 'A')
-    }
+    this.setState(() => ({
+      riders: riders,
+      timeout: this.state.timeout += 10,
+      selected: selected
+    }))
 
-    const nextPlayer2Index = findNextIndex(riders, this.state.player2Index, nextPlayer1Index)
-
-    if (nextPlayer1Index === -1 || nextPlayer2Index === -1) {
+    if (willContinue) {
+      this.selectRidersTimeout = setTimeout(this.selectRiders, this.state.timeout)
+    } else {
       this.setState({
         done: true
       })
-
-      return
     }
-
-    const riderA = riders[nextPlayer1Index]
-    const riderB = riders[nextPlayer2Index]
-
-    riderA.selected = true
-    riderA.bike = 'A'
-    riderB.selected = true
-    riderB.bike = 'B'
-
-    this.setState(s => ({
-      riders: riders,
-      loop: looped ? s.loop + 1 : s.loop,
-      player1Index: nextPlayer1Index,
-      player2Index: nextPlayer2Index,
-      timeout: looped ? (s.timeout > 300 ? 300 : s.timeout *= 1.1) : s.timeout
-    }))
-
-    this.timeout = setTimeout(this.selectRiders, this.state.timeout)
   }
 
   onStart = () => {
@@ -219,14 +261,14 @@ class SelectingRiders extends Component {
   }
 
   render () {
-    let riders = this.state.riders
+    const {
+      done,
+      selected
+    } = this.state
 
-    if (this.state.done) {
-      riders = this.props.riders
-    }
-
-    const player1 = riders.find(rider => rider.bike === 'A')
-    const player2 = riders.find(rider => rider.bike === 'B')
+    const riders = done ? this.props.riders : this.state.riders
+    const player1 = riders[selected.find(rider => rider.bike === 'A').index]
+    const player2 = riders[selected.find(rider => rider.bike === 'B').index]
 
     return (
       <RiderContainer>

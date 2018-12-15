@@ -1,48 +1,7 @@
-const debug = require('debug')('deathmatch:light')
-const SerialPort = require('serialport')
 const rangeMap = require('range-map')
-const Queue = require('p-queue')
-const queue = new Queue({
-  concurrency: 1
-})
-const port = '/dev/cu.usbmodem14501'
-const serialport = new SerialPort(port, {
-  baudRate: 9600
-})
-
-serialport.once('open', async () => {
-  debug('Serial port is open')
-})
-
-serialport.on('error', (err) => {
-  console.error(err)
-})
-
-serialport.on('data', () => {
-  setTimeout(() => {
-    // put dome light into DMX control mode
-    dome(DOME.CONTROL, 150)
-
-    laser.off()
-  }, 10)
-})
-
-const write = (offset, channel, value) => {
-  queue.add(() => new Promise((resolve, reject) => {
-    const command = `${offset + channel}c${value}w`
-    debug(command)
-
-    serialport.write(`${command}\n`, (err) => {
-      if (err) {
-        debug(`Wrote ${command} with error ${err}`)
-        return reject(err)
-      }
-
-      debug(`Wrote ${command}`)
-      resolve()
-    })
-  }))
-}
+const {
+  write
+} = require('./dmx-controller')
 
 process.on('exit', () => {
   dome.rotate(0)
@@ -202,20 +161,10 @@ const laser = (channel, value) => {
   write(LASER.OFFSET, channel, value)
 }
 laser.off = () => {
-  if (laser._off) {
-    return
-  }
-
   write(LASER.OFFSET, LASER.CONTROL, 0)
-  laser._off = true
 }
 laser.on = () => {
-  if (!laser._off) {
-    return
-  }
-
   write(LASER.OFFSET, LASER.CONTROL, 250)
-  laser._off = false
 }
 laser.animate = (pattern = -1, interval = 1000) => {
   // 0 = horizontal line
