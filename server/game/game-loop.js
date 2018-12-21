@@ -1,6 +1,7 @@
 const rangeMap = require('range-map')
 const setUpPlayers = require('./setup-players')
 const GAME_STATE = require('../../src/constants/game-state')
+const PLAYER_POWER = require('../../src/constants/power')
 const lights = require('../lights')
 
 const SPRINT_DISTANCE_FROM_FINISH = 30
@@ -36,7 +37,35 @@ const updateLeaderboard = (leaderboard, value, player) => {
   return leaderboard
 }
 
+let maxPowerTimeout
+
 const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, players, state) => {
+  const maxPowerHit = () => {
+    if (maxPowerTimeout) {
+      clearTimeout(maxPowerTimeout)
+    }
+  
+    lights.dome.strobe(200)
+    lights.spider1.strobe(200)
+    lights.spider2.strobe(200)
+  
+    maxPowerTimeout = setTimeout(() => {
+      const gameState = state.get().game.state
+
+      if (
+        gameState === GAME_STATE.race ||
+        gameState === GAME_STATE.sprint ||
+        gameState === GAME_STATE.finishing
+      ) {
+        lights.dome.strobe(0)
+        lights.dome.rotate(100)
+        lights.dome.colour(255, 255, 255)
+        lights.spider1.strobe(0)
+        lights.spider2.strobe(0)
+      }
+    }, 1000)
+  }
+
   return () => {
     let now = Date.now()
     const leaderboard = state.getLeaderboard()
@@ -58,6 +87,10 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
         leaderboard.cadence[player.gender] = updateLeaderboard(leaderboard.cadence[player.gender], player.cadence, player.id)
         leaderboard.speed[player.gender] = updateLeaderboard(leaderboard.speed[player.gender], player.speed, player.id)
         leaderboard.joules[player.gender] = updateLeaderboard(leaderboard.joules[player.gender], player.totalJoules, player.id)
+
+        if (player.power > PLAYER_POWER.MAX) {
+          maxPowerHit()
+        }
 
         if (state.get().game.state === GAME_STATE.finishing && player.totalJoules > player.targetJoules) {
           clearInterval(gameInterval)
@@ -108,22 +141,19 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
         }
       }
 
-      // within 5% of the end, show the finish line!
+      // within 5% of the end
       if (state.get().game.state === GAME_STATE.race && player.totalJoules > (player.targetJoules - ((player.targetJoules / 100) * SPRINT_DISTANCE_FROM_FINISH))) {
         state.setGameState(GAME_STATE.sprint)
 
-        lights.dome.strobe(100)
         lights.dome.rotate(255)
 
         lights.spider1.strobe(100)
         lights.spider2.strobe(100)
       }
 
-      // within 2% of the end, show the finish line!
+      // within 2% of the end, go nuts
       if (state.get().game.state === GAME_STATE.sprint && player.totalJoules > (player.targetJoules - ((player.targetJoules / 100) * SHOW_FINISH_DISTANCE_FROM_FINISH))) {
         state.setGameState(GAME_STATE.finishing)
-
-        lights.dome.strobe(255)
 
         lights.spider1.strobe(255)
         lights.spider2.strobe(255)
@@ -139,11 +169,6 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
 
     state.setLeaderboard(leaderboard)
     state.setPlayers(players)
-
-    if (state.get().game.state === GAME_STATE.race) {
-      const remaining = players[0].metersRemaining < players[1].metersRemaining ? players[0].metersRemaining : players[1].metersRemaining
-      lights.dome.strobe(rangeMap(remaining, 0, trackLength - ((trackLength / 100) * SPRINT_DISTANCE_FROM_FINISH), 255, 200))
-    }
   }
 }
 

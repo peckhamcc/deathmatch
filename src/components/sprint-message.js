@@ -4,11 +4,11 @@ import { STAGE_WIDTH } from '../constants/settings'
 
 const MESSAGES = [
   ['Up!', ' ', 'Up!', ' ', 'Up!'],
-  ['Sprint', ' ', 'for', ' ', 'the', ' ', 'line'],
-  ['Go', ' ', 'for', ' ', 'it!'],
-  ['More', ' ', 'power!'],
+  ['Sprint', 'for', 'the', 'line'],
+  ['Go', 'for', 'it!'],
+  ['More', 'power!'],
   ['Faster!'],
-  ['You', ' ', 'can', ' ', 'do', ' ', 'it!']
+  ['You', 'can', 'do', 'it!']
 ]
 
 const DISPLAY_TIME = 3000

@@ -68,6 +68,8 @@ const dome = (channel, value) => {
 }
 
 dome.colour = (r, g, b, w = 0) => {
+  dome(DOME.CONTROL, 150)
+
   if (w === 0) {
     dome(DOME.RED, r)
     dome(DOME.GREEN, g)
@@ -80,10 +82,15 @@ dome.colour = (r, g, b, w = 0) => {
 }
 
 dome.rotate = (amount) => {
+  dome(DOME.CONTROL, 150)
   dome(DOME.ROTATE, amount)
 }
 
 dome.strobe = (amount) => {
+  // 0 is max strobe, 255 is off so switch it so 255 is max and 0 is off
+  amount = 255 - amount
+
+  dome(DOME.CONTROL, 250) // strobe mode is exclusive of everything else
   dome(DOME.STROBE, amount)
 }
 

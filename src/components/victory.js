@@ -184,11 +184,13 @@ const Quote = styled.div`
   font-size: 24px;
   padding: 40px 80px 20px 80px;
   line-height: 1.4;
+  text-align: center;
 `
 
 const AttributedTo = styled.div`
   font-size: 18px;
   padding: 10px 80px;
+  text-align: center;
 `
 
 const NextRace = FF7.extend`
@@ -246,7 +248,7 @@ class Victory extends Component {
         </Riders>
 
         <Quote>&quot;{quote.quote}&quot;</Quote>
-        <AttributedTo>&nbsp;- {quote.saidBy}</AttributedTo>
+        <AttributedTo>- {quote.saidBy} -</AttributedTo>
       </Wrapper>
     )
   }

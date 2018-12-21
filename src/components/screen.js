@@ -11,7 +11,6 @@ import frames from '../utils/frames'
 import screenBatman from '../../assets/screen-batman.png'
 import screenBike from '../../assets/screen-bike.png'
 import screenDog from '../../assets/screen-dog.png'
-import screenDoge from '../../assets/screen-doge.png'
 import screenFalcon from '../../assets/screen-falcon.png'
 import screenKim from '../../assets/screen-kim.png'
 import screenNuclear from '../../assets/screen-nuclear.png'
@@ -31,7 +30,6 @@ const ANIMATIONS = [
   'batman',
   'bike',
   'dog',
-  'doge',
   'falcon',
   'kim',
   'nuclear',
@@ -145,7 +143,6 @@ class Screen extends Component {
       batman: () => this.createSprite(screenBatman, 500, 269, 13),
       bike: () => this.createSprite(screenBike, 640, 640, 33),
       dog: () => this.createSprite(screenDog, 640, 640, 33),
-      doge: () => this.createSprite(screenDoge, 385, 640, 24),
       falcon: () => this.createSprite(screenFalcon, 500, 209, 19),
       kim: () => this.createSprite(screenKim, 687, 680, 44),
       nuclear: () => this.createSprite(screenNuclear, 200, 200),

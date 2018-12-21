@@ -113,7 +113,7 @@ io.on('connection', (client) => {
     state.reset()
     state.setFreeplay(false)
     lights.dome.colour(255, 255, 0)
-    lights.dome.strobe(100)
+    lights.dome.rotate(100)
 
     lights.spider1.motorSpeed(100)
     lights.spider1.animate(100)

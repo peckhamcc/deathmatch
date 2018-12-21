@@ -22,9 +22,7 @@ import riderASpotlight from '../../assets/rider-a-spotlight.png'
 import riderBSpotlight from '../../assets/rider-b-spotlight.png'
 import stripes from '../../assets/stripes.png'
 import screenBatman from '../../assets/screen-batman.png'
-import screenBike from '../../assets/screen-bike.png'
 import screenDog from '../../assets/screen-dog.png'
-import screenDoge from '../../assets/screen-doge.png'
 import screenFalcon from '../../assets/screen-falcon.png'
 import screenKim from '../../assets/screen-kim.png'
 import screenNuclear from '../../assets/screen-nuclear.png'
@@ -67,7 +65,6 @@ const list = [
   stripes,
   screenBatman,
   screenDog,
-  screenDoge,
   screenFalcon,
   screenKim,
   screenNuclear,
