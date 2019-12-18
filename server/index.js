@@ -57,14 +57,6 @@ io.on('connection', (client) => {
     state.deleteRider(rider)
   })
 
-  client.on('admin:riders:eliminate', (token, rider) => {
-    if (token !== adminToken) {
-      return debug('Invalid admin token')
-    }
-
-    state.eliminateRider(rider)
-  })
-
   client.on('admin:photo:upload', (token, id, photo) => {
     if (token !== adminToken) {
       return debug('Invalid admin token')
@@ -187,7 +179,7 @@ io.on('connection', (client) => {
       return debug('Invalid admin token')
     }
 
-    game.eliminateRider(state, rider)
+    game.riderQuit(state, rider)
   })
 
   client.on('admin:game:start', (token, trackLength) => {

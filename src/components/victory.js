@@ -105,6 +105,9 @@ const QUOTES = [{
   quote: 'Stop whinging and have a gel',
   saidBy: 'Alex Potsides'
 }, {
+  quote: 'Complaining is just wasted watts',
+  saidBy: 'Alex Potsides'
+}, {
   quote: 'It\'s just a few 50km rides back to back...',
   saidBy: 'Eric \'Epic\' Richardson'
 }, {

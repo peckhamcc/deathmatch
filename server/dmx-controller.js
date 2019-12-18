@@ -5,7 +5,8 @@ const Queue = require('p-queue')
 const queue = new Queue({
   concurrency: 1
 })
-const path = '/dev/cu.usbmodem14501'
+//const path = '/dev/cu.usbmodem14501'
+const path = '/dev/cu.usbmodem14301'
 
 const channels = []
 let connected = false
@@ -26,7 +27,7 @@ const openSerialPort = () => {
     connected = false
 
     queue.clear()
-  
+
     setTimeout(openSerialPort, 1000)
   })
 
@@ -63,7 +64,7 @@ const openSerialPort = () => {
     setTimeout(openSerialPort, 1000)
   })
   parser.on('error', (err) => {
-    
+
   })
 }
 

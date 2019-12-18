@@ -12,13 +12,10 @@ import {
   Results,
   LoadingAssets
 } from '../components'
-import debug from 'debug'
 import { connect } from 'react-redux'
 import { updateGameState } from '../store/actions'
 import socket from '../socket'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
-
-const log = debug('GameContainer')
 
 class GameContainer extends Component {
 
@@ -64,7 +61,7 @@ class GameContainer extends Component {
       }
     }
 
-    if (this.props.gameState === GAME_STATE.countingDown || 
+    if (this.props.gameState === GAME_STATE.countingDown ||
       this.props.gameState === GAME_STATE.race ||
       this.props.gameState === GAME_STATE.sprint ||
       this.props.gameState === GAME_STATE.finishing) {

@@ -1,12 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
 import BluetoothState from './bluetooth-state'
 import Settings from './settings'
-import GAME_STATE from '../constants/game-state'
 
-const toolbar = ({demo, gameState}) => {
+const toolbar = ({ demo }) => {
   if (demo) {
     return null
   }
@@ -21,9 +18,8 @@ const toolbar = ({demo, gameState}) => {
   return null
 }
 
-const mapStateToProps = ({ game: { demo, state } }) => ({
-  demo,
-  gameState: state
+const mapStateToProps = ({ game: { demo } }) => ({
+  demo
 })
 
 const mapDispatchToProps = {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import riderImages from './rider-images'
@@ -164,7 +164,7 @@ const mapStateToProps = ({ leaderboard: { power, cadence, joules, speed }, rider
 })
 
 const mapDispatchToProps = {
-  
+
 }
 
 export default connect(

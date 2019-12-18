@@ -62,6 +62,7 @@ class Riders extends Component {
         name: rider.name,
         age: rider.age,
         weight: rider.weight,
+        height: rider.height,
         gender: rider.gender,
         photoSelect: rider.photoSelect,
         photoWin: rider.photoWin,
@@ -73,6 +74,7 @@ class Riders extends Component {
         name: rider.name,
         age: rider.age,
         weight: rider.weight,
+        height: rider.height,
         gender: rider.gender,
         photoSelect: rider.photoSelect,
         photoWin: rider.photoWin,
@@ -90,12 +92,6 @@ class Riders extends Component {
   deleteRider = (rider) => () => {
     if (confirm('Do you really want to delete this rider?')) {
       socket.emit('admin:riders:delete', this.props.adminToken, rider)
-    }
-  }
-
-  eliminateRider = (rider) => () => {
-    if (confirm('Do you really want to eliminate this rider?')) {
-      socket.emit('admin:riders:eliminate', this.props.adminToken, rider)
     }
   }
 
@@ -147,6 +143,7 @@ class Riders extends Component {
                 <TableCell padding='dense'>{rider.name}</TableCell>
                 <TableCell padding='dense' numeric>{rider.age}</TableCell>
                 <TableCell padding='dense' numeric>{rider.weight} kg</TableCell>
+                <TableCell padding='dense' numeric>{rider.height} cm</TableCell>
                 <TableCell padding='dense'>{rider.gender}</TableCell>
                 <TableCell padding='checkbox'>
                   <IconButton color="contrast" aria-label="Edit rider" onClick={this.editRider(rider)}>
@@ -180,7 +177,7 @@ const mapStateToProps = ({ admin: {token}, riders: { riders } }) => ({
 })
 
 const mapDispatchToProps = {
-  
+
 }
 
 export default connect(

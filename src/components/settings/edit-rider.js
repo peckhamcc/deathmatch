@@ -71,6 +71,7 @@ class EditRider extends Component {
       name: props.rider && props.rider.name,
       age: props.rider && props.rider.age,
       weight: props.rider && props.rider.weight,
+      height: props.rider && props.rider.height,
       gender: (props.rider && props.rider.gender) || 'male',
       photoSelect: (props.rider && props.rider.photoSelect),
       photoWin: (props.rider && props.rider.photoWin),
@@ -86,7 +87,7 @@ class EditRider extends Component {
   }
 
   saveRider = () => {
-    if (!this.state.name || !this.state.age || !this.state.weight) {
+    if (!this.state.name || !this.state.age || !this.state.weight || !this.state.height) {
       return
     }
 
@@ -94,6 +95,7 @@ class EditRider extends Component {
       name: this.state.name,
       age: this.state.age,
       weight: this.state.weight,
+      height: this.state.height,
       gender: this.state.gender,
       photoSelect: this.state.photoSelect,
       photoWin: this.state.photoWin,
@@ -105,6 +107,7 @@ class EditRider extends Component {
       name: null,
       age: null,
       weight: null,
+      height: null,
       gender: 'male',
       photoSelect: null,
       photoWin: null,
@@ -131,7 +134,7 @@ class EditRider extends Component {
     const { classes } = this.props
 
     return (
-      <Dialog open={this.props.open} onRequestClose={this.props.onCancel} maxWidth='md'>
+      <Dialog open={this.props.open} onRequestClose={this.props.onCancel} fullScreen>
         <DialogTitle>Add rider</DialogTitle>
         <DialogContent>
           <form>
@@ -162,6 +165,16 @@ class EditRider extends Component {
               className={classes.textField}
               onChange={this.handleChange('weight')}
               value={this.state.weight}
+              required
+            />
+            <TextField
+              id="height"
+              label="Height (cm)"
+              margin="normal"
+              type='number'
+              className={classes.textField}
+              onChange={this.handleChange('height')}
+              value={this.state.height}
               required
             />
             <TextField
@@ -203,7 +216,7 @@ const mapStateToProps = ({ admin: { token } }) => ({
 })
 
 const mapDispatchToProps = {
-  
+
 }
 
 export default connect(

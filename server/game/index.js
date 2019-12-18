@@ -103,6 +103,10 @@ emitter.selectRiders = (state, otherRider) => {
   }
 }
 
+emitter.riderQuit = (state, rider) => {
+  emitter.eliminateRider(state, rider)
+}
+
 emitter.eliminateRider = (state, rider) => {
   const riders = state.get().riders.riders
 

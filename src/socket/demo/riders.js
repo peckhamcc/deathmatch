@@ -134,6 +134,7 @@ module.exports = {
       name: rider.name,
       age: rider.age,
       gender: rider.gender,
+      height: rider.height,
       weight: rider.weight,
       image: images[rider.gender].last,
       races: 0
@@ -151,6 +152,7 @@ module.exports = {
         r.name = rider.name
         r.age = rider.age
         r.gender = rider.gender
+        r.height = rider.height
         r.weight = rider.weight
       })
 
@@ -194,9 +196,15 @@ module.exports = {
     const player2 = findRider(riders, player1.id)
 
     player1.selected = true
-    player1.bike = 'A'
     player2.selected = true
-    player2.bike = 'B'
+
+    if (player1.height > player2.height) {
+      player1.bike = 'A'
+      player2.bike = 'B'
+    } else {
+      player1.bike = 'B'
+      player2.bike = 'A'
+    }
 
     return riders
   },

@@ -71,6 +71,18 @@ const selectRiders = (emitter, state, riders, otherRider) => {
 
     eligible
       .slice(0, numPlayers)
+      .sort((a, b) => {
+        // tallest player on bike A, shortest on bike B
+        if (a.height < b.height) {
+          return 1
+        }
+
+        if (a.height > b.height) {
+          return -1
+        }
+
+        return 0
+      })
       .forEach((rider, index) => {
         rider.selected = true
         rider.bike = PLAYER_LETTERS[index]

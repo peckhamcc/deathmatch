@@ -113,6 +113,7 @@ const state = {
       age: rider.age,
       gender: rider.gender,
       weight: rider.weight,
+      height: rider.height,
       races: 0,
       photoSelect: rider.photoSelect,
       photoWin: rider.photoWin,
@@ -133,6 +134,7 @@ const state = {
         r.age = rider.age
         r.gender = rider.gender
         r.weight = rider.weight
+        r.height = rider.height
         r.photoSelect = rider.photoSelect
         r.photoWin = rider.photoWin
         r.photoLose = rider.photoLose

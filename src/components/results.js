@@ -59,8 +59,12 @@ class Results extends Component {
     riders: PropTypes.array.isRequired
   }
 
-  newGame = () => {
-    socket.emit('admin:game:intro', this.props.adminToken)
+  newGame = (event) => {
+    event.preventDefault()
+
+    if (confirm('Dismiss results and start new game?')) {
+      socket.emit('admin:game:intro', this.props.adminToken)
+    }
   }
 
   render () {

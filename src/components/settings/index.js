@@ -1,32 +1,19 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import styled from 'styled-components'
 import Button from 'material-ui/Button'
 import Dialog, {
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
 } from 'material-ui/Dialog'
 import Tabs, {
   Tab
 } from 'material-ui/Tabs'
-import Typography from 'material-ui/Typography'
-import withStyles from 'material-ui/styles/withStyles'
 import IconButton from 'material-ui/IconButton'
 import SettingsIcon from 'material-ui-icons/Settings'
 import Devices from './devices'
 import Riders from './riders'
 import Game from './game'
-import GAME_STATE from '../../constants/game-state'
-
-const styles = {
-  root: {
-    textAlign: 'center',
-    paddingTop: 200,
-  }
-}
 
 const Wrapper = styled.div`
   position: absolute;
@@ -84,7 +71,10 @@ class Settings extends Component {
       <Wrapper>
         <IconButton aria-label="Delete" onClick={this.showSettings}>
           <SettingsIcon />
-          <Dialog open={open} onRequestClose={this.hideSettings}>
+          <Dialog
+            open={open}
+            onRequestClose={this.hideSettings}
+            fullScreen>
             <DialogTitle>SETTINGS</DialogTitle>
             <DialogContent>
               <Tabs value={tab} onChange={this.handleTabChange}>
