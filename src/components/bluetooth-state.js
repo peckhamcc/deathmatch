@@ -1,16 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import debug from 'debug'
 import { connect } from 'react-redux'
-import BLUETOOTH_STATUSES from '../constants/bluetooth'
 import IconButton from 'material-ui/IconButton'
 import BluetoothIcon from 'material-ui-icons/Bluetooth'
 import BluetoothDisabledIcon from 'material-ui-icons/BluetoothDisabled'
 import ErrorIcon from 'material-ui-icons/Error'
 import styled from 'styled-components'
-import GAME_STATE from '../constants/game-state'
-
-const log = debug('BluetoothState')
 
 const Wrapper = styled.div`
   position: absolute;

@@ -2,39 +2,17 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import socket from '../../socket'
-import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
 import IconButton from 'material-ui/IconButton'
-import MenuIcon from 'material-ui-icons/Menu'
-import keycode from 'keycode'
 import Table, {
   TableBody,
   TableCell,
-  TableFooter,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
+  TableRow
 } from 'material-ui/Table'
-import Paper from 'material-ui/Paper'
-import Checkbox from 'material-ui/Checkbox'
-import Tooltip from 'material-ui/Tooltip'
 import PersonAddIcon from 'material-ui-icons/PersonAdd'
-import SearchIcon from 'material-ui-icons/Search'
-import StopIcon from 'material-ui-icons/Stop'
 import DeleteIcon from 'material-ui-icons/Delete'
 import EditIcon from 'material-ui-icons/Edit'
-import Dialog, {
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-} from 'material-ui/Dialog'
-import TextField from 'material-ui/TextField'
-import MenuItem from 'material-ui/Menu/MenuItem'
 import EditRider from './edit-rider'
 
 class Riders extends Component {

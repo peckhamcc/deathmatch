@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Layer, Rect, Stage, Group, Filters } from 'react-konva'
+import { Layer, Rect, Stage, Group } from 'react-konva'
 import styled from 'styled-components'
 import Background from './background'
 import Road from './road'
@@ -132,7 +132,7 @@ const mapStateToProps = ({ game: { state }, players: { players } }) => ({
 })
 
 const mapDispatchToProps = {
-  
+
 }
 
 export default connect(

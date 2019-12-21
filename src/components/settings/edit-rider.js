@@ -3,14 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Button from 'material-ui/Button'
 import { withStyles } from 'material-ui/styles'
-import MenuIcon from 'material-ui-icons/Menu'
-import keycode from 'keycode'
-import Checkbox from 'material-ui/Checkbox'
-import Tooltip from 'material-ui/Tooltip'
 import Dialog, {
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
 } from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
@@ -19,7 +14,6 @@ import styled from 'styled-components'
 import shortid from 'shortid'
 import socket from '../../socket'
 import Photo from './photo'
-import { PHOTO_WIDTH, PHOTO_HEIGHT } from '../../constants/settings'
 
 const styles = {
 

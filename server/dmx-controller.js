@@ -6,7 +6,8 @@ const queue = new Queue({
   concurrency: 1
 })
 //const path = '/dev/cu.usbmodem14501'
-const path = '/dev/cu.usbmodem14301'
+// const path = '/dev/cu.usbmodem14301'
+const path = '/dev/cu.usbmodem1433201'
 
 const channels = []
 let connected = false

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import styled, { css } from 'styled-components'
-import { Layer, Rect, Stage, Group, Text, Image, Sprite } from 'react-konva'
+import styled from 'styled-components'
+import { Group, Text, Sprite } from 'react-konva'
 import { addAnimateable, removeAnimateable } from './animator'
 import GAME_STATE from '../constants/game-state'
 import rangeMap from 'range-map'
@@ -10,14 +10,6 @@ import assets from '../css/assets'
 import frames from '../utils/frames'
 import playerPosition from '../constants/player-position'
 import POWER from '../constants/power'
-
-const PlayerName = styled.div`
-  background-color: #FFF;
-  padding: 5px 10px;
-  margin: 0;
-  font-size: 16px;
-  display: inline-block;
-`
 
 export const PLAYER_SPRITE_WIDTH = 500
 export const PLAYER_SPRITE_HEIGHT = 400
@@ -85,17 +77,17 @@ class Player extends Component {
       const through = Date.now() - this.state.startXTime
 
       if (this.props.player.power > POWER.FASTEST) {
-        animation = 'fastest'  
+        animation = 'fastest'
       } else if (this.props.player.power > POWER.FASTER) {
-        animation = 'faster'  
+        animation = 'faster'
       } else if (this.props.player.power > POWER.FAST) {
-        animation = 'fast'  
+        animation = 'fast'
       } else {
         animation = 'riding'
       }
 
       x = rangeMap(through > UPDATE_FREQUENCY_MS ? UPDATE_FREQUENCY_MS : through, 0, UPDATE_FREQUENCY_MS, this.state.lastX, this.state.nextX)
-    } 
+    }
 
     this.setState(s => {
       return {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Button } from './form-elements'
 import Card from 'material-ui/Card'
 
@@ -16,7 +16,7 @@ const ModalWrapper = styled.div`
 `
 
 const ModalHeader = styled.div`
-  
+
 `
 
 class Modal extends Component {
@@ -35,7 +35,7 @@ class Modal extends Component {
         {this.props.children}
       </ModalWrapper>
       </Card>
-      
+
     )
   }
 }

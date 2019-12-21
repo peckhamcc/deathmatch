@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { DoubleDounceLoading } from 'styled-spinkit'
@@ -28,7 +28,7 @@ const mapStateToProps = ({ game: { loaded }}) => ({
 })
 
 const mapDispatchToProps = {
-  
+
 }
 
 export default connect(

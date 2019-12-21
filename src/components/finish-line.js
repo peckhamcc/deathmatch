@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import styled, { css } from 'styled-components'
-import { Layer, Rect, Stage, Group, Text, Image, Sprite } from 'react-konva'
+import { Image } from 'react-konva'
 import finishLineImage from '../../assets/finish-line.png'
 import { addAnimateable, removeAnimateable } from './animator'
 import GAME_STATE from '../constants/game-state'
@@ -20,7 +19,7 @@ class FinshLine extends Component {
 
   componentDidMount () {
     addAnimateable(this.animate)
-   
+
     this.setState({
       xOffset: 0
     })
@@ -60,7 +59,7 @@ const mapStateToProps = ({ game: { state } }) => ({
 })
 
 const mapDispatchToProps = {
-  
+
 }
 
 export default connect(

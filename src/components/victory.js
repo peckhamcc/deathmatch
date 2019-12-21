@@ -9,7 +9,6 @@ import riderImages from './rider-images'
 import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
 import FF7 from './ff7'
 import tape from '../../assets/tape.gif'
-import LeaderBoard from './leader-board'
 
 const QUOTES = [{
   quote: 'Ride as much or as little, as long or as short as you feel. But ride.',

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles, MuiThemeProvider } from 'material-ui/styles'
 import { createMuiTheme } from 'material-ui/styles'
-import { grey, white } from 'material-ui/colors'
-import createGenerateClassName from 'material-ui/styles/createGenerateClassName'
+import { grey } from 'material-ui/colors'
 
 const theme = createMuiTheme({
   palette: {

@@ -1,5 +1,4 @@
 import { EventEmitter } from 'events'
-import shortid from 'shortid'
 import game from './game'
 import riders from './riders'
 
