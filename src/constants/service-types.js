@@ -5,4 +5,4 @@ const SERVICE_TYPES = {
   DEVICE_INFORMATION: '180a'
 }
 
-module.exports = SERVICE_TYPES
+export default SERVICE_TYPES

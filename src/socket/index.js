@@ -1,9 +1,4 @@
+import demo from './demo/index.js'
+import live from './socket.js'
 
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./demo')
-} else {
-  const io = require('socket.io-client')
-  const socket = io('//')
-
-  module.exports = socket
-}
+export default process.env.NODE_ENV === 'production' ? demo() : live()

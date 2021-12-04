@@ -1,11 +1,11 @@
-const EventEmitter = require('events').EventEmitter
-const devices = require('../devices')
-const selectRiders = require('./select-riders')
-const { startGame, stopGame } = require('./game-loop')
-const GAME_STATE = require('../../src/constants/game-state')
-const lights = require('../lights')
-const PLAYER_LETTERS = require('../../src/constants/player-letters')
-const PLAYER_COLOURS = require('../../src/constants/player-colours')
+import { EventEmitter } from 'events'
+import devices from '../devices/index.js'
+import selectRiders from './select-riders.js'
+import { startGame, stopGame } from './game-loop.js'
+import GAME_STATE from '../../src/constants/game-state.js'
+import * as lights from '../lights.js'
+import PLAYER_LETTERS from '../../src/constants/player-letters.js'
+import PLAYER_COLOURS from '../../src/constants/player-colours.js'
 
 const emitter = new EventEmitter()
 
@@ -153,4 +153,4 @@ emitter.cancelGame = () => {
   stopGame()
 }
 
-module.exports = emitter
+export default emitter

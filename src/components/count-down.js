@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ColouredText from './coloured-text'
+import ColouredText from './coloured-text.js'
 
 class CountDown extends Component {
   state = {

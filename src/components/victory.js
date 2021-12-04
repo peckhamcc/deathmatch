@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import Button from 'material-ui/Button'
-import socket from '../socket'
+import Button from '@mui/material/Button/index.js'
+import socket from '../socket/index.js'
 import clubLogo from '../../assets/pcc-logo@2x.png'
-import riderImages from './rider-images'
-import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
-import FF7 from './ff7'
+import riderImages from './rider-images.js'
+import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings.js'
+import FF7 from './ff7.js'
 import tape from '../../assets/tape.gif'
 
 const QUOTES = [{
@@ -115,6 +115,18 @@ const QUOTES = [{
 }, {
   quote: 'The less time we are stationary the slower we can ride while moving',
   saidBy: 'Eric \'Epic\' Richardson'
+}, {
+  quote: 'The only thing I know for sure is that I\'m peddling. Besides that I\'ve not a clue what’s going on',
+  saidBy: 'Gerard Ward'
+}, {
+  quote: 'F*ck this I\'m joining Dulwich Paragon',
+  saidBy: 'Paul Schneider'
+}, {
+  quote: 'I dont think I\'d ever class myself as 100% in control of my bike 😅',
+  saidBy: 'Leo Hemsted'
+}, {
+  quote: 'Is the carbon necessary?',
+  saidBy: 'Amy Powell'
 }]
 
 const Wrapper = styled.div`
@@ -195,7 +207,7 @@ const AttributedTo = styled.div`
   text-align: center;
 `
 
-const NextRace = FF7.extend`
+const NextRace = styled(FF7)`
   position: absolute;
   margin: 670px 0 0 755px;
 `

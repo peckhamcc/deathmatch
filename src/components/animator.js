@@ -5,7 +5,7 @@ const animate = () => {
   animatables.forEach(animatable => {
     try {
       animatable()
-    } catch(error) {
+    } catch (error) {
       console.error(error)
     }
   })

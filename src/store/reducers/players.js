@@ -1,9 +1,9 @@
-import { PLAYERS_SET } from '../actions'
+import { PLAYERS_SET } from '../actions/index.js'
 import rangeMap from 'range-map'
-import { PLAYER_SPRITE_WIDTH } from '../../components/player'
-import { STAGE_WIDTH } from '../../constants/settings'
-import PLAYER_STATUS from '../../constants/player-status'
-import POWER from '../../constants/power'
+import { PLAYER_SPRITE_WIDTH } from '../../components/player.js'
+import { STAGE_WIDTH } from '../../constants/settings.js'
+import PLAYER_STATUS from '../../constants/player-status.js'
+import POWER from '../../constants/power.js'
 
 const initialState = {
   players: []

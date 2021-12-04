@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Rect, Group, Text, Image } from 'react-konva'
 import rangeMap from 'range-map'
 import powerBar from '../../assets/background-power.png'
-import assets from '../css/assets'
+import assets from '../css/assets.js'
 
 const FF7Canvas = ({ width, height, x, y, children }) => {
   return (

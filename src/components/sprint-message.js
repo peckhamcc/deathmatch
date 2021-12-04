@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import ColouredText from './coloured-text'
-import { STAGE_WIDTH } from '../constants/settings'
+import ColouredText from './coloured-text.js'
+import { STAGE_WIDTH } from '../constants/settings.js'
 
 const MESSAGES = [
   ['Up!', ' ', 'Up!', ' ', 'Up!'],

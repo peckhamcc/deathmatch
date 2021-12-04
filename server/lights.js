@@ -1,7 +1,7 @@
-const rangeMap = require('range-map')
-const {
+import rangeMap from 'range-map'
+import {
   write
-} = require('./dmx-controller')
+} from './dmx-controller.js'
 
 process.on('exit', () => {
   dome.rotate(0)
@@ -63,7 +63,7 @@ const LASER = {
   ROTATE_Z: 12
 }
 
-const dome = (channel, value) => {
+export const dome = (channel, value) => {
   write(DOME.OFFSET, channel, value)
 }
 
@@ -160,10 +160,10 @@ const spider = (offset) => {
   return output
 }
 
-const spider1 = spider(SPIDER_LIGHT_1.OFFSET)
-const spider2 = spider(SPIDER_LIGHT_2.OFFSET)
+export const spider1 = spider(SPIDER_LIGHT_1.OFFSET)
+export const spider2 = spider(SPIDER_LIGHT_2.OFFSET)
 
-const laser = (channel, value) => {
+export const laser = (channel, value) => {
   laser.on()
   write(LASER.OFFSET, channel, value)
 }
@@ -239,11 +239,4 @@ laser.colour = (r, g, b, w = 0) => {
   } else {
     laser(LASER.COLOUR, 140)
   }
-}
-
-module.exports = {
-  dome,
-  spider1,
-  spider2,
-  laser
 }

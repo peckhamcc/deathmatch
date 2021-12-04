@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import styled, { css } from 'styled-components'
-import { Image, Layer, Sprite } from 'react-konva'
-import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
-import { addAnimateable, removeAnimateable } from './animator'
-import assets from '../css/assets'
-import PLAYER_STATUS from '../constants/player-status'
-import GAME_STATE from '../constants/game-state'
+import { Image } from 'react-konva'
+import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings.js'
+import { addAnimateable, removeAnimateable } from './animator.js'
+import PLAYER_STATUS from '../constants/player-status.js'
+import GAME_STATE from '../constants/game-state.js'
 
 class Sky extends Component {
   static propTypes = {

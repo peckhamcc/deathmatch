@@ -5,8 +5,8 @@ import {
   LOADED_SET,
   FREEPLAY_SET,
   NUM_PLAYERS_SET
-} from '../actions'
-import GAME_STATE from '../../constants/game-state'
+} from '../actions/index.js'
+import GAME_STATE from '../../constants/game-state.js'
 
 const initialState = {
   loaded: 0,

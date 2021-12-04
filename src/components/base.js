@@ -5,7 +5,6 @@ class Base extends Component {
 
 }
 
-
 const mapStateToProps = ({ game: { trackLength }, players: { players } }) => ({
   trackLength: trackLength,
   players: players

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import TextField from 'material-ui/TextField'
-import { setAdminToken } from '../../store/actions'
+import TextField from '@mui/material/TextField/index.js'
+import { setAdminToken } from '../../store/actions/index.js'
 
 class Authenticate extends Component {
   state = {

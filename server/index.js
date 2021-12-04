@@ -1,15 +1,21 @@
-const express = require('express')
-const serveStatic = require('serve-static')
-const path = require('path')
-const socket = require('socket.io')
-const http = require('http')
-const debug = require('debug')('deathmatch:server')
-const bluetooth = require('./devices')
-const game = require('./game')
-const photos = require('./photos')
-const GAME_STATE = require('../src/constants/game-state')
-const lights = require('./lights')
+import express from 'express'
+import serveStatic from 'serve-static'
+import path from 'path'
+import { Server } from 'socket.io'
+import http from 'http'
+import debug from 'debug'
+import bluetooth from './devices/index.js'
+import game from './game/index.js'
+import * as photos from './photos.js'
+import GAME_STATE from '../src/constants/game-state.js'
+import * as lights from './lights.js'
+import createState from './state.js'
+import { fileURLToPath } from 'url'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const log = debug('deathmatch:server')
 const adminToken = 'something-random'
 const PORT = 5000
 
@@ -22,20 +28,21 @@ process.on('unhandledRejection', error => {
 const app = express()
 app.use('/deathmatch', serveStatic(path.resolve(path.join(__dirname, '..', 'dist'))))
 app.use('/deathmatch/photos', serveStatic(path.resolve(path.join(__dirname, '..', 'photos'))))
-//app.use('/', (req, res) => {
-//  res.redirect(301, '/deathmatch')
-//})
+app.use('/', (req, res) => {
+  res.redirect(301, '/deathmatch')
+})
 
 const server = http.createServer(app)
-const io = socket(server)
-const state = require('./state')(io)
+
+const io = new Server(server)
+const state = createState(io)
 
 io.on('connection', (client) => {
-  debug('client', client.id, 'connected')
+  log('client', client.id, 'connected')
 
   client.on('admin:riders:create', (token, rider) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     state.createRider(rider)
@@ -43,7 +50,7 @@ io.on('connection', (client) => {
 
   client.on('admin:riders:update', (token, rider) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     state.updateRider(rider)
@@ -51,7 +58,7 @@ io.on('connection', (client) => {
 
   client.on('admin:riders:delete', (token, rider) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     state.deleteRider(rider)
@@ -59,7 +66,7 @@ io.on('connection', (client) => {
 
   client.on('admin:photo:upload', (token, id, photo) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     client.emit(`admin:photo:uploaded:${id}`, photos.upload(photo))
@@ -67,7 +74,7 @@ io.on('connection', (client) => {
 
   client.on('admin:devices:search:start', (token) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     bluetooth.startSearching()
@@ -75,7 +82,7 @@ io.on('connection', (client) => {
 
   client.on('admin:devices:search:stop', (token) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     bluetooth.stopSearching()
@@ -83,7 +90,7 @@ io.on('connection', (client) => {
 
   client.on('admin:devices:connect', (token, id) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     bluetooth.connect(id)
@@ -91,7 +98,7 @@ io.on('connection', (client) => {
 
   client.on('admin:devices:assign', (token, deviceId, player) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     bluetooth.assign(deviceId, player)
@@ -99,7 +106,7 @@ io.on('connection', (client) => {
 
   client.on('admin:game:intro', (token) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     state.reset()
@@ -118,7 +125,7 @@ io.on('connection', (client) => {
 
   client.on('admin:game:freeplay', (token) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     state.reset()
@@ -128,7 +135,7 @@ io.on('connection', (client) => {
 
   client.on('admin:game:freeplay:start', (token, trackLength, players) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     game.startFreeplay(state, players, trackLength)
@@ -136,7 +143,7 @@ io.on('connection', (client) => {
 
   client.on('admin:game:new', (token) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     state.reset()
@@ -157,7 +164,7 @@ io.on('connection', (client) => {
 
   client.on('admin:game:continue', (token) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     game.selectRiders(state)
@@ -176,7 +183,7 @@ io.on('connection', (client) => {
 
   client.on('admin:game:rider-quit', (token, rider) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     game.riderQuit(state, rider)
@@ -184,7 +191,7 @@ io.on('connection', (client) => {
 
   client.on('admin:game:start', (token, trackLength) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     game.startGame(trackLength, state)
@@ -192,7 +199,7 @@ io.on('connection', (client) => {
 
   client.on('admin:game:stop', (token) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     game.cancelGame()
@@ -200,7 +207,7 @@ io.on('connection', (client) => {
 
   client.on('admin:game:results', (token) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     state.setGameState(GAME_STATE.results)
@@ -208,7 +215,7 @@ io.on('connection', (client) => {
 
   client.on('admin:game:set-num-players', (token, numPlayers) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     state.setNumPlayers(numPlayers)
@@ -216,14 +223,14 @@ io.on('connection', (client) => {
 
   client.on('admin:game:set-track-length', (token, trackLength) => {
     if (token !== adminToken) {
-      return debug('Invalid admin token')
+      return log('Invalid admin token')
     }
 
     state.setTrackLength(trackLength)
   })
 
   client.once('disconnect', () => {
-    debug('client', client.id, 'disconnected')
+    log('client', client.id, 'disconnected')
   })
 
   client.emit('init', {
@@ -258,6 +265,6 @@ game.on('game:players', (players) => {
 })
 
 server.listen(PORT, () => {
-  debug(`Listening on port ${PORT}`)
-  debug(`window.adminToken = '${adminToken}'`)
+  log(`Listening on port ${PORT}`)
+  log(`window.adminToken = '${adminToken}'`)
 })

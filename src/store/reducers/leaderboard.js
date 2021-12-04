@@ -1,4 +1,4 @@
-import { LEADERBOARD_SET } from '../actions'
+import { LEADERBOARD_SET } from '../actions/index.js'
 
 const initialState = {
   power: {

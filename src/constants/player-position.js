@@ -1,3 +1,3 @@
 
 // not really constant
-module.exports = []
+export default []

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { DoubleDounceLoading } from 'styled-spinkit'
+import { Pulse } from 'styled-spinkit'
 
 const LoadingPanel = styled.div`
   color: #FFF;
@@ -17,13 +17,13 @@ const LoadingPanel = styled.div`
 const Loading = ({ loaded }) => {
   return (
     <LoadingPanel>
-      <DoubleDounceLoading color='#FFFFFF' />
+      <Pulse color='#FFFFFF' />
       <p>Loading {loaded}%</p>
     </LoadingPanel>
   )
 }
 
-const mapStateToProps = ({ game: { loaded }}) => ({
+const mapStateToProps = ({ game: { loaded } }) => ({
   loaded: loaded
 })
 

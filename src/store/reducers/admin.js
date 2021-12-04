@@ -1,4 +1,4 @@
-import { ADMIN_TOKEN } from '../actions'
+import { ADMIN_TOKEN } from '../actions/index.js'
 
 const initialState = {
   token: 'something-random'

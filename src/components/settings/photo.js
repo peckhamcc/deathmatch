@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Button from 'material-ui/Button'
-import PhotoTaker from './photo-taker'
+import Button from '@mui/material/Button/index.js'
+import PhotoTaker from './photo-taker.js'
 import defaultPhoto from '../../../assets/rider-female-0.png'
-import { PHOTO_WIDTH, PHOTO_HEIGHT } from '../../constants/settings'
+import { PHOTO_WIDTH, PHOTO_HEIGHT } from '../../constants/settings.js'
 
 const Wrapper = styled.div`
   width: ${PHOTO_WIDTH}px;

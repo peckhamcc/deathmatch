@@ -7,4 +7,4 @@ const PLAYER_STATUS = {
   MAX: 'max'
 }
 
-module.exports = PLAYER_STATUS
+export default PLAYER_STATUS

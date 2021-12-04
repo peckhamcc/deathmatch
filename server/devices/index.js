@@ -1,15 +1,16 @@
-const noble = require('noble-mac')
-const debug = require('debug')('deathmatch:devices')
-const EventEmitter = require('events').EventEmitter
-const { load, save } = require('../files')
-const powerMeasurement = require('./power-measurement')
-const cadenceMeasurement = require('./cadence-measurement')
-const DEVICE_STATUSES = require('../../src/constants/devices')
-const SERVICE_TYPES = require('../../src/constants/service-types')
-const CHARACTERISTIC_TYPES = require('../../src/constants/characteristic-types')
-const TYRE_CIRCUMFERENCES = require('../../src/constants/tyre-circumferences')
-const fakeDevices = require('./fake-devices')
+import noble from '@abandonware/noble'
+import debug from 'debug'
+import { EventEmitter } from 'events'
+import { load, save } from '../files.js'
+import powerMeasurement from './power-measurement.js'
+import cadenceMeasurement from './cadence-measurement.js'
+import DEVICE_STATUSES from '../../src/constants/devices.js'
+import SERVICE_TYPES from '../../src/constants/service-types.js'
+import CHARACTERISTIC_TYPES from '../../src/constants/characteristic-types.js'
+import TYRE_CIRCUMFERENCES from '../../src/constants/tyre-circumferences.js'
+import fakeDevices from './fake-devices.js'
 
+const log = debug('deathmatch:devices')
 const emitter = new EventEmitter()
 const peripherals = load('devices.json')
 
@@ -25,7 +26,7 @@ noble.on('stateChange', (state) => {
 })
 
 noble.on('discover', (peripheral) => {
-  debug('discovered', peripheral)
+  log('discovered', peripheral)
 
   let device = peripherals
     .find(device => device.id === peripheral.id)
@@ -95,29 +96,29 @@ emitter.stopSearching = () => {
 }
 
 emitter.connect = (id) => {
-  debug(`Connecting to ${id}`)
+  log(`Connecting to ${id}`)
   const device = peripherals
     .find(device => device.id === id)
 
   if (!device) {
-    debug('Cannot connect to non-existent device', id)
+    log('Cannot connect to non-existent device', id)
     return
   }
 
-  debug('Found device', device)
+  log('Found device', device)
 
   device.status = DEVICE_STATUSES.connecting
   emitter.emit('devices', peripherals)
 
   device.peripheral.connect((error) => {
     if (error) {
-      return debug(`Error connecting to ${device.name}: ${error}`)
+      return log(`Error connecting to ${device.name}: ${error}`)
     }
 
     device.status = DEVICE_STATUSES.connected
     emitter.emit('devices', peripherals)
 
-    debug(`connected to ${device.name}`)
+    log(`connected to ${device.name}`)
 
     device.peripheral.discoverSomeServicesAndCharacteristics([
       SERVICE_TYPES.POWER,
@@ -127,23 +128,23 @@ emitter.connect = (id) => {
       CHARACTERISTIC_TYPES.CYCLING_SPEED_CADENCE_MEASUREMENT
     ], (error, services, characteristics) => {
       if (error) {
-        return debug(`Error discovering services and charateristics of ${device.name}: ${error}`)
+        return log(`Error discovering services and charateristics of ${device.name}: ${error}`)
       }
 
       const power = characteristics.find(c => c.uuid === CHARACTERISTIC_TYPES.CYCLING_POWER_MEASUREMENT)
       const cadence = characteristics.find(c => c.uuid === CHARACTERISTIC_TYPES.CYCLING_SPEED_CADENCE_MEASUREMENT)
 
       if (!power) {
-        return debug(`Could not find power measurement characteristic ${device.name}`)
+        return log(`Could not find power measurement characteristic ${device.name}`)
       }
 
       if (!cadence) {
-        return debug(`Could not find cadence measurement characteristic of ${device.name}`)
+        return log(`Could not find cadence measurement characteristic of ${device.name}`)
       }
 
       power.subscribe((error) => {
         if (error) {
-          debug(`Error subscribing to power characteristic of ${device.name}: ${error}`)
+          log(`Error subscribing to power characteristic of ${device.name}: ${error}`)
         }
 
         device.power = 0
@@ -151,7 +152,7 @@ emitter.connect = (id) => {
 
       cadence.subscribe((error) => {
         if (error) {
-          debug(`Error subscribing to power characteristic of ${device.name}: ${error}`)
+          log(`Error subscribing to power characteristic of ${device.name}: ${error}`)
         }
 
         device.cadence = 0
@@ -160,7 +161,7 @@ emitter.connect = (id) => {
       power.on('data', (data) => {
         const measurement = powerMeasurement(data)
 
-        debug(`Got power data from ${device.name}`, measurement)
+        log(`Got power data from ${device.name}`, measurement)
 
         device.power = measurement.instantaneousPower
         emitter.emit('devices', peripherals)
@@ -173,7 +174,7 @@ emitter.connect = (id) => {
       cadence.on('data', (data) => {
         const measurement = cadenceMeasurement(data)
 
-        debug(`Got cadence data from ${device.name}`, JSON.stringify(measurement, null, 2))
+        log(`Got cadence data from ${device.name}`, JSON.stringify(measurement, null, 2))
 
         if (lastCadenceTime !== -1) {
           const timeMs = Date.now() - lastCadenceTime
@@ -245,4 +246,4 @@ emitter.assign = (deviceId, player) => {
   emitter.emit('devices', peripherals)
 }
 
-module.exports = emitter
+export default emitter

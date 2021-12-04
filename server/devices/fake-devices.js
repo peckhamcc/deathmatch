@@ -1,7 +1,7 @@
-const EventEmitter = require('events').EventEmitter
-const CHARACTERISTIC_TYPES = require('../../src/constants/characteristic-types')
-const SERVICE_TYPES = require('../../src/constants/service-types')
-const rangeMap = require('range-map')
+import { EventEmitter } from 'events'
+import CHARACTERISTIC_TYPES from '../../src/constants/characteristic-types.js'
+import SERVICE_TYPES from '../../src/constants/service-types.js'
+import rangeMap from 'range-map'
 
 const devices = new Array(4)
   .fill(0)
@@ -100,7 +100,7 @@ const devices = new Array(4)
     }
   })
 
-module.exports = (noble) => {
+export default (noble) => {
   devices.forEach(device => {
     noble.emit('discover', device)
   })

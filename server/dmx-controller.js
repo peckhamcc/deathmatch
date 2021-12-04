@@ -1,11 +1,13 @@
-const debug = require('debug')('deathmatch:dmx-controller')
-const SerialPort = require('serialport')
-const Readline = require('@serialport/parser-readline')
-const Queue = require('p-queue')
+import debug from 'debug'
+import SerialPort from 'serialport'
+import Readline from '@serialport/parser-readline'
+import Queue from 'p-queue'
+
+const log = debug('deathmatch:dmx-controller')
 const queue = new Queue({
   concurrency: 1
 })
-//const path = '/dev/cu.usbmodem14501'
+// const path = '/dev/cu.usbmodem14501'
 // const path = '/dev/cu.usbmodem14301'
 const path = '/dev/cu.usbmodem1433201'
 
@@ -22,7 +24,7 @@ const openSerialPort = () => {
   })
 
   port.on('close', () => {
-    debug(`Port ${path} closed`)
+    log(`Port ${path} closed`)
 
     connectionLost = true
     connected = false
@@ -34,7 +36,7 @@ const openSerialPort = () => {
 
   parser = port.pipe(new Readline())
   parser.once('data', async (line) => {
-    debug(`Port ${path} opened`)
+    log(`Port ${path} opened`)
     // put dome light into DMX control mode
     queue.add(() => write(1, 150))
 
@@ -69,34 +71,32 @@ const openSerialPort = () => {
   })
 }
 
-const write = (channel, value) => {
+const writeValue = (channel, value) => {
   return new Promise((resolve, reject) => {
     const command = `${channel}c${value}w`
-    debug(command)
+    log(command)
 
     port.write(`${command}\n`, (err) => {
       if (err) {
-        debug(`Wrote ${command} with error ${err}`)
+        log(`Wrote ${command} with error ${err}`)
         return reject(err)
       }
 
-      debug(`Wrote ${command}`)
+      log(`Wrote ${command}`)
       resolve()
     })
   })
 }
 
-module.exports = {
-  write: (offset, channel, value) => {
-    channel += offset
-    channels[channel] = value
+export function write (offset, channel, value) {
+  channel += offset
+  channels[channel] = value
 
-    if (!connected) {
-      return
-    }
-
-    queue.add(() => write(channel, value))
+  if (!connected) {
+    return
   }
+
+  queue.add(() => writeValue(channel, value))
 }
 
 openSerialPort()

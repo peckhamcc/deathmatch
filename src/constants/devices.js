@@ -6,4 +6,4 @@ const DEVICE_STATUSES = {
   connected: 3
 }
 
-module.exports = DEVICE_STATUSES
+export default DEVICE_STATUSES

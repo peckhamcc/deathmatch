@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withStyles } from 'material-ui/styles'
-import TextField from 'material-ui/TextField'
-import Select from 'material-ui/Select'
-import {
-  MenuItem
-} from 'material-ui/Menu'
+import { withStyles } from '@mui/styles/index.js'
+import TextField from '@mui/material/TextField/index.js'
+import Select from '@mui/material/Select/index.js'
+import MenuItem from '@mui/material/MenuItem/index.js'
 import {
   setAdminToken,
   setNumPlayers,
   setTrackLength
-} from '../../store/actions'
-import socket from '../../socket'
+} from '../../store/actions/index.js'
+import socket from '../../socket/index.js'
 
 const styles = {
 
@@ -37,7 +35,7 @@ class Game extends Component {
     this.setState({
       [name]: event.target.value,
     })
- 
+
     if (name === 'numPlayers') {
       this.props.setNumPlayers(event.target.value)
       socket.emit('admin:game:set-num-players', this.state.password, event.target.value)

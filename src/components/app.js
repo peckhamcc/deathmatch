@@ -1,44 +1,30 @@
 import React, { Component } from 'react'
-import { withStyles, MuiThemeProvider } from 'material-ui/styles'
-import { createMuiTheme } from 'material-ui/styles'
-import { grey } from 'material-ui/colors'
+import { ThemeProvider, createTheme } from '@mui/material/styles/index.js'
+import { grey, blue, red, green } from '@mui/material/colors/index.js'
 
-const theme = createMuiTheme({
+const theme = createTheme({
+  typography: {
+    fontFamily: '"Press Start 2P", monospace',
+    fontSize: 16
+  },
   palette: {
     primary: grey,
-    secondary: grey
+    secondary: grey,
+    info: blue,
+    warning: red
   }
 })
-
-// Apply some reset
-const styles = theme => ({
-  '@global': {
-    html: {
-      background: theme.palette.background.default,
-      WebkitFontSmoothing: 'antialiased', // Antialiasing.
-      MozOsxFontSmoothing: 'grayscale', // Antialiasing.
-      fontSize: 16
-    },
-    body: {
-      margin: 0
-    }
-  }
-})
-
-const context = {
-  theme
-}
 
 class App extends Component {
   render () {
     return (
-      <MuiThemeProvider theme={context.theme} sheetsManager={context.sheetsManager}>
+      <ThemeProvider theme={theme}>
         <div>
           {this.props.children}
         </div>
-      </MuiThemeProvider>
+      </ThemeProvider>
     )
   }
 }
 
-export default withStyles(styles)(App)
+export default App

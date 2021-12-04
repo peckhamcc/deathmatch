@@ -1,22 +1,22 @@
-const { readFileSync, writeFileSync } = require('fs')
-const debug = require('debug')('deathmatch:files')
+import { readFileSync, writeFileSync } from 'fs'
+import debug from 'debug'
 
-module.exports = {
-  load: (file, defaultValue = []) => {
-    try {
-      return JSON.parse(readFileSync(file))
-    } catch (error) {
-      debug(error)
+const log = debug('deathmatch:files')
 
-      return JSON.parse(JSON.stringify(defaultValue))
-    }
-  },
+export function load (file, defaultValue = []) {
+  try {
+    return JSON.parse(readFileSync(file))
+  } catch (error) {
+    log(error)
 
-  save: (array, file) => {
-    try {
-      return writeFileSync(file, JSON.stringify(array, null, 2))
-    } catch (error) {
-      debug(error)
-    }
+    return JSON.parse(JSON.stringify(defaultValue))
+  }
+}
+
+export function save (array, file) {
+  try {
+    return writeFileSync(file, JSON.stringify(array, null, 2))
+  } catch (error) {
+    log(error)
   }
 }

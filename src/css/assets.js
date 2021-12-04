@@ -84,45 +84,45 @@ const list = [
 
 const assets = {}
 
-module.exports = {
+export default {
   load: (riders, progress, cb) => {
     riders.forEach(rider => {
       if (rider.photoSelect) {
         list.push(rider.photoSelect)
       }
-  
+
       if (rider.photoWin) {
         list.push(rider.photoWin)
       }
-  
+
       if (rider.photoLose) {
         list.push(rider.photoLose)
       }
-  
+
       if (rider.photoPower) {
         list.push(rider.photoPower)
       }
     })
-  
+
     let remaning = list.length
-  
+
     Promise.all(list.map(asset => {
       return new Promise((resolve, reject) => {
         const image = new window.Image()
         image.src = asset
         image.onload = () => {
           assets[asset] = image
-  
+
           remaning -= 1
-  
+
           progress(remaning, list.length)
-  
+
           resolve()
         }
       })
     }))
-    .then(() => cb())
-    .catch(error => cb(error))
+      .then(() => cb())
+      .catch(error => cb(error))
   },
 
   get: (key) => {

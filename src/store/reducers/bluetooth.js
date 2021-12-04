@@ -1,5 +1,5 @@
-import { BLUETOOTH_STATUS, BLUETOOTH_SEARCH_STATUS } from '../actions'
-import BLUETOOTH_STATUSES from '../../constants/bluetooth'
+import { BLUETOOTH_STATUS, BLUETOOTH_SEARCH_STATUS } from '../actions/index.js'
+import BLUETOOTH_STATUSES from '../../constants/bluetooth.js'
 
 const initialState = {
   status: 'poweredOff',

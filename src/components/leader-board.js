@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import riderImages from './rider-images'
+import riderImages from './rider-images.js'
 
 const Header = styled.div`
   font-size: 18px;
@@ -28,7 +28,7 @@ const TableCell = styled.td`
   font-size: 12px;
 `
 
-const SmallTableCell = TableCell.extend`
+const SmallTableCell = styled(TableCell)`
   width: 66px;
 `
 
@@ -40,7 +40,7 @@ const findLeaderboardEntry = (riders, entry) => {
   if (!entry) {
     return {
       rider: {
-        name:'-'
+        name: '-'
       },
       value: '-'
     }
@@ -51,7 +51,7 @@ const findLeaderboardEntry = (riders, entry) => {
   if (!rider) {
     return {
       rider: {
-        name:'-'
+        name: '-'
       },
       value: '-'
     }
@@ -63,7 +63,7 @@ const findLeaderboardEntry = (riders, entry) => {
   }
 }
 
-const RiderImage = ({ rider: { photoWin, gender, image} }) => {
+const RiderImage = ({ rider: { photoWin, gender, image } }) => {
   if (!gender) {
     return null
   }
@@ -84,29 +84,29 @@ const findWinner = (riders, gender) => {
     .pop()
 
   return winner || riders
-        .filter(rider => rider.gender === gender)
-        .sort((a, b) => a.eliminatedAt - b.eliminatedAt)
-        .pop()
+    .filter(rider => rider.gender === gender)
+    .sort((a, b) => a.eliminatedAt - b.eliminatedAt)
+    .pop()
 }
 
 const LeaderBoard = ({ riders, power, cadence, joules, speed }) => {
   const leaderBoard = []
 
-  for(let i = 0; i < 5; i++) {
+  for (let i = 0; i < 5; i++) {
     leaderBoard.push({
       power: {
         male: findLeaderboardEntry(riders, power.male[i]),
-        female: findLeaderboardEntry(riders, power.female[i]),
+        female: findLeaderboardEntry(riders, power.female[i])
       },
       speed: {
         male: findLeaderboardEntry(riders, speed.male[i]),
-        female: findLeaderboardEntry(riders, speed.female[i]),
+        female: findLeaderboardEntry(riders, speed.female[i])
       }
     })
   }
 
-  let mensChampion = findWinner(riders, 'male')
-  let womensChampion = findWinner(riders, 'female')
+  const mensChampion = findWinner(riders, 'male')
+  const womensChampion = findWinner(riders, 'female')
 
   return (
     <div>
@@ -143,7 +143,7 @@ const LeaderBoard = ({ riders, power, cadence, joules, speed }) => {
                 <TableCell>{leaders.power.male.rider.name}</TableCell>
                 <SmallTableCell>{leaders.power.male.value}</SmallTableCell>
 
-                <SmallTableCell ><RiderImage rider={leaders.power.female.rider} /></SmallTableCell>
+                <SmallTableCell><RiderImage rider={leaders.power.female.rider} /></SmallTableCell>
                 <TableCell>{leaders.power.female.rider.name}</TableCell>
                 <SmallTableCell>{leaders.power.female.value}</SmallTableCell>
               </tr>
@@ -155,7 +155,7 @@ const LeaderBoard = ({ riders, power, cadence, joules, speed }) => {
   )
 }
 
-const mapStateToProps = ({ leaderboard: { power, cadence, joules, speed }, riders: { riders }}) => ({
+const mapStateToProps = ({ leaderboard: { power, cadence, joules, speed }, riders: { riders } }) => ({
   riders,
   power,
   cadence,

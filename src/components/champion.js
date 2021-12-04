@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import Button from 'material-ui/Button'
-import socket from '../socket'
+import Button from '@mui/material/Button/index.js'
+import socket from '../socket/index.js'
 import clubLogo from '../../assets/pcc-logo@2x.png'
-import riderImages from './rider-images'
-import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
-import FF7 from './ff7'
+import riderImages from './rider-images.js'
+import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings.js'
+import FF7 from './ff7.js'
 import tape from '../../assets/tape.gif'
 
 const Wrapper = styled.div`
@@ -46,7 +46,7 @@ const ClubLogo = styled.div`
   padding-top: 140px;
 `
 
-const NewGame = FF7.extend`
+const NewGame = styled(FF7)`
   position: absolute;
   margin: 670px 0 0 755px;
 `

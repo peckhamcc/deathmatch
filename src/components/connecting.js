@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
-import { DoubleDounceLoading } from 'styled-spinkit'
+import { Pulse } from 'styled-spinkit'
 
 const ConnectingPanel = styled.div`
   color: #FFF;
@@ -16,7 +16,7 @@ const ConnectingPanel = styled.div`
 const Connecting = () => {
   return (
     <ConnectingPanel>
-      <DoubleDounceLoading color='#FFFFFF' />
+      <Pulse color='#FFFFFF' />
       <p>Connecting</p>
     </ConnectingPanel>
   )

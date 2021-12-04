@@ -1,4 +1,4 @@
-import { DEVICES_SET, DEVICES_ADD } from '../actions'
+import { DEVICES_SET, DEVICES_ADD } from '../actions/index.js'
 
 const initialState = {
   devices: []

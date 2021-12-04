@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Image } from 'react-konva'
 import finishLineImage from '../../assets/finish-line.png'
-import { addAnimateable, removeAnimateable } from './animator'
-import GAME_STATE from '../constants/game-state'
-import assets from '../css/assets'
+import { addAnimateable, removeAnimateable } from './animator.js'
+import GAME_STATE from '../constants/game-state.js'
+import assets from '../css/assets.js'
 
 class FinshLine extends Component {
 

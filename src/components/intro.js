@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Button from 'material-ui/Button'
+import Button from '@mui/material/Button/index.js'
 import introBackground from '../../assets/intro.png'
-import FF7 from './ff7'
+import FF7 from './ff7.js'
 import styled from 'styled-components'
-import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
+import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings.js'
 
 const IntroWrapper = styled.div`
   background-color: #FFF;
@@ -19,7 +19,7 @@ const IntroWrapper = styled.div`
   padding-top: 500px;
 `
 
-const StartGame = FF7.extend`
+const StartGame = styled(FF7)`
   margin-top: 0;
 `
 

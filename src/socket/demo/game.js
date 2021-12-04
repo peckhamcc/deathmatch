@@ -1,8 +1,8 @@
-const EventEmitter = require('events').EventEmitter
-const riders = require('./riders')
-const selectRiders = require('../../../server/game/select-riders')
-const { startGame, stopGame } = require('../../../server/game/game-loop')
-const GAME_STATE = require('../../constants/game-state')
+import { EventEmitter } from 'events'
+import riders from './riders.js'
+import selectRiders from '../../../server/game/select-riders.js'
+import { startGame, stopGame } from '../../../server/game/game-loop.js'
+import GAME_STATE from '../../constants/game-state.js'
 
 const emitter = new EventEmitter()
 
@@ -44,7 +44,7 @@ emitter.selectRiders = () => {
   const r = riders.get()
   const willRace = selectRiders(emitter, {
     getNumPlayers: () => 2
-  }. r)
+  }.r)
 
   riders.set(r)
 
@@ -61,4 +61,4 @@ emitter.cancelGame = () => {
   stopGame()
 }
 
-module.exports = emitter
+export default emitter

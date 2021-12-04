@@ -1,10 +1,10 @@
-const debug = require('debug')('deathmatch:state')
-const path = require('path')
-const { load, save } = require('./files')
-const bluetooth = require('./devices')
-const GAME_STATE = require('../src/constants/game-state')
-const shortid = require('shortid')
-const { writeFileSync } = require('fs')
+import debug from 'debug'
+import { load, save } from './files.js'
+import bluetooth from './devices/index.js'
+import GAME_STATE from '../src/constants/game-state.js'
+import shortid from 'shortid'
+
+const log = debug('deathmatch:state')
 
 const defaultState = () => ({
   admin: {
@@ -50,7 +50,7 @@ const defaultState = () => ({
   }
 })
 
-let s = load('state.json', defaultState())
+const s = load('state.json', defaultState())
 s.game.state = GAME_STATE.intro
 
 let socket = null
@@ -229,7 +229,7 @@ const state = {
   }
 }
 
-module.exports = (s) => {
+export default (s) => {
   socket = s
 
   return state

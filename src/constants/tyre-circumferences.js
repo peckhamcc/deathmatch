@@ -4,4 +4,4 @@ const TYRE_CIRCUMFERENCES = {
   '25C': 2111.15
 }
 
-module.exports = TYRE_CIRCUMFERENCES
+export default TYRE_CIRCUMFERENCES

@@ -1,4 +1,4 @@
-import { RIDERS_SET } from '../actions'
+import { RIDERS_SET } from '../actions/index.js'
 
 const initialState = {
   riders: []

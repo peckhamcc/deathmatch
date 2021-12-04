@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Button from 'material-ui/Button'
+import Button from '@mui/material/Button/index.js'
 import styled from 'styled-components'
-import { PHOTO_WIDTH, PHOTO_HEIGHT } from '../../constants/settings'
+import { PHOTO_WIDTH, PHOTO_HEIGHT } from '../../constants/settings.js'
 
 const VideoWrapper = styled.div`
   width: ${PHOTO_WIDTH}px;
@@ -30,7 +30,7 @@ class PhotoTaker extends Component {
           width: PHOTO_WIDTH,
           height: PHOTO_HEIGHT
         }
-      } 
+      }
 
       navigator.mediaDevices.getUserMedia(constraints)
       .then(mediaStream => {
@@ -61,7 +61,7 @@ class PhotoTaker extends Component {
     return (
       <VideoWrapper>
         <video height={PHOTO_HEIGHT} width={PHOTO_WIDTH} ref={this.videoLoaded}></video>
-        <Button color="primary" onClick={this.savePhoto}>Take photo</Button>
+        <Button onClick={this.savePhoto}>Take photo</Button>
       </VideoWrapper>
     )
   }

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Button from 'material-ui/Button'
+import Button from '@mui/material/Button/index.js'
 import styled from 'styled-components'
-import socket from '../socket'
+import socket from '../socket/index.js'
 import clubLogo from '../../assets/pcc-logo@2x.png'
-import riderImages from './rider-images'
-import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
-import FF7 from './ff7'
+import riderImages from './rider-images.js'
+import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings.js'
+import FF7 from './ff7.js'
 import player1Outline from '../../assets/player1-outline.png'
 import player2Outline from '../../assets/player2-outline.png'
 
@@ -87,12 +87,12 @@ const ClubLogo = styled.div`
   margin-top: 30px;
 `
 
-const StartRace = FF7.extend`
+const StartRace = styled(FF7)`
   position: absolute;
   margin: 670px 0 0 755px;
 `
 
-const Back = FF7.extend`
+const Back = styled(FF7)`
   position: absolute;
   margin: 670px 0 0 20px;
 `

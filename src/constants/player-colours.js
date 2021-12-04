@@ -1,4 +1,4 @@
-module.exports = [{
+export default [{
   r: 255,
   g: 0,
   b: 0,

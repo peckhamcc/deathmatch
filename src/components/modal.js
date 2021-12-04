@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Button } from './form-elements'
-import Card from 'material-ui/Card'
+import { Button } from './form-elements.js'
+import Card from '@mui/material/Card/index.js'
 
 const ModalWrapper = styled.div`
   position: absolute;

@@ -1,8 +1,8 @@
-const rangeMap = require('range-map')
-const setUpPlayers = require('./setup-players')
-const GAME_STATE = require('../../src/constants/game-state')
-const PLAYER_POWER = require('../../src/constants/power')
-const lights = require('../lights')
+import rangeMap from 'range-map'
+import setUpPlayers from './setup-players.js'
+import GAME_STATE from '../../src/constants/game-state.js'
+import PLAYER_POWER from '../../src/constants/power.js'
+import * as lights from '../lights.js'
 
 const SPRINT_DISTANCE_FROM_FINISH = 30
 const SHOW_FINISH_DISTANCE_FROM_FINISH = 2
@@ -44,11 +44,11 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
     if (maxPowerTimeout) {
       clearTimeout(maxPowerTimeout)
     }
-  
+
     lights.dome.strobe(200)
     lights.spider1.strobe(200)
     lights.spider2.strobe(200)
-  
+
     maxPowerTimeout = setTimeout(() => {
       const gameState = state.get().game.state
 
@@ -67,7 +67,7 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
   }
 
   return () => {
-    let now = Date.now()
+    const now = Date.now()
     const leaderboard = state.getLeaderboard()
 
     players = players.map(player => {
@@ -102,14 +102,14 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
             .map(rider => {
               delete rider.winner
               delete rider.loser
-      
+
               if (rider.id === loser) {
                 rider.eliminated = true
                 rider.eliminatedAt = Date.now()
                 rider.loser = true
                 rider.races = rider.races + 1
               }
-      
+
               if (rider.id === winner) {
                 rider.winner = true
                 rider.races = rider.races + 1
@@ -172,26 +172,24 @@ const gameLoop = (emitter, getWatts, getCadence, getSpeed, trackLength, then, pl
   }
 }
 
-module.exports = {
-  startGame: (emitter, getWatts, getCadence, getSpeed, trackLength, state) => {
-    if (gameInterval) {
-      module.exports.stopGame()
-    }
-
-    const players = setUpPlayers(
-      state.get().riders.riders
-        .filter(rider => rider.selected)
-        .sort((a, b) => a.bike.localeCompare(b.bike)),
-        trackLength
-    )
-
-    state.setPlayers(players)
-
-    gameInterval = setInterval(gameLoop(emitter, getWatts, getCadence, getSpeed, trackLength, Date.now(), players, state), 1000)
-  },
-
-  stopGame: () => {
-    clearInterval(gameInterval)
-    gameInterval = null
+export function startGame (emitter, getWatts, getCadence, getSpeed, trackLength, state) {
+  if (gameInterval) {
+    stopGame()
   }
+
+  const players = setUpPlayers(
+    state.get().riders.riders
+      .filter(rider => rider.selected)
+      .sort((a, b) => a.bike.localeCompare(b.bike)),
+    trackLength
+  )
+
+  state.setPlayers(players)
+
+  gameInterval = setInterval(gameLoop(emitter, getWatts, getCadence, getSpeed, trackLength, Date.now(), players, state), 1000)
+}
+
+export function stopGame () {
+  clearInterval(gameInterval)
+  gameInterval = null
 }

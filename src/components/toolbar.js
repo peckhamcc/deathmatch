@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import BluetoothState from './bluetooth-state'
-import Settings from './settings'
+import BluetoothState from './bluetooth-state.js'
+import Settings from './settings/index.js'
 
 const toolbar = ({ demo }) => {
   if (demo) {
@@ -14,8 +14,6 @@ const toolbar = ({ demo }) => {
       <Settings />
     </div>
   )
-
-  return null
 }
 
 const mapStateToProps = ({ game: { demo } }) => ({

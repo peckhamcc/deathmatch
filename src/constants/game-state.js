@@ -12,4 +12,4 @@ const GAME_STATE = {
   results: 'THEY_THINK_ITS_ALL_OVER'
 }
 
-module.exports = GAME_STATE
+export default GAME_STATE

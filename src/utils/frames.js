@@ -1,8 +1,8 @@
 
-export default frames = (width, height, yOffset, frames) => {
+export default function frames (width, height, yOffset, frames) {
   const output = []
 
-  for(let i = 0; i < frames; i++) {
+  for (let i = 0; i < frames; i++) {
     output.push(width * i)
     output.push(yOffset)
     output.push(width)

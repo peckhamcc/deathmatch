@@ -1,1 +1,1 @@
-export { default as GameContainer } from './game-container'
+export { default as GameContainer } from './game-container.js'

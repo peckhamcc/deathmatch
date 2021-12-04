@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Image } from 'react-konva'
 import backgroundRoad from '../../assets/background-road.png'
-import { addAnimateable, removeAnimateable } from './animator'
-import { STAGE_WIDTH } from '../constants/settings'
-import assets from '../css/assets'
+import { addAnimateable, removeAnimateable } from './animator.js'
+import { STAGE_WIDTH } from '../constants/settings.js'
+import assets from '../css/assets.js'
 
 class Road extends Component {
 

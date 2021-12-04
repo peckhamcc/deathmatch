@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Shape } from 'react-konva'
-import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
+import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings.js'
 import stripes from '../../assets/stripes.png'
-import assets from '../css/assets'
+import assets from '../css/assets.js'
 
 class ColouredText extends Component {
   static propTypes = {

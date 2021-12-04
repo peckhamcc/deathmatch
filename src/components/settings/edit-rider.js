@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Button from 'material-ui/Button'
-import { withStyles } from 'material-ui/styles'
-import Dialog, {
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from 'material-ui/Dialog'
-import TextField from 'material-ui/TextField'
-import MenuItem from 'material-ui/Menu/MenuItem'
+import Button from '@mui/material/Button/index.js'
+import { withStyles } from '@mui/styles/index.js'
+import Dialog from '@mui/material/Dialog/index.js'
+import DialogTitle from '@mui/material/DialogTitle/index.js'
+import DialogContent from '@mui/material/DialogContent/index.js'
+import DialogActions from '@mui/material/DialogActions/index.js'
+import TextField from '@mui/material/TextField/index.js'
+import MenuItem from '@mui/material/MenuItem/index.js'
 import styled from 'styled-components'
 import shortid from 'shortid'
-import socket from '../../socket'
-import Photo from './photo'
+import socket from '../../socket/index.js'
+import Photo from './photo.js'
 
 const styles = {
 
@@ -128,7 +127,7 @@ class EditRider extends Component {
     const { classes } = this.props
 
     return (
-      <Dialog open={this.props.open} onRequestClose={this.props.onCancel} fullScreen>
+      <Dialog open={this.props.open} onClose={this.props.onCancel} fullScreen>
         <DialogTitle>Add rider</DialogTitle>
         <DialogContent>
           <form>
@@ -196,7 +195,7 @@ class EditRider extends Component {
           </form>
         </DialogContent>
         <DialogActions>
-          <Button color="primary" onClick={this.saveRider}>
+          <Button onClick={this.saveRider}>
             OK
           </Button>
         </DialogActions>

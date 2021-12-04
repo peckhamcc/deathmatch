@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import GAME_STATE from '../constants/game-state'
+import GAME_STATE from '../constants/game-state.js'
 import {
   Game,
   Intro,
@@ -11,11 +11,11 @@ import {
   Champion,
   Results,
   LoadingAssets
-} from '../components'
+} from '../components/index.js'
 import { connect } from 'react-redux'
-import { updateGameState } from '../store/actions'
-import socket from '../socket'
-import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings'
+import { updateGameState } from '../store/actions/index.js'
+import socket from '../socket/index.js'
+import { STAGE_WIDTH, STAGE_HEIGHT } from '../constants/settings.js'
 
 class GameContainer extends Component {
 

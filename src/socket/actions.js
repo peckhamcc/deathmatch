@@ -1,4 +1,4 @@
-import socket from './index'
+import socket from './index.js'
 import {
   updateBluetoothStatus,
   updateBluetoothSearchStatus,
@@ -13,10 +13,10 @@ import {
   setFreeplay,
   setNumPlayers,
   setTrackLength
-} from '../store/actions'
+} from '../store/actions/index.js'
 
 export default (store) => {
-  socket.on('bluetooth:status', ({status}) => {
+  socket.on('bluetooth:status', ({ status }) => {
     store.dispatch(updateBluetoothStatus(status))
   })
 
@@ -31,7 +31,7 @@ export default (store) => {
   socket.on('device:search:error', (error) => {
     store.dispatch(bluetoothSearchError(error))
 
-    alert(error.message)
+    window.alert(error.message)
   })
 
   socket.on('device:found', (device) => {

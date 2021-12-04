@@ -1,5 +1,5 @@
-const PLAYER_COLOURS = require('../../src/constants/player-colours')
-const PLAYER_LETTERS = require('../../src/constants/player-letters')
+import PLAYER_COLOURS from '../../src/constants/player-colours.js'
+import PLAYER_LETTERS from '../../src/constants/player-letters.js'
 
 const selectRiders = (emitter, state, riders, otherRider) => {
   const numPlayers = state.getNumPlayers()
@@ -97,4 +97,4 @@ const selectRiders = (emitter, state, riders, otherRider) => {
   return false
 }
 
-module.exports = selectRiders
+export default selectRiders

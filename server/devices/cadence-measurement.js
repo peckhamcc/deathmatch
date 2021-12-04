@@ -1,5 +1,7 @@
-const readBytes = require('./read-bytes')
-const debug = require('debug')('deathmatch:cadence-measurement')
+import readBytes from './read-bytes.js'
+import debug from 'debug'
+
+const log = debug('deathmatch:cadence-measurement')
 
 const cadenceMeasurement = (buffer) => {
   const flags = buffer.readInt8(0)
@@ -9,14 +11,14 @@ const cadenceMeasurement = (buffer) => {
   const output = {
     flags: flags
   }
-/*
-  debug('-- s/c buffer start --')
+  /*
+  log('-- s/c buffer start --')
   for(var i = 0; i < buffer.length; i++) {
     var string = buffer[i].toString(2)
 
-    debug('00000000'.substring(0, 8 - string.length) + string)
+    log('00000000'.substring(0, 8 - string.length) + string)
   }
-  debug('-- s/c buffer end --')
+  log('-- s/c buffer end --')
 */
   const wheelRevolutionDataPresent = flags & 0b01
   const crankRevolutionDataPresent = flags & 0b10
@@ -27,7 +29,7 @@ const cadenceMeasurement = (buffer) => {
 
     // this is when the wheels last turned (e.g. does not change while stationary)
     output.lastWheelEventTime = readBytes(buffer, offset, 2)
-    offset +=2
+    offset += 2
   }
 
   if (crankRevolutionDataPresent) {
@@ -36,10 +38,10 @@ const cadenceMeasurement = (buffer) => {
 
     // this is when the cranks last turned (e.g. does not change while coasting)
     output.lastCrankEventTime = readBytes(buffer, offset, 2)
-    offset +=2
+    offset += 2
   }
 
   return output
 }
 
-module.exports = cadenceMeasurement
+export default cadenceMeasurement

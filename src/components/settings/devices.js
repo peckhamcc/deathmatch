@@ -1,28 +1,27 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import socket from '../../socket'
-import { addDevice } from '../../store/actions'
-import { withStyles } from 'material-ui/styles'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import IconButton from 'material-ui/IconButton'
-import Table, {
-  TableBody,
-  TableCell,
-  TableRow,
-} from 'material-ui/Table'
-import SearchIcon from 'material-ui-icons/Search'
-import StopIcon from 'material-ui-icons/Stop'
-import InfoIcon from 'material-ui-icons/Info'
-import CachedIcon from 'material-ui-icons/Cached'
-import BatteryIcon from 'material-ui-icons/BatteryStd'
-import FlashOnIcon from 'material-ui-icons/FlashOn'
-import ConnectIcon from 'material-ui-icons/AddBox'
-import LoadingIcon from 'material-ui-icons/Refresh'
-import UnknownIcon from 'material-ui-icons/Warning'
-import TextField from 'material-ui/TextField'
-import MenuItem from 'material-ui/Menu/MenuItem'
+import socket from '../../socket/index.js'
+import { addDevice } from '../../store/actions/index.js'
+import { withStyles } from '@mui/styles/index.js'
+import AppBar from '@mui/material/AppBar/index.js'
+import Toolbar from '@mui/material/Toolbar/index.js'
+import IconButton from '@mui/material/IconButton/index.js'
+import Table from '@mui/material/Table/index.js'
+import TableBody from '@mui/material/TableBody/index.js'
+import TableCell from '@mui/material/TableCell/index.js'
+import TableRow from '@mui/material/TableRow/index.js'
+import SearchIcon from '@mui/icons-material/Search.js'
+import StopIcon from '@mui/icons-material/Stop.js'
+import InfoIcon from '@mui/icons-material/Info.js'
+import CachedIcon from '@mui/icons-material/Cached.js'
+import BatteryIcon from '@mui/icons-material/BatteryStd.js'
+import FlashOnIcon from '@mui/icons-material/FlashOn.js'
+import ConnectIcon from '@mui/icons-material/AddBox.js'
+import LoadingIcon from '@mui/icons-material/Refresh.js'
+import UnknownIcon from '@mui/icons-material/Warning.js'
+import TextField from '@mui/material/TextField/index.js'
+import MenuItem from '@mui/material/MenuItem/index.js'
 
 const styles = {
 
@@ -60,12 +59,12 @@ class Devices extends Component {
       <div>
         <AppBar position="static">
           <Toolbar>
-            {!this.props.scanning && <IconButton color="contrast" aria-label="Search for devices" onClick={this.startScan}>
-                <SearchIcon />
+            {!this.props.scanning && <IconButton aria-label="Search for devices" onClick={this.startScan}>
+                <SearchIcon.default />
               </IconButton>
             }
-            {this.props.scanning && <IconButton color="contrast" aria-label="Stop searching" onClick={this.stopScan}>
-                <StopIcon />
+            {this.props.scanning && <IconButton aria-label="Stop searching" onClick={this.stopScan}>
+                <StopIcon.default />
               </IconButton>
             }
           </Toolbar>
@@ -94,10 +93,10 @@ class Devices extends Component {
               .sort((a, b) => a.name - b.name)
               .map(device => {
               const serviceIcons = {
-                '1818': <FlashOnIcon key='power' />,
-                '180f': <BatteryIcon key='battery' />,
-                '1816': <CachedIcon key='speed/cadence' />,
-                '180a': <InfoIcon key='deviceinfo' />
+                '1818': <FlashOnIcon.default key='power' />,
+                '180f': <BatteryIcon.default key='battery' />,
+                '1816': <CachedIcon.default key='speed/cadence' />,
+                '180a': <InfoIcon.default key='deviceinfo' />
               }
 
               const services = []
@@ -115,9 +114,9 @@ class Devices extends Component {
               }
 
               const statuses = [
-                <UnknownIcon />,
-                <ConnectIcon onClick={this.connect(device)} />,
-                <LoadingIcon />,
+                <UnknownIcon.default />,
+                <ConnectIcon.default onClick={this.connect(device)} />,
+                <LoadingIcon.default />,
                 <TextField
                   id="assign-to"
                   label="Assign to"

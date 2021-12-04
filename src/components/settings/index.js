@@ -1,19 +1,17 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Button from 'material-ui/Button'
-import Dialog, {
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from 'material-ui/Dialog'
-import Tabs, {
-  Tab
-} from 'material-ui/Tabs'
-import IconButton from 'material-ui/IconButton'
-import SettingsIcon from 'material-ui-icons/Settings'
-import Devices from './devices'
-import Riders from './riders'
-import Game from './game'
+import Button from '@mui/material/Button/index.js'
+import Dialog from '@mui/material/Dialog/index.js'
+import DialogTitle from '@mui/material/DialogTitle/index.js'
+import DialogContent from '@mui/material/DialogContent/index.js'
+import DialogActions from '@mui/material/DialogActions/index.js'
+import Tabs from '@mui/material/Tabs/index.js'
+import Tab from '@mui/material/Tab/index.js'
+import IconButton from '@mui/material/IconButton/index.js'
+import SettingsIcon from '@mui/icons-material/Settings.js'
+import Devices from './devices.js'
+import Riders from './riders.js'
+import Game from './game.js'
 
 const Wrapper = styled.div`
   position: absolute;
@@ -39,7 +37,7 @@ class Settings extends Component {
     })
   }
 
-  hideSettings = () => {
+  hideSettings = (event) => {
     this.setState({
       open: false
     })
@@ -69,28 +67,28 @@ class Settings extends Component {
 
     return (
       <Wrapper>
-        <IconButton aria-label="Delete" onClick={this.showSettings}>
-          <SettingsIcon />
-          <Dialog
-            open={open}
-            onRequestClose={this.hideSettings}
-            fullScreen>
-            <DialogTitle>SETTINGS</DialogTitle>
-            <DialogContent>
-              <Tabs value={tab} onChange={this.handleTabChange}>
-                <Tab label='DEVICES' />
-                <Tab label='RIDERS' />
-                <Tab label='GAME' />
-              </Tabs>
-              <Panel socket={this.props.socket} />
-            </DialogContent>
-            <DialogActions>
-              <Button color="primary" onClick={this.hideSettings}>
-                OK
-              </Button>
-            </DialogActions>
-          </Dialog>
+        <IconButton aria-label="Show settings" onClick={this.showSettings}>
+          <SettingsIcon.default />
         </IconButton>
+        <Dialog
+          open={open}
+          onClose={this.hideSettings}
+          fullScreen>
+          <DialogTitle>SETTINGS</DialogTitle>
+          <DialogContent>
+            <Tabs value={tab} onChange={this.handleTabChange}>
+              <Tab label='DEVICES' />
+              <Tab label='RIDERS' />
+              <Tab label='GAME' />
+            </Tabs>
+            <Panel socket={this.props.socket} />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.hideSettings}>
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Wrapper>
     )
   }

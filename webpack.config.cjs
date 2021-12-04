@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 const LiveReloadPlugin = require('webpack-livereload-plugin')
-const config = require('./webpack.config.template.js')
+const config = require('./webpack.config.template.cjs')
 
 config.plugins.unshift(
   new webpack.HotModuleReplacementPlugin(),
@@ -10,13 +10,18 @@ config.plugins.unshift(
   })
 )
 
-config.plugins.push(new webpack.DefinePlugin({
-  'process.env': {
-    'NODE_ENV': '"development"'
-  }
-}))
+config.plugins.push(
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: '"development"'
+    }
+  }),
+  new webpack.LoaderOptionsPlugin({
+    debug: true
+  })
+)
 
-config.debug = true
+config.mode = 'development'
 config.devtool = 'source-map'
 
 module.exports = config

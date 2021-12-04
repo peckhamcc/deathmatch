@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Image } from 'react-konva'
-import { addAnimateable, removeAnimateable } from './animator'
-import assets from '../css/assets'
+import { addAnimateable, removeAnimateable } from './animator.js'
+import assets from '../css/assets.js'
 
 class Background extends Component {
   static propTypes = {
