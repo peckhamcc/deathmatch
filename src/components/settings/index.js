@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import Button from '@mui/material/Button/index.js'
-import Dialog from '@mui/material/Dialog/index.js'
-import DialogTitle from '@mui/material/DialogTitle/index.js'
-import DialogContent from '@mui/material/DialogContent/index.js'
-import DialogActions from '@mui/material/DialogActions/index.js'
-import Tabs from '@mui/material/Tabs/index.js'
-import Tab from '@mui/material/Tab/index.js'
-import IconButton from '@mui/material/IconButton/index.js'
-import SettingsIcon from '@mui/icons-material/Settings.js'
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Tabs,
+  Tab,
+  IconButton
+} from '@material-ui/core'
+import {
+  Settings as SettingsIcon
+} from '@material-ui/icons'
 import Devices from './devices.js'
 import Riders from './riders.js'
 import Game from './game.js'
@@ -68,7 +72,7 @@ class Settings extends Component {
     return (
       <Wrapper>
         <IconButton aria-label="Show settings" onClick={this.showSettings}>
-          <SettingsIcon.default />
+          <SettingsIcon />
         </IconButton>
         <Dialog
           open={open}

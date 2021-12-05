@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { ThemeProvider, createTheme } from '@mui/material/styles/index.js'
-import { grey, blue, red, green } from '@mui/material/colors/index.js'
+import { ThemeProvider, createTheme } from '@material-ui/core/styles/index.js'
+import { grey, blue, red, green } from '@material-ui/core/colors/index.js'
 
 const theme = createTheme({
   typography: {

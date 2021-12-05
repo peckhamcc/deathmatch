@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Button from '@mui/material/Button/index.js'
+import { Button } from '@material-ui/core'
 import styled from 'styled-components'
 import socket from '../socket/index.js'
 import clubLogo from '../../assets/pcc-logo@2x.png'

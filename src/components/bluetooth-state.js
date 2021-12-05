@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import IconButton from '@mui/material/IconButton/index.js'
-import BluetoothIcon from '@mui/icons-material/Bluetooth.js'
-import BluetoothDisabledIcon from '@mui/icons-material/BluetoothDisabled.js'
-import ErrorIcon from '@mui/icons-material/Error.js'
+import { IconButton } from '@material-ui/core'
+import {
+  Bluetooth as BluetoothIcon,
+  BluetoothDisabled as BluetoothDisabledIcon,
+  Error as ErrorIcon
+} from '@material-ui/icons'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -18,8 +20,8 @@ const BluetoothState = ({ status }) => {
     <Wrapper>
       <IconButton aria-label='Bluetooth status'>
         {status === 'unknown' && <ErrorIcon />}
-        {status === 'poweredOff' && <BluetoothDisabledIcon.default />}
-        {status === 'poweredOn' && <BluetoothIcon.default />}
+        {status === 'poweredOff' && <BluetoothDisabledIcon />}
+        {status === 'poweredOn' && <BluetoothIcon />}
       </IconButton>
     </Wrapper>
   )

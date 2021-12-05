@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Button from '@mui/material/Button/index.js'
+import { Button } from '@material-ui/core'
 import PhotoTaker from './photo-taker.js'
 import defaultPhoto from '../../../assets/rider-female-0.png'
 import { PHOTO_WIDTH, PHOTO_HEIGHT } from '../../constants/settings.js'

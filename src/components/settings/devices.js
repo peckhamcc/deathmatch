@@ -3,25 +3,29 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import socket from '../../socket/index.js'
 import { addDevice } from '../../store/actions/index.js'
-import { withStyles } from '@mui/styles/index.js'
-import AppBar from '@mui/material/AppBar/index.js'
-import Toolbar from '@mui/material/Toolbar/index.js'
-import IconButton from '@mui/material/IconButton/index.js'
-import Table from '@mui/material/Table/index.js'
-import TableBody from '@mui/material/TableBody/index.js'
-import TableCell from '@mui/material/TableCell/index.js'
-import TableRow from '@mui/material/TableRow/index.js'
-import SearchIcon from '@mui/icons-material/Search.js'
-import StopIcon from '@mui/icons-material/Stop.js'
-import InfoIcon from '@mui/icons-material/Info.js'
-import CachedIcon from '@mui/icons-material/Cached.js'
-import BatteryIcon from '@mui/icons-material/BatteryStd.js'
-import FlashOnIcon from '@mui/icons-material/FlashOn.js'
-import ConnectIcon from '@mui/icons-material/AddBox.js'
-import LoadingIcon from '@mui/icons-material/Refresh.js'
-import UnknownIcon from '@mui/icons-material/Warning.js'
-import TextField from '@mui/material/TextField/index.js'
-import MenuItem from '@mui/material/MenuItem/index.js'
+import { withStyles } from '@material-ui/core/styles/index.js'
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  TextField,
+  MenuItem
+} from '@material-ui/core'
+import {
+  Search as SearchIcon,
+  Stop as StopIcon,
+  Info as InfoIcon,
+  Cached as CachedIcon,
+  BatteryStd as BatteryIcon,
+  FlashOn as FlashOnIcon,
+  AddBox as ConnectIcon,
+  Refresh as LoadingIcon,
+  Warning as UnknownIcon
+} from '@material-ui/icons'
 
 const styles = {
 
@@ -60,11 +64,11 @@ class Devices extends Component {
         <AppBar position="static">
           <Toolbar>
             {!this.props.scanning && <IconButton aria-label="Search for devices" onClick={this.startScan}>
-                <SearchIcon.default />
+                <SearchIcon />
               </IconButton>
             }
             {this.props.scanning && <IconButton aria-label="Stop searching" onClick={this.stopScan}>
-                <StopIcon.default />
+                <StopIcon />
               </IconButton>
             }
           </Toolbar>
@@ -93,10 +97,10 @@ class Devices extends Component {
               .sort((a, b) => a.name - b.name)
               .map(device => {
               const serviceIcons = {
-                '1818': <FlashOnIcon.default key='power' />,
-                '180f': <BatteryIcon.default key='battery' />,
-                '1816': <CachedIcon.default key='speed/cadence' />,
-                '180a': <InfoIcon.default key='deviceinfo' />
+                '1818': <FlashOnIcon key='power' />,
+                '180f': <BatteryIcon key='battery' />,
+                '1816': <CachedIcon key='speed/cadence' />,
+                '180a': <InfoIcon key='deviceinfo' />
               }
 
               const services = []
@@ -114,9 +118,9 @@ class Devices extends Component {
               }
 
               const statuses = [
-                <UnknownIcon.default />,
-                <ConnectIcon.default onClick={this.connect(device)} />,
-                <LoadingIcon.default />,
+                <UnknownIcon />,
+                <ConnectIcon onClick={this.connect(device)} />,
+                <LoadingIcon />,
                 <TextField
                   id="assign-to"
                   label="Assign to"

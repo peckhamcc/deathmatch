@@ -2,16 +2,20 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import socket from '../../socket/index.js'
-import AppBar from '@mui/material/AppBar/index.js'
-import Toolbar from '@mui/material/Toolbar/index.js'
-import IconButton from '@mui/material/IconButton/index.js'
-import Table from '@mui/material/Table/index.js'
-import TableBody from '@mui/material/TableBody/index.js'
-import TableCell from '@mui/material/TableCell/index.js'
-import TableRow from '@mui/material/TableRow/index.js'
-import PersonAddIcon from '@mui/icons-material/PersonAdd.js'
-import DeleteIcon from '@mui/icons-material/Delete.js'
-import EditIcon from '@mui/icons-material/Edit.js'
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow
+} from '@material-ui/core'
+import {
+  PersonAdd as PersonAddIcon,
+  Delete as DeleteIcon,
+  Edit as EditIcon
+} from '@material-ui/icons'
 import EditRider from './edit-rider.js'
 
 class Riders extends Component {
@@ -101,7 +105,7 @@ class Riders extends Component {
         <AppBar position="static">
           <Toolbar>
             <IconButton aria-label="Add rider" onClick={this.addRider}>
-              <PersonAddIcon.default />
+              <PersonAddIcon />
               <EditRider
                 open={this.state.addingRider}
                 onSave={this.saveRider}
@@ -123,8 +127,8 @@ class Riders extends Component {
                 <TableCell padding='dense' numeric>{rider.height} cm</TableCell>
                 <TableCell padding='dense'>{rider.gender}</TableCell>
                 <TableCell padding='checkbox'>
-                  <IconButton color="info" aria-label="Edit rider" onClick={this.editRider(rider)}>
-                    <EditIcon.default />
+                  <IconButton aria-label="Edit rider" onClick={this.editRider(rider)}>
+                    <EditIcon />
                     <EditRider
                       open={this.state.editingRider === rider.id}
                       onSave={this.saveRider}
@@ -134,8 +138,8 @@ class Riders extends Component {
                   </IconButton>
                 </TableCell>
                 <TableCell padding='checkbox'>
-                  <IconButton color="warning" aria-label="Delete rider" onClick={this.deleteRider(rider)}>
-                    <DeleteIcon.default />
+                  <IconButton color="secondary" aria-label="Delete rider" onClick={this.deleteRider(rider)}>
+                    <DeleteIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>

@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Button from '@mui/material/Button/index.js'
-import { withStyles } from '@mui/styles/index.js'
-import Dialog from '@mui/material/Dialog/index.js'
-import DialogTitle from '@mui/material/DialogTitle/index.js'
-import DialogContent from '@mui/material/DialogContent/index.js'
-import DialogActions from '@mui/material/DialogActions/index.js'
-import TextField from '@mui/material/TextField/index.js'
-import MenuItem from '@mui/material/MenuItem/index.js'
+import { withStyles } from '@material-ui/core/styles/index.js'
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  MenuItem
+ } from '@material-ui/core'
 import styled from 'styled-components'
 import shortid from 'shortid'
 import socket from '../../socket/index.js'
