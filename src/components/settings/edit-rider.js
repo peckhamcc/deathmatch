@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles/index.js'
+import { withStyles } from '@mui/styles'
 import {
   Button,
   Dialog,
@@ -10,7 +10,7 @@ import {
   DialogActions,
   TextField,
   MenuItem
- } from '@material-ui/core'
+ } from '@mui/material'
 import styled from 'styled-components'
 import shortid from 'shortid'
 import socket from '../../socket/index.js'
@@ -61,7 +61,7 @@ class EditRider extends Component {
       .catch((err) => console.log(err.name + ": " + err.message))
   }
 
-  componentWillReceiveProps (props) {
+  UNSAFE_componentWillReceiveProps (props) {
     this.setState({
       name: props.rider && props.rider.name,
       age: props.rider && props.rider.age,

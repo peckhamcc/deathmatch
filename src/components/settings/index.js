@@ -9,10 +9,10 @@ import {
   Tabs,
   Tab,
   IconButton
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   Settings as SettingsIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import Devices from './devices.js'
 import Riders from './riders.js'
 import Game from './game.js'

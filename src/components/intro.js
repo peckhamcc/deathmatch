@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import introBackground from '../../assets/intro.png'
 import FF7 from './ff7.js'
 import styled from 'styled-components'

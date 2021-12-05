@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import styled from 'styled-components'
 import socket from '../socket/index.js'
 import clubLogo from '../../assets/pcc-logo@2x.png'
@@ -119,12 +119,12 @@ class SelectingRiders extends Component {
     timeout: 50
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.setupSelectRiders(this.props)
   }
 
   // gets called after mounting if we are being reused
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     this.setupSelectRiders(nextProps)
   }
 

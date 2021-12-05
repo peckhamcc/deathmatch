@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles/index.js'
+import { withStyles } from '@mui/styles'
 import {
   TextField,
   Select,
   MenuItem
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   setAdminToken,
   setNumPlayers,

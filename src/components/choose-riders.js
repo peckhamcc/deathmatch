@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import styled from 'styled-components'
 import socket from '../socket/index.js'
 import clubLogo from '../../assets/pcc-logo@2x.png'
@@ -111,7 +111,7 @@ class ChooseRiders extends Component {
     selectIndex: 1
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.setState({
       player1Index: 0,
       player2Index: 1

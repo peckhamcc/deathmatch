@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { IconButton } from '@material-ui/core'
+import { IconButton } from '@mui/material'
 import {
   Bluetooth as BluetoothIcon,
   BluetoothDisabled as BluetoothDisabledIcon,
   Error as ErrorIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`

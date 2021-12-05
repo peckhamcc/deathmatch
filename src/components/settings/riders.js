@@ -10,12 +10,12 @@ import {
   TableBody,
   TableCell,
   TableRow
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   PersonAdd as PersonAddIcon,
   Delete as DeleteIcon,
   Edit as EditIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import EditRider from './edit-rider.js'
 
 class Riders extends Component {

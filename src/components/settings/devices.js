@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import socket from '../../socket/index.js'
 import { addDevice } from '../../store/actions/index.js'
-import { withStyles } from '@material-ui/core/styles/index.js'
+import { withStyles } from '@mui/styles'
 import {
   AppBar,
   Toolbar,
@@ -14,7 +14,7 @@ import {
   TableRow,
   TextField,
   MenuItem
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   Search as SearchIcon,
   Stop as StopIcon,
@@ -25,7 +25,7 @@ import {
   AddBox as ConnectIcon,
   Refresh as LoadingIcon,
   Warning as UnknownIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 const styles = {
 

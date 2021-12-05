@@ -13,8 +13,8 @@ import {
   setLoadProgress
 } from './store/actions/index.js'
 import GAME_STATE from './constants/game-state.js'
-import { ThemeProvider, createTheme } from '@material-ui/core/styles/index.js'
-import { grey, blueGrey, blue, red } from '@material-ui/core/colors/index.js'
+import { ThemeProvider, createTheme } from '@mui/material'
+import { grey, blueGrey, blue, red } from '@mui/material/colors/index.js'
 
 const theme = createTheme({
   typography: {

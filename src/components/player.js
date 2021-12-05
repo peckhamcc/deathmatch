@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import styled from 'styled-components'
 import { Group, Text, Sprite } from 'react-konva'
 import { addAnimateable, removeAnimateable } from './animator.js'
 import GAME_STATE from '../constants/game-state.js'
@@ -56,7 +55,7 @@ class Player extends Component {
     removeAnimateable(this.animate)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     this.setState(s => ({
       lastX: s.nextX,
       nextX: this.props.player.x,
@@ -108,8 +107,8 @@ class Player extends Component {
   }
 
   render () {
-    const rps = this.props.player.cadence / 60
-    const fps = parseInt(rps * ANIMATION_FRAMES[this.state.animation], 10)
+    const rps = (this.props.player.cadence || 60) / 60
+    let fps = parseInt(rps * ANIMATION_FRAMES[this.state.animation], 10)
 
     return (
       <Group>
@@ -126,7 +125,7 @@ class Player extends Component {
           shadowBlur={0}
         />
         <Sprite
-          ref={this.setSprite}
+          ref={(ref) => this.setSprite(ref)}
           image={assets.get(this.props.sprite)}
           x={this.state.x}
           y={this.props.yOffset + NAME_SIZE}
@@ -140,7 +139,7 @@ class Player extends Component {
             fastest: frames(PLAYER_SPRITE_WIDTH, PLAYER_SPRITE_HEIGHT, PLAYER_SPRITE_HEIGHT * 3, ANIMATION_FRAMES['fastest'])
           }}
           frameRate={fps}
-          frameIndex={this.sprite && this.sprite.frameIndex() || 0}
+          frameIndex={this.sprite ? this.sprite.frameIndex() : 0}
         />
       </Group>
     )

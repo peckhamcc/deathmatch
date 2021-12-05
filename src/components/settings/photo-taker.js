@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import styled from 'styled-components'
 import { PHOTO_WIDTH, PHOTO_HEIGHT } from '../../constants/settings.js'
 
