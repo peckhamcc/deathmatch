@@ -14,18 +14,26 @@ import backgroundClouds from '../../assets/background-clouds.png'
 import backgroundCity from '../../assets/background-city.png'
 import backgroundTerraces from '../../assets/background-terraces.png'
 import backgroundPeckham from '../../assets/background-peckham.png'
-import riderASprite from '../../assets/rider-a-sprite.png'
-import riderBSprite from '../../assets/rider-b-sprite.png'
+import riderAMSprite from '../../assets/rider-a-m-sprite.png'
+import riderAFSprite from '../../assets/rider-a-f-sprite.png'
+import riderBMSprite from '../../assets/rider-b-m-sprite.png'
+import riderBFSprite from '../../assets/rider-b-f-sprite.png'
 import riderASpotlight from '../../assets/rider-a-spotlight.png'
 import riderBSpotlight from '../../assets/rider-b-spotlight.png'
 import Spotlight from './spotlight.js'
 import Screen from './screen.js'
 import Canvas from './canvas.js'
 
-const RIDER_SPRITES = [
-  riderASprite,
-  riderBSprite
-]
+const RIDER_SPRITES = {
+  female: [
+    riderAFSprite,
+    riderBFSprite
+  ],
+  male: [
+    riderAMSprite,
+    riderBMSprite
+  ]
+}
 
 const SPOTLIGHT_SPRITES = [
   riderASpotlight,
@@ -65,7 +73,7 @@ function Game ({ width, height, players, gameState }) {
                 player={player}
                 yOffset={index === 0 ? 250 : 300}
                 xOffset={index === 0 ? 50 : 0}
-                sprite={RIDER_SPRITES[index]}
+                sprite={RIDER_SPRITES[player.gender][index]}
                 x={player.x}
               />
             </Group>
