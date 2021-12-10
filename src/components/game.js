@@ -44,7 +44,7 @@ function Game ({ width, height, players, gameState }) {
   // context doesn't work inside react-konva any more
   // https://github.com/konvajs/react-konva/issues/349
   const store = useStore()
-
+console.info(players)
   return (
     <Canvas
       width={width}

@@ -7,8 +7,10 @@ import backgroundRoad from '../../assets/background-road.png'
 import backgroundPeckham from '../../assets/background-peckham.png'
 import introBackground from '../../assets/intro.png'
 import powerBar from '../../assets/background-power.png'
-import riderASprite from '../../assets/rider-a-sprite.png'
-import riderBSprite from '../../assets/rider-b-sprite.png'
+import riderAMSprite from '../../assets/rider-a-m-sprite.png'
+import riderAFSprite from '../../assets/rider-a-f-sprite.png'
+import riderBMSprite from '../../assets/rider-b-m-sprite.png'
+import riderBFSprite from '../../assets/rider-b-f-sprite.png'
 import riderMale0 from '../../assets/rider-male-0.png'
 import riderMale1 from '../../assets/rider-male-1.png'
 import riderMale2 from '../../assets/rider-male-2.png'
@@ -49,8 +51,10 @@ const list = [
   backgroundPeckham,
   introBackground,
   powerBar,
-  riderASprite,
-  riderBSprite,
+  riderAMSprite,
+  riderAFSprite,
+  riderBMSprite,
+  riderBFSprite,
   riderMale0,
   riderMale1,
   riderMale2,
